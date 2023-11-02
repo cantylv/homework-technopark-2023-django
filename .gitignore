@@ -1,1 +1,4 @@
 .idea/
+.DS_Store
+static/.DS_Store
+static/bootstrap5.3.2

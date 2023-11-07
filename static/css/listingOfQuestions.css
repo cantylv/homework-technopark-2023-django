@@ -1,0 +1,50 @@
+@font-face {
+    font-family: "Mona-Sans-Regular";
+    src:url("../otf/Mona-Sans-Regular.woff");
+}
+
+@media(max-width:840px) {
+  .big-screens {
+    display:none;
+  }
+}
+
+@media(min-width:841px) {
+  .small-screens {
+    display:none;
+  }
+}
+
+@media(max-width:570px) {
+  .btn-signup {
+    display:none;
+  }
+}
+
+@media(max-width:420px) {
+  .search-bar-max {
+    display:none;
+  }
+}
+
+@media(min-width:421px) {
+  .search-bar-min {
+    display:none;
+  }
+}
+
+body {
+    background-color: #F8F7F4;
+    font-family: "Mona-Sans-Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin: 0px;
+    padding-top: 70px;
+    height: 5000px;
+}
+
+.nav-link {
+    color: #0b0a0a;
+}
+
+.header {
+    backdrop-filter: blur(10px);
+}

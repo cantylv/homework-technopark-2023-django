@@ -1,0 +1,86 @@
+/*Copyright © 2023 tussan_pussan ivanlobanov515@gmail.com*/
+
+/*CSS стили, небхожимые для работы заголовка*/
+@media (max-width: 570px) {
+    .btn-signup {
+        display: none;
+    }
+}
+
+@media (max-width: 420px) {
+    .search-bar-max {
+        display: none;
+    }
+}
+
+@media (min-width: 421px) {
+    .search-bar-min {
+        display: none;
+    }
+}
+
+@media (max-width: 1000px) {
+    .popular_tags {
+        display: none;
+    }
+
+    .questions {
+        flex: 0 0 auto;
+        width: 100%;
+    }
+}
+
+/*lds - likes, dislikes, comments*/
+
+@media (max-width: 767px) {
+    .big-screens-ldc {
+        display: none;
+    }
+}
+
+@media (min-width: 767px) {
+    .small-screens-ldc {
+        display: none;
+    }
+}
+
+.nav-link {
+    color: #0b0a0a;
+}
+
+/*$$$$$$$$$$$$$$$$*/
+
+.bg-color-card-info {
+    background-color: #ecf5fd;
+}
+
+.q-card-info {
+    border: 0.5px solid #0d6efd;
+}
+
+.card input {
+    font-size: 0.9rem;
+}
+
+.img-set {
+    width: 250px;
+    border-radius: 30px;
+}
+
+.user-block {
+    float: left;
+}
+
+.post-tags a {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    background-color: #95cbff;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.warning-card-body {
+    background-color: rgba(255, 17, 48, 0.15);
+}

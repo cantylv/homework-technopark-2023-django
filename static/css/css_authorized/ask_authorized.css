@@ -1,0 +1,74 @@
+/*Copyright © 2023 tussan_pussan ivanlobanov515@gmail.com*/
+
+
+/*CSS стили, небхожимые для работы заголовка*/
+@media (min-width: 841px) {
+    body {
+        padding-top: 100px;
+    }
+}
+
+@media (max-width: 1000px) {
+    .search-bar-max {
+        display: none;
+    }
+}
+
+@media (min-width: 1001px) {
+    .search-bar-min {
+        display: none;
+    }
+}
+
+@media (max-width: 840px) {
+    body {
+        padding-top: 70px;
+    }
+}
+
+@media (max-width: 1000px) {
+    .popular_tags {
+        display: none;
+    }
+
+    .questions {
+        flex: 0 0 auto;
+        width: 100%;
+    }
+}
+
+/*lds - likes, dislikes, comments*/
+
+@media (max-width: 767px) {
+    .big-screens-ldc {
+        display: none;
+    }
+}
+
+@media (min-width: 767px) {
+    .small-screens-ldc {
+        display: none;
+    }
+}
+
+.nav-link {
+    color: #0b0a0a;
+}
+
+/*Шапка профиля авторизованного пользователя*/
+
+.user-block-header img {
+    border-radius: 5px;
+    width: 40px;
+}
+
+
+/*Шапка пользователя в бургер меню*/
+.user-block-burger img{
+    border-radius: 5px;
+    width: 80px;
+}
+
+.warning-card-body {
+    background-color: rgba(255, 17, 48, 0.15);
+}

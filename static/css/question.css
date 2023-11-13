@@ -1,0 +1,33 @@
+/*Цвет - Синия Элис*/
+
+.bg-color-card-info {
+    background-color: #ecf5fd;
+}
+
+.q-card-info {
+    border: 0.5px solid #0d6efd;
+}
+
+.card input {
+    font-size: 0.9rem;
+}
+
+.img-set {
+    width: 250px;
+    border-radius: 30px;
+}
+
+.user-block {
+    float: left;
+}
+
+.post-tags a {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    background-color: #95cbff;
+    border-radius: 5px;
+    text-decoration: none;
+}
+

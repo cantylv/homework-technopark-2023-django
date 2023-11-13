@@ -2,7 +2,7 @@
 
 @font-face {
     font-family: "Mona-Sans-Regular";
-    src: url("../otf/Mona-Sans-Regular.woff");
+    src: url("../otf/Mona-Sans-Regular.woff") format('woff');
 }
 
 @media (max-width: 840px) {
@@ -88,7 +88,7 @@ body {
     /*Дымный*/
     background-color: #F8F7F4;
     font-family: "Mona-Sans-Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    margin: 0px;
+    margin: 0;
     padding-top: 70px;
 }
 
@@ -102,6 +102,8 @@ body {
 
 .header {
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    /*Safari*/
 }
 
 .main_first_header {
@@ -178,7 +180,18 @@ body {
     border-radius: 20px;
 }
 
+/*Пагинатор*/
+
+.paginator {
+    margin-left: 20px;
+}
 
 
+/*Шапка профиля авторизованного пользователя*/
+
+.user-block-header img {
+    border-radius: 5px;
+    width: 40px;
+}
 
 

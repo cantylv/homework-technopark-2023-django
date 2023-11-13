@@ -63,7 +63,7 @@
 
 
 /*Шапка пользователя в бургер меню*/
-.user-block-burger img{
+.user-block-burger img {
     border-radius: 5px;
     width: 80px;
 }
@@ -107,3 +107,7 @@
     background-color: rgba(255, 17, 48, 0.15);
 }
 
+.right-answer-check {
+    background-color: #95cbff;
+    border-radius: 5px;
+}

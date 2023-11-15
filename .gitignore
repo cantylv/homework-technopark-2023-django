@@ -1,5 +1,5 @@
 .gitignore
-.sqlite3
+*.sqlite3
 .idea/
 .DS_Store
 app/static/.DS_Store

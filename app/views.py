@@ -28,3 +28,11 @@ def authorization(req):
 
 def registration(req):
     return render(req, 'app/public/registration.html')
+
+
+def ask(req):
+    return render(req, 'app/public/ask.html', {
+        'data': {
+            'user_token': 'XXX'
+        }
+    })

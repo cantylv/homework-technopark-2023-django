@@ -46,7 +46,8 @@
 
 </header>
 
-<main>
+<!--Содержимое страницы-->
+<main class="container-fluid px-0">
 
     <!--Содержимое бургер-меню-->
     <div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop"
@@ -74,9 +75,13 @@
 
     {% block best_users %} {% endblock %}
 
-    {% block content %} {% endblock %}
+    {% block button_filter %} {% endblock %}
 
-    {% block popular_tags %} {% endblock %}
+    <div class="container-fluid container-lg d-flex flex-nowrap">
+        {% block content %} {% endblock %}
+
+        {% block popular_tags %} {% endblock %}
+    </div>
 
     {% block paginator %} {% endblock %}
 

@@ -10,5 +10,5 @@ urlpatterns = [
     path('profile/', views.profile),  # user profile
     path('login/', views.authorization),  # login
     path('signup/', views.registration),  # registration
-    path('ask/', views.registration),  # ask question
+    path('ask/', views.ask),  # ask question
 ]

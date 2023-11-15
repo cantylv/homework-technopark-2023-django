@@ -56,6 +56,7 @@
     {% endif %}
 {% endblock %}
 
+
 {% block burger_menu_no_collapse %} <!--Бургер меню в раскрытом виде для авторизованного пользователя-->
     {% if data.user_token == 'XXX' %}
         <div class="user-block-burger mb-2">
@@ -84,7 +85,6 @@
 {% endblock %}
 
 
-
 <!--Это контент страницы, который не зависит от статуса пользователя: авторизован/не авторизован-->
 
 {% block page_title %} <!--Центральные надписи на странице-->
@@ -98,9 +98,10 @@
     <h4 class="text-center mb-2 tittle-best-users" style="font-size: 2rem">Best users</h4>
 {% endblock %}
 
+
 {% block best_users %}
     <!--Карусель с лучшими пользователями-->
-    <div class="slider mb-2">
+    <div class="slider mb-4">
         <div class="slider-track">
 
             <!--12 слайдов-->
@@ -188,8 +189,8 @@
     </div>
 {% endblock %}
 
-{% block content %}
-    <!--Кнопка фильтрации-->
+
+{% block button_filter %} <!--Кнопка фильтрации-->
     <div class="d-flex flex-wrap justify-content-center align-items-center mb-3">
         <h1 class="text-center tittle-publications mb-0 me-1" style="font-size: 2rem">Explore existing
             questions</h1>
@@ -200,100 +201,101 @@
             Filter
         </button>
     </div>
+{% endblock %}
 
+
+{% block content %}
     <!--Список вопросов-->
-    <div class="container-fluid d-flex flex-nowrap">
-        <div class="questions col-12 col-md-9 p-2 me-2">
+    <div class="questions col-12 col-md-9 p-2 me-2">
 
-            <!--Меню для выбора тегов и сортировки-->
-            <div class="collapse mb-2" id="filter-menu">
-                <div class="card p-3">
-                    <div class="row border-bottom">
-                        <form class="col">
-                            <h4 class="col-12 fw-bold">Sorted with</h4>
-                            <p><input name="sorting" type="radio" value="newest"> Newest</p>
-                            <p><input name="sorting" type="radio" value="high_score"> Highest Score</p>
-                        </form>
+        <!--Меню для выбора тегов и сортировки-->
+        <div class="collapse mb-2" id="filter-menu">
+            <div class="card p-3">
+                <div class="row border-bottom">
+                    <form class="col">
+                        <h4 class="col-12 fw-bold">Sorted with</h4>
+                        <p><input name="sorting" type="radio" value="newest"> Newest</p>
+                        <p><input name="sorting" type="radio" value="high_score"> Highest Score</p>
+                    </form>
 
-                        <form class="col">
-                            <h4 class="col-12 fw-bold">Tagged with</h4>
-                            <div class="d-flex flex-wrap">
-                                <span class="tag"><input type="radio"> Django</span>
-                                <span class="tag"><input type="radio"> Docker</span>
-                                <span class="tag"><input type="radio"> C++</span>
-                                <span class="tag"><input type="radio"> Centrifugo 3</span>
-                                <span class="tag"><input type="radio"> TP Web</span>
-                                <span class="tag"><input type="radio"> Webpack</span>
-                                <span class="tag"><input type="radio"> Python</span>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="footer_sort_menu d-inline-flex pt-2 justify-content-between">
-                        <button class="btn btn-primary fsm_btn_apply">Apply changes</button>
-                        <button class="btn btn-primary fsm_btn_cancel">Cancel</button>
-                    </div>
+                    <form class="col">
+                        <h4 class="col-12 fw-bold">Tagged with</h4>
+                        <div class="d-flex flex-wrap">
+                            <span class="tag"><input type="radio"> Django</span>
+                            <span class="tag"><input type="radio"> Docker</span>
+                            <span class="tag"><input type="radio"> C++</span>
+                            <span class="tag"><input type="radio"> Centrifugo 3</span>
+                            <span class="tag"><input type="radio"> TP Web</span>
+                            <span class="tag"><input type="radio"> Webpack</span>
+                            <span class="tag"><input type="radio"> Python</span>
+                        </div>
+                    </form>
+                </div>
+                <div class="footer_sort_menu d-inline-flex pt-2 justify-content-between">
+                    <button class="btn btn-primary fsm_btn_apply">Apply changes</button>
+                    <button class="btn btn-primary fsm_btn_cancel">Cancel</button>
                 </div>
             </div>
+        </div>
 
-            <!--Карточка с вопросами-->
-            <!--Часть карточки, которая содержит лайки, дизлайки, а также футер-->
-            <div class="card mb-3">
-                <div class="row g-0">
-                    <!--Статистика карточки: лайки, дислайки и комментарии-->
-                    <div class="col-md-2">
-                        <div class="post_statistic text-end mt-3 big-screens-ldc">
-                            <div class="likes col-12">
-                                <div class="d-inline-flex">5</div>
-                                <img src="{% static 'svg/like.svg' %}" alt="like">
-                            </div>
-                            <div class="dislikes col-12 mt-2">0
-                                <img src="{% static 'svg/dislike.svg' %}" alt="dislike">
-                            </div>
-                            <div class="comments col-12 mt-2">10
-                                <img src="{% static 'svg/comment.svg' %}" alt="comm">
-                            </div>
+        <!--Карточка с вопросами-->
+        <!--Часть карточки, которая содержит лайки, дизлайки, а также футер-->
+        <div class="card mb-3">
+            <div class="row g-0">
+                <!--Статистика карточки: лайки, дислайки и комментарии-->
+                <div class="col-md-2">
+                    <div class="post_statistic text-end mt-3 big-screens-ldc">
+                        <div class="likes col-12">
+                            <div class="d-inline-flex">5</div>
+                            <img src="{% static 'svg/like.svg' %}" alt="like">
+                        </div>
+                        <div class="dislikes col-12 mt-2">0
+                            <img src="{% static 'svg/dislike.svg' %}" alt="dislike">
+                        </div>
+                        <div class="comments col-12 mt-2">10
+                            <img src="{% static 'svg/comment.svg' %}" alt="comm">
                         </div>
                     </div>
+                </div>
 
-                    <!--Тело карточки-->
-                    <div class="col-md-10">
-                        <div class="card-body">
-                            <a href="#" class="text-decoration-none"><h5 class="card-title">How to create HTML page
-                                in IDE?</h5></a>
-                            <p class="card-text">Today we will talk about creating pages in IDE. It's tutorial for
-                                beginners. This is a wider card with supporting text below as a natural lead-in to
-                                additional content. </p>
-                            <div class="col-12 px-3 mb-1 d-flex flex-wrap justify-content-end align-items-baseline">
-                                <a href="/user" class="px-1 text-decoration-none">
-                                    <img src="{% static 'img/users/user1_avaa.jpg' %}" alt="User's photo"
-                                         class="ava_user mb-1">
-                                    <span class="username px-1 ">tussan_pussan</span>
-                                </a>
+                <!--Тело карточки-->
+                <div class="col-md-10">
+                    <div class="card-body">
+                        <a href="#" class="text-decoration-none"><h5 class="card-title">How to create HTML page
+                            in IDE?</h5></a>
+                        <p class="card-text">Today we will talk about creating pages in IDE. It's tutorial for
+                            beginners. This is a wider card with supporting text below as a natural lead-in to
+                            additional content. </p>
+                        <div class="col-12 px-3 mb-1 d-flex flex-wrap justify-content-end align-items-baseline">
+                            <a href="/user" class="px-1 text-decoration-none">
+                                <img src="{% static 'img/users/user1_avaa.jpg' %}" alt="User's photo"
+                                     class="ava_user mb-1">
+                                <span class="username px-1 ">tussan_pussan</span>
+                            </a>
 
-                                <span class="time_last_update px-1"><small
-                                        class="text-body-secondary">Last updated 3 mins ago</small></span>
-                            </div>
+                            <span class="time_last_update px-1"><small
+                                    class="text-body-secondary">Last updated 3 mins ago</small></span>
+                        </div>
 
-                            <div class="tag-listing text-end me-3">
-                                <a href="#">IDE</a>
-                                <a href="#">Python</a>
-                                <a href="#">Proton</a>
-                            </div>
+                        <div class="tag-listing text-end me-3">
+                            <a href="#">IDE</a>
+                            <a href="#">Python</a>
+                            <a href="#">Proton</a>
+                        </div>
 
 
-                            <!--Блок с лайками, комментариями и дислайками, который будет отображаться на маленьких экранах-->
-                            <div class="post_statistic text-end mt-3 сol-12 small-screens-ldc">
-                                <!--Block with likes and dislikes-->
-                                <span class="likes me-4">5
-                                    <img src="{% static 'svg/like.svg' %}" alt="like">
-                                    </span>
-                                <span class="dislikes me-4">0
-                                        <img src="{% static 'svg/dislike.svg' %}" alt="dislike">
-                                    </span>
-                                <span class="comments me-4">10
-                                        <img src="{% static 'svg/comment.svg' %}" alt="comm">
-                                    </span>
-                            </div>
+                        <!--Блок с лайками, комментариями и дислайками, который будет отображаться на маленьких экранах-->
+                        <div class="post_statistic text-end mt-3 сol-12 small-screens-ldc">
+                            <!--Block with likes and dislikes-->
+                            <span class="likes me-4">5
+                                <img src="{% static 'svg/like.svg' %}" alt="like">
+                            </span>
+                            <span class="dislikes me-4">0
+                                <img src="{% static 'svg/dislike.svg' %}" alt="dislike">
+                            </span>
+                            <span class="comments me-4">10
+                                <img src="{% static 'svg/comment.svg' %}" alt="comm">
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -302,24 +304,24 @@
     </div>
 
 {% endblock %}
+
 
 {% block popular_tags %}
     <!--Популярные теги справа на странице-->
-    <div class="container-fluid d-flex flex-nowrap">
-        <div class="popular_tags col-3 p-2">
-            <h3 class="text-center">Popular tags</h3>
-            <div class="tags container d-flex flex-wrap justify-content-center align-content-center">
-                <div class="tag"><a href="#" class="tag-ref text-decoration-none">Django</a></div>
-                <div class="tag"><a href="#" class="tag-ref text-decoration-none">Python</a></div>
-                <div class="tag"><a href="#" class="tag-ref text-decoration-none">Docker</a></div>
-                <div class="tag"><a href="#" class="tag-ref text-decoration-none">C++</a></div>
-                <div class="tag"><a href="#" class="tag-ref text-decoration-none">Centrifugo 3</a></div>
-                <div class="tag"><a href="#" class="tag-ref text-decoration-none">TP Web</a></div>
-                <div class="tag"><a href="#" class="tag-ref text-decoration-none">Webpack</a></div>
-            </div>
+    <div class="popular_tags col-3 p-2">
+        <h3 class="text-center">Popular tags</h3>
+        <div class="tags container d-flex flex-wrap justify-content-center align-content-center">
+            <div class="tag"><a href="#" class="tag-ref text-decoration-none">Django</a></div>
+            <div class="tag"><a href="#" class="tag-ref text-decoration-none">Python</a></div>
+            <div class="tag"><a href="#" class="tag-ref text-decoration-none">Docker</a></div>
+            <div class="tag"><a href="#" class="tag-ref text-decoration-none">C++</a></div>
+            <div class="tag"><a href="#" class="tag-ref text-decoration-none">Centrifugo 3</a></div>
+            <div class="tag"><a href="#" class="tag-ref text-decoration-none">TP Web</a></div>
+            <div class="tag"><a href="#" class="tag-ref text-decoration-none">Webpack</a></div>
         </div>
     </div>
 {% endblock %}
+
 
 {% block paginator %}
     <!--Пагинатор (выбор определеннйо страницы запроса)-->

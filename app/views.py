@@ -3,8 +3,11 @@ from django.http import HttpResponse
 
 
 def listing(req):
-    questions = []
-    return render(req, 'app/public/user_unauthorized/listing_unauthorized.html')
+    return render(req, 'app/public/listing.html', {
+        'data': {
+            'user_token': 'XXX'
+        }
+    })
 
 
 def question(req):

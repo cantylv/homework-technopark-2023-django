@@ -1,3 +1,4 @@
+<!--Copyright © 2023 tussan_pussan ivanlobanov515@gmail.com-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,21 +8,14 @@
     {% load static %}
     <link href="{% static 'bootstrap5.3.2/css/bootstrap.css' %}" type="text/css" rel="stylesheet">
     <link href="{% static 'css/base.css' %}" type="text/css" rel="stylesheet">
-    <link href="{% static 'css/css_authorized/listing_authorized.css' %}" type="text/css" rel="stylesheet">
+    {% block link_css %} {% endblock %}
 </head>
 <body>
 
 <!--Хедер-->
 <header class="container-fluid fixed-top header d-flex flex-wrap align-items-center justify-content-between py-2">
 
-    <div class="pt-2 big-screens">
-        <ul class="nav">
-            <li><a href="#" class="nav-link px-2">Home</a></li>
-            <li><a href="#" class="nav-link px-2">Ask</a></li>
-            <li><a href="#" class="nav-link px-2">Profile</a></li>
-            <li><a href="#" class="nav-link px-2">About</a></li>
-        </ul>
-    </div>
+    {% block user_menu %} {% endblock %}
 
     <div class="col-auto col-sm-2 d-flex justify-content-center ms-md-5 ps-md-5">
         <a href="/web-app/publicp/public" class="d-inline-flex link-body-emphasis text-decoration-none">
@@ -42,62 +36,52 @@
                    aria-label="Search">
         </form>
 
-        <div class="user-block-header pe-2 pt-2 d-flex flex-wrap justify-content-center align-items-center">
-            <img src="../../../../app/static/img/users/user1_avaa.jpg" alt="" class="col-12 big-screens">
-            <a class="col-12 text-center text-decoration-none big-screens" href="#">tussan_pussan</a>
-        </div>
-        <button type="button" class="btn btn-primary ms-md-0 ms-1 big-screens">Sign-out</button>
+        {% block user_block %} {% endblock %}
     </div>
 
     <a href="#" class="text-decoration-none small-screens" data-bs-toggle="offcanvas"
        data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
-        <img src="../../../../app/static/img/bars-solid.png">
+        <img src="{% static 'img/bars-solid.png' %}" alt="bars">
     </a>
 
 </header>
+
 <main>
 
+    <!--Содержимое бургер-меню-->
+    <div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop"
+         aria-labelledby="staticBackdropLabel">
+        <div class="offcanvas-header border-bottom">
+            <h5 class="offcanvas-title" id="staticBackdropLabel" style="font-size: 1.5rem">Gain Skills</h5>
+            <div>
+                {% block nickname_burger_menu %} {% endblock %}
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+        </div>
+        <div class="offcanvas-body">
+            <div>
+                {% block burger_menu_no_collapse %} {% endblock %}
+            </div>
+        </div>
+    </div>
+
+    <!--Search bar, который будет рендериться, когда экран станет маленьким-->
+    <form class="mb-2 mx-3 search-bar-min" role="search">
+        <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+    </form>
+
+    {% block page_title %} {% endblock %}
+
+    {% block best_users %} {% endblock %}
+
+    {% block content %} {% endblock %}
+
+    {% block popular_tags %} {% endblock %}
+
+    {% block paginator %} {% endblock %}
 
 </main>
 
-<!--Содержимое бургер-меню-->
-
-<!--Содержимое бургер-меню-->
-
-<div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop"
-     aria-labelledby="staticBackdropLabel">
-    <div class="offcanvas-header border-bottom">
-        <h5 class="offcanvas-title" id="staticBackdropLabel" style="font-size: 1.5rem">Gain Skills</h5>
-        <div>
-            <a class="col-12 text-center text-decoration-none me-2" href="#"
-               style="font-size: 1.2rem">tussan_pussan</a>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-    </div>
-    <div class="offcanvas-body">
-        <div>
-            <div class="user-block-burger mb-2">
-                <img src="../../../../app/static/img/users/user1_avaa.jpg" alt="user_ava" class="">
-            </div>
-            <div>
-                <div class="mb-1"><a href="#" class="nav-link nav-link-bm">Home</a></div>
-                <div class="mb-1"><a href="#" class="nav-link nav-link-bm">Ask</a></div>
-                <div class="mb-1"><a href="#" class="nav-link nav-link-bm">Profile</a></div>
-                <div class="mb-1"><a href="#" class="nav-link nav-link-bm">About</a></div>
-            </div>
-            <div class="d-flex justify-content-end">
-                <button type="button" class="btn btn-primary ms-1">Sign-out</button>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<!--Search bar, который будет рендериться, когда экран станет маленьким-->
-<form class="mb-2 mx-3 search-bar-min" role="search">
-    <input type="search" class="form-control" placeholder="Search..."
-           aria-label="Search">
-</form>
 
 <!--Футер-->
 <div class="container-fluid">
@@ -108,18 +92,18 @@
 
         <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
             <li class="ms-3"><a class="text-muted" href="https://t.me/cantylv">
-                <img src="../../../../app/static/svg/icon_tg.svg" alt="tg">
+                <img src="{% static 'svg/icon_tg.svg' %}" alt="tg">
             </a></li>
             <li class="ms-3"><a class="text-muted" href="https://vk.com/tussan_pussan">
-                <img src="../../../../app/static/svg/icon_vk.svg" alt="vk">
+                <img src="{% static 'svg/icon_vk.svg' %}" alt="vk">
             </a></li>
             <li class="ms-3"><a class="text-muted" href="https://github.com/cantylv">
-                <img src="../../../../app/static/svg/icon_github.svg" alt="github">
+                <img src="{% static 'svg/icon_github.svg' %}" alt="github">
             </a></li>
         </ul>
     </footer>
 </div>
 
-<script src="../../../../app/static/bootstrap5.3.2/js/bootstrap.js"></script>
+<script src="{% static 'bootstrap5.3.2/js/bootstrap.js' %}"></script>
 </body>
 </html>

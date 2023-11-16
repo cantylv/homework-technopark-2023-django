@@ -53,7 +53,7 @@ body {
 /*Профиль*/
 
 .profile-header {
-    background-image: url("../../img/bg_profile.jpg");
+    background-image: url("../img/bg_profile.jpg");
     width: 100vw;
     height: 320px;
     background-size: cover;

@@ -85,6 +85,7 @@
 {% endblock %}
 
 
+
 <!--Это контент страницы, который не зависит от статуса пользователя: авторизован/не авторизован-->
 
 {% block page_title %} <!--Центральные надписи на странице-->
@@ -192,8 +193,7 @@
 
 {% block button_filter %} <!--Кнопка фильтрации-->
     <div class="d-flex flex-wrap justify-content-center align-items-center mb-3">
-        <h1 class="text-center tittle-publications mb-0 me-3" style="font-size: 2rem">Explore existing
-            questions</h1>
+        <h1 class="text-center tittle-publications mb-0 me-3" style="font-size: 2rem">Explore existing questions</h1>
 
         <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#filter-menu"
                 aria-expanded="false" aria-controls="filter-menu">
@@ -205,11 +205,18 @@
 
 
 {% block content %}
-    <!--Список вопросов-->
-    <div class="questions col-12 col-lg-9 d-flex flex-column">
+
+    <div class="questions col-12 col-md-8 p-2 me-2 d-flex flex-column">
+
+        <!--Explore existing questions + Кнопка фильтрации-->
+        <div class="d-flex justify-content-start align-items-center mb-4">
+            <h1 class="text-center tittle-publications mb-0 me-1 tag-listing" style="font-size: 2rem">Tag:
+                <a href="{% url 'tag_url' %}">Python</a>
+            </h1>
+        </div>
 
         <!--Меню для выбора тегов и сортировки-->
-        <div class="collapse mb-2" id="filter-menu">
+        <div class="collapse mb-3" id="filter-menu">
             <div class="card p-3">
                 <div class="row border-bottom">
                     <form class="col">
@@ -232,19 +239,20 @@
                     </form>
                 </div>
                 <div class="footer_sort_menu d-inline-flex pt-2 justify-content-between">
-                    <button class="btn btn-primary fsm_btn_apply">Apply changes</button>  <!--FooterSortMenu - fsm-->
+                    <button class="btn btn-primary fsm_btn_apply">Apply changes</button> <!--FooterSortMenu - fsm-->
                     <button class="btn btn-primary fsm_btn_cancel">Cancel</button>
                 </div>
             </div>
         </div>
 
-        <!--Карточка с вопросами-->
+
+        <!--Карточки с вопросами-->
         <!--Часть карточки, которая содержит лайки, дизлайки, а также футер-->
         <div class="card mb-3">
             <div class="row g-0">
-                <!--Статистика карточки: лайки, дислайки и комментарии-->
                 <div class="col-md-2">
                     <div class="post_statistic text-end mt-3 big-screens-ldc">
+                        <!--Block with likes and dislikes-->
                         <div class="likes col-12">
                             <div class="d-inline-flex">5</div>
                             <img src="{% static 'svg/like.svg' %}" alt="like">
@@ -258,12 +266,13 @@
                     </div>
                 </div>
 
+
                 <!--Тело карточки-->
                 <div class="col-md-10">
                     <div class="card-body">
                         <a href="{% url 'question_url' %}" class="text-decoration-none"><h5 class="card-title">How to
-                            create HTML page
-                            in IDE?</h5></a>
+                            create HTML page in
+                            IDE?</h5></a>
                         <p class="card-text">Today we will talk about creating pages in IDE. It's tutorial for
                             beginners. This is a wider card with supporting text below as a natural lead-in to
                             additional content. </p>
@@ -279,9 +288,9 @@
                         </div>
 
                         <div class="tag-listing text-end me-3">
-                            <a href="{% url 'tag_url' %}">IDE</a>
-                            <a href="{% url 'tag_url' %}">Python</a>
-                            <a href="{% url 'tag_url' %}">Proton</a>
+                            <a href="{% url 'question_url' %}">IDE</a>
+                            <a href="{% url 'question_url' %}">Python</a>
+                            <a href="{% url 'question_url' %}">Proton</a>
                         </div>
 
 
@@ -289,14 +298,14 @@
                         <div class="post_statistic text-end mt-3 сol-12 small-screens-ldc">
                             <!--Block with likes and dislikes-->
                             <span class="likes me-4">5
-                                <img src="{% static 'svg/like.svg' %}" alt="like">
-                            </span>
+                                    <img src="{% static 'svg/like.svg' %}" alt="like">
+                                </span>
                             <span class="dislikes me-4">0
                                 <img src="{% static 'svg/dislike.svg' %}" alt="dislike">
-                            </span>
+                                </span>
                             <span class="comments me-4">10
-                                <img src="{% static 'svg/comment.svg' %}" alt="comm">
-                            </span>
+                                    <img src="{% static 'svg/comment.svg' %}" alt="comm">
+                                </span> <!--надо будет заменить на кнопки-->
                         </div>
                     </div>
                 </div>
@@ -309,7 +318,7 @@
 
 {% block popular_tags %}
     <!--Популярные теги справа на странице-->
-    <div class="popular_tags col-3 p-2">
+    <div class="popular_tags col-md-3 p-2 ms-5">
         <h3 class="text-center">Popular tags</h3>
         <div class="tags container d-flex flex-wrap justify-content-center align-content-center">
             <div class="tag"><a href="{% url 'tag_url' %}" class="tag-ref text-decoration-none">Django</a></div>
@@ -322,7 +331,6 @@
         </div>
     </div>
 {% endblock %}
-
 
 {% block paginator %}
     <!--Пагинатор (выбор определеннйо страницы запроса)-->

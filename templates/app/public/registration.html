@@ -13,29 +13,29 @@
 {% block user_menu %} <!--Навигационное меню в шапке страницы-->
     <div class="pt-2 big-screens">
         <ul class="nav">
-            <li><a href="#" class="nav-link px-2">Home</a></li>
-            <li><a href="#" class="nav-link px-2">Ask</a></li>
-            <li><a href="#" class="nav-link px-2">About</a></li>
+            <li><a href="{% url 'home' %}" class="nav-link px-2">Home</a></li>
+            <li><a href="{% url 'ask' %}" class="nav-link px-2">Ask</a></li>
+            <li><a href="{% url 'about' %}" class="nav-link px-2">About</a></li>
         </ul>
     </div>
 {% endblock %}
 
 
 {% block user_block %} <!--Блок с пользователем, содержащий маленькую аватарку, никнейм и кнопку выхода-->
-    <button type="button" class="btn btn-outline-primary me-2 big-screens">Login</button>
-    <button type="button" class="btn btn-primary ms-md-0 ms-1 btn-signup">Sign-up</button>
+    <button type="button" class="btn btn-outline-primary btn-signin me-2 big-screens">Login</button> <!--need js-->
+    <button type="button" class="btn btn-primary btn-signup ms-md-0 ms-1 ">Sign-up</button>
 {% endblock %}
 
 
 {% block burger_menu_no_collapse %} <!--Бургер меню в раскрытом виде для авторизованного пользователя-->
     <div>
-        <div class="mb-1"><a href="#" class="nav-link nav-link-bm">Home</a></div>
-        <div class="mb-1"><a href="#" class="nav-link nav-link-bm">Ask</a></div>
-        <div class="mb-1"><a href="#" class="nav-link nav-link-bm">About</a></div>
+        <div class="mb-1"><a href="{% url 'home' %}" class="nav-link nav-link-bm">Home</a></div>
+        <div class="mb-1"><a href="{% url 'ask' %}" class="nav-link nav-link-bm">Ask</a></div>
+        <div class="mb-1"><a href="{% url 'about' %}" class="nav-link nav-link-bm">About</a></div>
     </div>
     <div class="d-flex justify-content-end">
-        <button type="button" class="btn btn-outline-primary me-2">Login</button>
-        <button type="button" class="btn btn-primary ms-1">Sign-up</button>
+        <button type="button" class="btn btn-outline-primary btn-signin me-2">Login</button>
+        <button type="button" class="btn btn-primary btn-signup ms-1">Sign-up</button>
     </div>
 {% endblock %}
 
@@ -127,7 +127,7 @@
             Password mismatch!
         </div>
 
-        <button type="submit" class="btn btn-primary">Sign-up</button>
+        <button type="submit" class="btn btn-primary btn-signup-finish">Finish</button>
 
     </div>
 {% endblock %}

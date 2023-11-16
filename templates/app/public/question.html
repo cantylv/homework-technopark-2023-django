@@ -1,0 +1,322 @@
+<!--Copyright © 2023 tussan_pussan ivanlobanov515@gmail.com-->
+
+{% extends 'app/public/base.html' %}
+
+{% load static %}
+
+
+{% block link_css %} <!--Файл стилей для страницы с авторизованным пользователем-->
+    {% if data.user_token == 'XXX' %}
+        <link href="{% static 'css/css_authorized/question_authorized.css' %}" type="text/css" rel="stylesheet">
+    {% else %}
+        <link href="{% static 'css/css_unauthorized/question_unauthorized.css' %}" type="text/css" rel="stylesheet">
+    {% endif %}
+{% endblock %}
+
+
+{% block user_menu %} <!--Навигационное меню в шапке страницы-->
+    {% if data.user_token == 'XXX' %}
+        <div class="pt-2 big-screens">
+            <ul class="nav">
+                <li><a href="{% url 'home' %}" class="nav-link px-2">Home</a></li>
+                <li><a href="{% url 'ask' %}" class="nav-link px-2">Ask</a></li>
+                <li><a href="{% url 'profile' %}" class="nav-link px-2">Profile</a></li>
+                <li><a href="{% url 'about' %}" class="nav-link px-2">About</a></li>
+            </ul>
+        </div>
+    {% else %}
+        <div class="pt-2 big-screens">
+            <ul class="nav">
+                <li><a href="{% url 'home' %}" class="nav-link px-2">Home</a></li>
+                <li><a href="{% url 'ask' %}" class="nav-link px-2">Ask</a></li>
+                <li><a href="{% url 'about' %}" class="nav-link px-2">About</a></li>
+            </ul>
+        </div>
+    {% endif %}
+{% endblock %}
+
+
+{% block user_block %} <!--Блок с пользователем, содержащий маленькую аватарку, никнейм и кнопку выхода-->
+    {% if data.user_token == 'XXX' %}
+        <div class="user-block-header pe-2 pt-2 d-flex flex-wrap justify-content-center align-items-center">
+            <img src="{% static 'img/users/user1_avaa.jpg' %}" alt="user_ava" class="col-12 big-screens">
+            <a class="col-12 text-center text-decoration-none big-screens" href="{% url 'profile' %}">tussan_pussan</a>
+        </div>
+        <button type="button" class="btn btn-primary btn-sign-out ms-md-0 ms-1 big-screens">Sign-out</button>
+    {% else %}
+        <button type="button" class="btn btn-outline-primary btn-signin me-2 big-screens">Login</button> <!--need js-->
+        <button type="button" class="btn btn-primary btn-signup ms-md-0 ms-1 ">Sign-up</button>
+    {% endif %}
+{% endblock %}
+
+
+{% block nickname_burger_menu %} <!--Никнейм пользователя в раскрытом бургер меню-->
+    {% if data.user_token == 'XXX' %}
+        <a class="col-12 text-center text-decoration-none me-2" href="{% url 'profile' %}" style="font-size: 1.2rem">tussan_pussan</a>
+    {% endif %}
+{% endblock %}
+
+
+{% block burger_menu_no_collapse %} <!--Бургер меню в раскрытом виде для авторизованного пользователя-->
+    {% if data.user_token == 'XXX' %}
+        <div class="user-block-burger mb-2">
+            <img src="{% static 'img/users/user1_avaa.jpg' %}" alt="user_ava" class="">
+        </div>
+        <div>
+            <div class="mb-1"><a href="{% url 'home' %}" class="nav-link nav-link-bm">Home</a></div>
+            <div class="mb-1"><a href="{% url 'ask' %}" class="nav-link nav-link-bm">Ask</a></div>
+            <div class="mb-1"><a href="{% url 'profile' %}" class="nav-link nav-link-bm">Profile</a></div>
+            <div class="mb-1"><a href="{% url 'about' %}" class="nav-link nav-link-bm">About</a></div>
+        </div>
+        <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-primary btn-sign-out ms-1">Sign-out</button>
+        </div>
+    {% else %}
+        <div>
+            <div class="mb-1"><a href="{% url 'home' %}" class="nav-link nav-link-bm">Home</a></div>
+            <div class="mb-1"><a href="{% url 'ask' %}" class="nav-link nav-link-bm">Ask</a></div>
+            <div class="mb-1"><a href="{% url 'about' %}" class="nav-link nav-link-bm">About</a></div>
+        </div>
+        <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-outline-primary btn-signin me-2">Login</button>
+            <button type="button" class="btn btn-primary btn-signup ms-1">Sign-up</button>
+        </div>
+    {% endif %}
+{% endblock %}
+
+
+
+<!--Это контент страницы, который не зависит от статуса пользователя: авторизован/не авторизован-->
+
+{% block page_title %}
+    <h4 class="text-center mb-2 tittle-best-users" style="font-size: 2rem">Best users</h4>
+{% endblock %}
+
+{% block best_users %}
+    <!--Карусель с лучшими пользователями-->
+    <div class="slider mb-4">
+        <div class="slider-track">
+
+            <!--12 слайдов-->
+            <div class="slide">
+                <img src="{% static 'img/users/user1_avaa.jpg' %}" alt="user2">
+            </div>
+
+            <div class="slide">
+                <img src="{% static 'img/users/user2_ava.jpg' %}" alt="user2">
+            </div>
+
+            <div class="slide">
+                <img src="{% static 'img/users/user3_ava.jpg' %}" alt="user2">
+            </div>
+
+            <div class="slide">
+                <img src="{% static 'img/users/user4_ava.jpg' %}" alt="user2">
+            </div>
+
+            <div class="slide">
+                <img src="{% static 'img/users/user5_ava.jpg' %}" alt="user2">
+            </div>
+
+            <div class="slide">
+                <img src="{% static 'img/users/user6_ava.jpg' %}" alt="user2">
+            </div>
+
+            <div class="slide">
+                <img src="{% static 'img/users/user7_ava.jpg' %}" alt="user2">
+            </div>
+
+            <div class="slide">
+                <img src="{% static 'img/users/user8_ava.jpg' %}" alt="user2">
+            </div>
+
+            <div class="slide">
+                <img src="{% static 'img/users/user9_ava.jpg' %}" alt="user2">
+            </div>
+
+            <div class="slide">
+                <img src="{% static 'img/users/user10_ava.jpg' %}" alt="user2">
+            </div>
+
+            <!--эти же 12 слайдов (продублированные для полноценной прокрутки)-->
+            <div class="slide">
+                <img src="{% static 'img/users/user1_avaa.jpg' %}" alt="user2">
+            </div>
+
+            <div class="slide">
+                <img src="{% static 'img/users/user2_ava.jpg' %}" alt="user2">
+            </div>
+
+            <div class="slide">
+                <img src="{% static 'img/users/user3_ava.jpg' %}" alt="user2">
+            </div>
+
+            <div class="slide">
+                <img src="{% static 'img/users/user4_ava.jpg' %}" alt="user2">
+            </div>
+
+            <div class="slide">
+                <img src="{% static 'img/users/user5_ava.jpg' %}" alt="user2">
+            </div>
+
+            <div class="slide">
+                <img src="{% static 'img/users/user6_ava.jpg' %}" alt="user2">
+            </div>
+
+            <div class="slide">
+                <img src="{% static 'img/users/user7_ava.jpg' %}" alt="user2">
+            </div>
+
+            <div class="slide">
+                <img src="{% static 'img/users/user8_ava.jpg' %}" alt="user2">
+            </div>
+
+            <div class="slide">
+                <img src="{% static 'img/users/user9_ava.jpg' %}" alt="user2">
+            </div>
+
+            <div class="slide">
+                <img src="{% static 'img/users/user10_ava.jpg' %}" alt="user2">
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block question %}
+    <div class="container mb-5">
+        <!--Развернутый ответ-->
+        <div class="head_question border-bottom">
+            <h3>How to create HTML page in IDE? </h3>
+            <span class="text-body-secondary">Last updated 3 mins ago</span>
+        </div>
+
+        <div class="user-block pt-3 pe-5">
+            <img src="{% static 'img/users/user1_avaa.jpg' %}" class="img-set" alt="user_ava">
+
+            <div class="post_statistic d-flex mt-1 big-screens-ldc justify-content-center">
+                <!--Block with likes and dislikes-->
+                <div class="likes mt-2 me-2">5
+                    <img src="{% static 'svg/like.svg' %}" alt="like">
+                </div>
+                <div class="dislikes mt-2 me-2">0
+                    <img src="{% static 'svg/dislike.svg' %}" alt="dislike">
+                </div>
+            </div>
+        </div>
+
+        <p class="body-question mt-2">
+            Today we will talk about creating pages in IDE. It's tutorial for
+            beginners. This is a wider card with supporting text below as a natural lead-in to
+            additional content.Today we will talk about creating pages in IDE. It's tutorial for
+            beginners. This is a wider card with supporting text below as a natural lead-in to
+            additional content.Today we will talk about creating pages in IDE. It's tutorial for
+            beginners. This is a wider card with supporting text below as a natural lead-in to
+            additional content.
+            Today we will talk about creating pages in IDE. It's tutorial for
+            beginners. This is a wider card with supporting text below as a natural lead-in to
+            additional content.Today we will talk about creating pages in IDE. It's tutorial for
+            beginners. This is a wider card with supporting text below as a natural lead-in to
+            additional content.Today we will talk about creating pages in IDE. It's tutorial for
+            beginners. This is a wider card with supporting text below as a natural lead-in to
+            additional content.Today we will talk about creating pages in IDE. It's tutorial for
+            beginners. This is a wider card with supporting text below as a natural lead-in to
+            additional content.Today we will talk about creating pages in IDE. It's tutorial for
+            beginners. This is a wider card with supporting text below as a natural lead-in to
+            additional content.Today we will talk about creating pages in IDE. It's tutorial for
+            beginners. This is a wider card with supporting text below as a natural lead-in to
+            additional content.Today we will talk about creating pages in IDE. It's tutorial for
+            beginners. This is a wider card with supporting text below as a natural lead-in to
+            additional content.Today we will talk about creating pages in IDE. It's tutorial for
+            beginners. This is a wider card with supporting text below as a natural lead-in to
+            additional content.Today we will talk about creating pages in IDE. It's tutorial for
+            beginners. This is a wider card with supporting text below as a natural lead-in to
+            additional content.Today we will talk about creating pages in IDE. It's tutorial for
+            beginners. This is a wider card with supporting text below as a natural lead-in to. What do you think ?
+        </p>
+
+
+        <div class="post-tags">
+            <a href="{% url 'question_url' %}">IDE</a>
+            <a href="{% url 'question_url' %}">Python</a>
+            <a href="{% url 'question_url' %}">Proton</a>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block content %}
+    <div class="container-fluid container-lg answers ms-2">
+        <div class="row">
+            <div class="answers col-12">
+                <div class="sorting_answers d-flex flex-row align-items-center mb-3 justify-content-end">
+                    <span class="me-2">Sorted by:</span>
+                    <select class="form-select" style="max-width: 200px">
+                        <option value="1">Newest</option>
+                        <option value="2">Highest Score</option>
+                    </select>
+                </div>
+
+                <div class="comments mt-2 text-start mb-5">
+                    <span style="font-size: 1.1rem">10 Answers</span>
+                    <img src="{% static 'svg/comment.svg' %}" alt="comm">
+                </div>
+
+                <div class="ans border-bottom mb-3">
+                    <div class="answer-body">
+                            <span>This is a wider card with supporting text below as a natural lead-in to
+                            additional content.Today we will talk about creating pages in IDE. It's tutorial for
+                            beginners. This is a wider card with supporting text below as a natural lead-in to
+                            additional content.Today we will talk about creating pages in IDE. It's tutorial for
+                            beginners. This is a wider card with supporting text below as a natural lead-in to. What do you think ?</span>
+                    </div>
+                    <div class="col-12 px-0 mb-1 d-flex flex-wrap justify-content-between align-items-baseline">
+
+                        <div class="post-statistic d-flex flex-wrap mb-1">
+
+                            <div class="likes mt-2 me-2">3
+                                <img src="{% static 'svg/like.svg' %}" alt="like" class="mb-2">
+                            </div>
+                            <div class="dislikes mt-2 me-2">9
+                                <img src="{% static 'svg/dislike.svg' %}" alt="dislike">
+                            </div>
+
+                        </div>
+
+                        <div>
+                            <img src="{% static '/img/users/user2_ava.jpg' %}" alt="User's photo"
+                                 class="ava_user mb-1">
+                            <span class="username px-1 ">sssofiicca</span>
+
+                            <span class="time_last_update px-1"><small
+                                    class="text-body-secondary">Last updated 3 mins ago</small>
+                        </span>
+                        </div>
+                    </div>
+
+                    <div class="form-check ms-1 mb-1">
+                        <input class="form-check-input ps-1" type="checkbox" value="" id="flexCheckDefault" checked
+                               disabled>
+                        <label class="form-check-label right-answer-check px-1" for="flexCheckIndeterminateDisabled">
+                            Correct!
+                        </label>
+                    </div>
+                </div>
+
+
+                <!--Форма для ответа-->
+                <h3 class="mt-5 mb-3">Your Answer</h3>
+
+                <!--Блок с ошибкой-->
+                <div class="card my-3">
+                    <div class="card-body warning-card-body">
+                        Answer is missing
+                    </div>
+                </div>
+
+                <textarea class="col-12 py-1 form-control"></textarea>
+                <button class="btn btn-primary my-3">Post Your Answer</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

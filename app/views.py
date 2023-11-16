@@ -5,21 +5,25 @@ from django.http import HttpResponse
 def listing(req):
     return render(req, 'app/public/listing.html', {
         'data': {
-            'user_token': 'XXX'
+            'user_token': 'XX'
         }
     })
 
 
 def question(req):
-    return render(req, 'app/public/user_unauthorized/question_unauthorized.html')
+    return render(req, 'app/public/question.html', {
+        'data': {
+            'user_token': 'XXX'
+        }
+    })
 
 
 def profile(req):
-    return render(req, 'app/public/user_unauthorized/tag_questions_unauthorized.html')
+    return render(req, 'app/public/profile.html')
 
 
 def tag(req):
-    return render(req, 'app/public/user_unauthorized/tag_questions_unauthorized.html')
+    return render(req, 'app/public/tag_question.html')
 
 
 def authorization(req):
@@ -36,3 +40,7 @@ def ask(req):
             'user_token': 'XXX'
         }
     })
+
+
+def about(req):
+    return render(req, 'app/public/base.html')  # need to make layout for page layout

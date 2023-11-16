@@ -161,126 +161,121 @@
 
 
 {% block content %}
-    <div class="container-fluid container-lg">
 
-        <h3 class="my-5">Ask a public question</h3>
+    <div class="row">
+        <div class="form-question col-12 col-lg-9 d-flex flex-column">
 
-        <div class="row">
+            <!--Информационная карточка об этапах написания вопроса-->
+            <div class="card q-card-info bg-color-card-info d-inline-flex">
 
-            <div class="form-question col-12 col-lg-9 d-flex flex-column">
+                <div class="mt-4 ms-3" style="font-size: 1.3rem">Writing a good question</div>
 
-                <!--Информационная карточка об этапах написания вопроса-->
-                <div class="card q-card-info bg-color-card-info d-inline-flex">
+                <div class="card-body">
+                    <p>You’re ready to ask a programming-related question and this form will help guide
+                        you through the process.</p>
+                    <span>Steps</span>
+                    <ul>
+                        <li>Summarize your problem in a one-line title.</li>
+                        <li>Describe your problem in more detail.</li>
+                        <li>Describe what you tried and what you expected to happen.</li>
+                        <li>Add “tags” which help surface your question to members of the community.</li>
+                        <li>Review your question and post it to the site.</li>
+                    </ul>
+                </div>
+            </div>
 
-                    <div class="mt-4 ms-3" style="font-size: 1.3rem">Writing a good question</div>
+            <div class="card mt-3">
+                <div class="card-body warning-card-body">
+                    Title is missing
+                </div>
+            </div>
 
-                    <div class="card-body">
-                        <p>You’re ready to ask a programming-related question and this form will help guide
-                            you through the process.</p>
-                        <span>Steps</span>
-                        <ul>
-                            <li>Summarize your problem in a one-line title.</li>
-                            <li>Describe your problem in more detail.</li>
-                            <li>Describe what you tried and what you expected to happen.</li>
-                            <li>Add “tags” which help surface your question to members of the community.</li>
-                            <li>Review your question and post it to the site.</li>
-                        </ul>
+            <div class="card mt-3 d-inline-flex">
+                <div class="card-body">
+                    <span style="font-size: 1.3rem">Title</span>
+                    <p class="mb-1" style="font-size: 0.9rem">Be specific and imagine you’re asking a question
+                        to
+                        another
+                        person.</p>
+                    <input type="text" class="col-12 py-1 form-control"
+                           placeholder=" e.g. Is there an R function for finding the index of an element in a vector?">
+                </div>
+            </div>
+
+            <div class="card mt-3">
+                <div class="card-body warning-card-body">
+                    Minimum 20 symbols
+                </div>
+            </div>
+
+            <div class="card mt-3 d-inline-flex">
+                <div class="card-body">
+                    <span style="font-size: 1.3rem">Body</span>
+                    <p class="mb-1">What are the details of your problem?</p>
+                    <p class="mb-1" style="font-size: 0.9rem">Introduce the problem and expand on what you put
+                        in
+                        the title.
+                        Minimum 20 characters.</p>
+                    <textarea type="text" class="col-12 py-1 form-control"></textarea>
+                </div>
+            </div>
+
+            <div class="card mt-3">
+                <div class="card-body warning-card-body">
+                    Minimum 20 symbols
+                </div>
+            </div>
+
+            <div class="card mt-3 d-inline-flex">
+                <div class="card-body">
+                    <span style="font-size: 1.3rem">What did you try and what were you expecting?</span>
+                    <p class="mb-1" style="font-size: 0.9rem">Describe what you tried, what you expected to
+                        happen,
+                        and what actually resulted. Minimum 20 characters</p>
+                    <textarea type="text" class="col-12 py-1 form-control"></textarea>
+                </div>
+            </div>
+
+            <div class="card mt-3">
+                <div class="card-body warning-card-body">
+                    Maximum 3 tags
+                </div>
+            </div>
+
+            <div class="card mt-3 d-inline-flex">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <span style="font-size: 1.3rem">Tags</span>
+                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#popularTags" aria-expanded="false" aria-controls="popularTags">
+                            Популярные теги
+                        </button>
                     </div>
+                    <p class="mb-1" style="font-size: 0.9rem">Add up to 3 tags to describe what your question is
+                        about.
+                        Start typing to see suggestions.</p>
+                    <input type="text" class="col-12 py-1 form-control"
+                           placeholder=" e.g. (windows database vga)">
                 </div>
+            </div>
 
-                <div class="card mt-3">
-                    <div class="card-body warning-card-body">
-                        Title is missing
-                    </div>
+            <div class="collapse mt-3" id="popularTags">
+                <div class="card card-body">
+                    <ul>
+                        <li>Python</li>
+                        <li>Docker</li>
+                        <li>C++</li>
+                        <li>Centrifugo 3</li>
+                        <li>TP Web</li>
+                        <li>Webpack</li>
+                        <li>Django</li>
+                    </ul>
                 </div>
-
-                <div class="card mt-3 d-inline-flex">
-                    <div class="card-body">
-                        <span style="font-size: 1.3rem">Title</span>
-                        <p class="mb-1" style="font-size: 0.9rem">Be specific and imagine you’re asking a question
-                            to
-                            another
-                            person.</p>
-                        <input type="text" class="col-12 py-1 form-control"
-                               placeholder=" e.g. Is there an R function for finding the index of an element in a vector?">
-                    </div>
-                </div>
-
-                <div class="card mt-3">
-                    <div class="card-body warning-card-body">
-                        Minimum 20 symbols
-                    </div>
-                </div>
-
-                <div class="card mt-3 d-inline-flex">
-                    <div class="card-body">
-                        <span style="font-size: 1.3rem">Body</span>
-                        <p class="mb-1">What are the details of your problem?</p>
-                        <p class="mb-1" style="font-size: 0.9rem">Introduce the problem and expand on what you put
-                            in
-                            the title.
-                            Minimum 20 characters.</p>
-                        <textarea type="text" class="col-12 py-1 form-control"></textarea>
-                    </div>
-                </div>
-
-                <div class="card mt-3">
-                    <div class="card-body warning-card-body">
-                        Minimum 20 symbols
-                    </div>
-                </div>
-
-                <div class="card mt-3 d-inline-flex">
-                    <div class="card-body">
-                        <span style="font-size: 1.3rem">What did you try and what were you expecting?</span>
-                        <p class="mb-1" style="font-size: 0.9rem">Describe what you tried, what you expected to
-                            happen,
-                            and what actually resulted. Minimum 20 characters</p>
-                        <textarea type="text" class="col-12 py-1 form-control"></textarea>
-                    </div>
-                </div>
-
-                <div class="card mt-3">
-                    <div class="card-body warning-card-body">
-                        Maximum 3 tags
-                    </div>
-                </div>
-
-                <div class="card mt-3 d-inline-flex">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <span style="font-size: 1.3rem">Tags</span>
-                            <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#popularTags" aria-expanded="false" aria-controls="popularTags">
-                                Популярные теги
-                            </button>
-                        </div>
-                        <p class="mb-1" style="font-size: 0.9rem">Add up to 3 tags to describe what your question is
-                            about.
-                            Start typing to see suggestions.</p>
-                        <input type="text" class="col-12 py-1 form-control"
-                               placeholder=" e.g. (windows database vga)">
-                    </div>
-                </div>
-
-                <div class="collapse mt-3" id="popularTags">
-                    <div class="card card-body">
-                        <ul>
-                            <li>Python</li>
-                            <li>Docker</li>
-                            <li>C++</li>
-                            <li>Centrifugo 3</li>
-                            <li>TP Web</li>
-                            <li>Webpack</li>
-                            <li>Django</li>
-                        </ul>
-                    </div>
-                </div>
+            </div>
 
 
-                <div class="mt-3 d-inline-flex">
-                    <button class="btn btn-primary">Review your request</button>
-                </div>
+            <div class="mt-3 d-inline-flex">
+                <button class="btn btn-primary">Review your request</button>
             </div>
         </div>
     </div>

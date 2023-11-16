@@ -77,14 +77,14 @@
 
     {% block button_filter %} {% endblock %}
 
-    <div class="container-fluid container-lg d-flex flex-nowrap">
-        {% block content %} {% endblock %}
-
-        {% block popular_tags %} {% endblock %}
+    <div class="container">
+        {% block authorization%} {% endblock %}
+        <div class="row">
+            {% block content %} {% endblock %}
+            {% block popular_tags %} {% endblock %}
+        </div>
+        {% block paginator %} {% endblock %}
     </div>
-
-    {% block paginator %} {% endblock %}
-
 </main>
 
 

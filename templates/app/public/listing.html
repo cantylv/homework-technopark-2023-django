@@ -192,7 +192,7 @@
 
 {% block button_filter %} <!--Кнопка фильтрации-->
     <div class="d-flex flex-wrap justify-content-center align-items-center mb-3">
-        <h1 class="text-center tittle-publications mb-0 me-1" style="font-size: 2rem">Explore existing
+        <h1 class="text-center tittle-publications mb-0 me-3" style="font-size: 2rem">Explore existing
             questions</h1>
 
         <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#filter-menu"
@@ -206,7 +206,7 @@
 
 {% block content %}
     <!--Список вопросов-->
-    <div class="questions col-12 col-md-9 p-2 me-2">
+    <div class="questions col-12 col-lg-9 d-flex flex-column">
 
         <!--Меню для выбора тегов и сортировки-->
         <div class="collapse mb-2" id="filter-menu">
@@ -325,7 +325,7 @@
 
 {% block paginator %}
     <!--Пагинатор (выбор определеннйо страницы запроса)-->
-    <nav aria-label="Page navigation example" class="paginator">
+    <nav aria-label="Page navigation example" class="paginator ms-0">
         <ul class="pagination">
             <li class="page-item">
                 <a class="page-link" href="#" aria-label="Previous">

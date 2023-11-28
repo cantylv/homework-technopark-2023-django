@@ -1,0 +1,53 @@
+<!--Copyright © 2023 tussan_pussan ivanlobanov515@gmail.com-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block title %} {% endblock %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link href="{% static 'bootstrap5.3.2/css/bootstrap.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'css/base.css' %}" type="text/css" rel="stylesheet">
+    {% block link_css %} {% endblock %}
+</head>
+<body>
+
+<!--Хедер-->
+<header class="container-fluid fixed-top header d-flex flex-wrap align-items-center justify-content-between py-2">
+    {% include 'main/public/include/header.html' %}
+</header>
+
+<!--Содержимое страницы-->
+<main class="container-fluid px-0">
+
+    {% include 'main/public/include/burger.html' %}
+
+    {% block page_title %} {% endblock %} <!--Главная надпись на странице-->
+
+    {% block best_users %} {% endblock %} <!--Слайдер с лучшими пользователями-->
+
+    {% block profile_block %} {% endblock %}
+
+    {% block button_filter %} {% endblock %} <!--Фильтрация для ответов, вопросов-->
+
+    {% block about %} {% endblock %} <!--Страница about.html отличается от других, поэтому вынес ее из блока content-->
+
+    <div class="container">
+        {% block authorization %} {% endblock %}
+        {% block question %} {% endblock %}  <!--Блок с вопросом почти на всю страницу-->
+        <div class="row">
+            {% block content %} {% endblock %}
+            {% block popular_tags %} {% endblock %}
+        </div>
+        {% block paginator %}
+        {% endblock %}
+    </div>
+</main>
+
+
+{% include 'main/public/include/footer.html' %}
+
+<script src="{% static 'bootstrap5.3.2/js/bootstrap.js' %}"></script>
+</body>
+</html>

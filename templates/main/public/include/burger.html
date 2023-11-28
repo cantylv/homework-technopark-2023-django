@@ -1,0 +1,50 @@
+{% load static %}
+
+<!--Содержимое бургер-меню-->
+<div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop"
+     aria-labelledby="staticBackdropLabel">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="staticBackdropLabel" style="font-size: 1.5rem">Gain Skills</h5>
+        <div>
+            <!--Никнейм пользователя в раскрытом бургер меню-->
+            {% if user.user_token == 'XXX' %}
+                <a class="col-12 text-center text-decoration-none me-2" href="{% url 'profile' login=user.login%}"
+                   style="font-size: 1.2rem">{{ user.username }}</a>
+            {% endif %}
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+    </div>
+    <div class="offcanvas-body">
+        <div>
+            <!--Бургер меню в раскрытом виде для авторизованного пользователя-->
+            {% if user.user_token == 'XXX' %}
+                <div class="user-block-burger mb-2">
+                    <img src="{% static user.user_ava %}" alt="{{ user.username }}' ava">
+                </div>
+                <div>
+                    <div class="mb-1"><a href="{% url 'home' %}" class="nav-link nav-link-bm">Home</a></div>
+                    <div class="mb-1"><a href="{% url 'ask' %}" class="nav-link nav-link-bm">Ask</a></div>
+                    <div class="mb-1"><a href="{% url 'profile' login=user.login%}" class="nav-link nav-link-bm">Profile</a></div>
+                    <div class="mb-1"><a href="{% url 'about' %}" class="nav-link nav-link-bm">About</a></div>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-primary btn-sign-out ms-1">Sign-out</button>
+                </div>
+            {% else %}
+                <div>
+                    <div class="mb-1"><a href="{% url 'home' %}" class="nav-link nav-link-bm">Home</a></div>
+                    <div class="mb-1"><a href="{% url 'about' %}" class="nav-link nav-link-bm">About</a></div>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-outline-primary btn-signin me-2">Login</button>
+                    <button type="button" class="btn btn-primary btn-signup ms-1">Sign-up</button>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!--Search bar, который будет рендериться, когда экран станет маленьким-->
+<form class="mb-2 mx-3 search-bar-min" role="search">
+    <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+</form>

@@ -1,0 +1,65 @@
+<!--Copyright © 2023 tussan_pussan ivanlobanov515@gmail.com-->
+
+{% extends 'main/public/base.html' %}
+
+{% load static %}
+
+{% block title %}
+    <title>Gain Skills - Where Developers Learn, Share & Build Careers</title>
+{% endblock %}
+
+
+{% block link_css %} <!--Файл стилей для страницы с вопросами-->
+    {% if user.user_token == 'XXX' %}
+        <link href="{% static 'css/css_authorized/listing_authorized.css' %}" type="text/css" rel="stylesheet">
+    {% else %}
+        <link href="{% static 'css/css_unauthorized/listing_unauthorized.css' %}" type="text/css" rel="stylesheet">
+    {% endif %}
+{% endblock %}
+
+
+
+<!--Это контент страницы, который не зависит от статуса пользователя: авторизован/не авторизован-->
+
+{% block page_title %} <!--Центральные надписи на странице-->
+    <div class="d-flex justify-content-center mt-3">
+        <span class="main_first_header p-2 my-2">Over 10.000 people ready-to-work</span>
+    </div>
+    <h1 class="text-center mt-3 big-tittle" style="font-size: 3rem">Workspace where you can ask questions and answer
+        them</h1>
+    <h4 class="text-center mb-5 tittle-under-big-tittle" style="font-size: 1.5rem">Connect with thousands of top-rated
+        programmers around the world</h4>
+{% endblock %}
+
+
+{% block best_users %}
+    {% include 'main/public/include/best_users.html' %}
+{% endblock %}
+
+
+{% block button_filter %} <!--Кнопка фильтрации-->
+    {% include 'main/public/include/button_filter.html' %}
+{% endblock %}
+
+
+{% block content %}
+    <div class="questions col-12 col-lg-9 d-flex flex-column">
+        <!--Меню для выбора тегов и сортировки-->
+        {% include 'main/public/include/filter_menu.html' %}
+
+        <!--Карточки с вопросами-->
+        {% include 'main/public/include/card.html' %}
+    </div>
+{% endblock %}
+
+
+{% block popular_tags %}
+    <!--Популярные теги справа на странице-->
+    {% include 'main/public/include/popular_tags.html' %}
+{% endblock %}
+
+
+{% block paginator %}
+    <!--Пагинатор (выбор определенной страницы запроса)-->
+    {% include 'main/public/include/paginator.html' %}
+{% endblock %}

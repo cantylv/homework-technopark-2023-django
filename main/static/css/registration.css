@@ -1,0 +1,18 @@
+/*Copyright © 2023 tussan_pussan ivanlobanov515@gmail.com*/
+
+.search-bar-min {
+    display: none;
+}
+
+.search-bar-max {
+    display: none;
+}
+
+.warning-card-body {
+    background-color: rgba(255, 17, 48, 0.15);
+}
+
+.central-logo {
+    margin-left: 0!important;
+    margin-right: 80px;
+}

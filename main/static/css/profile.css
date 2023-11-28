@@ -1,0 +1,87 @@
+/*Copyright © 2023 tussan_pussan ivanlobanov515@gmail.com*/
+
+/*CSS стили, небхожимые для работы заголовка*/
+body {
+    padding-top: 100px;
+}
+
+
+.search-bar-max {
+    display: none;
+}
+
+
+.search-bar-min {
+    display: none;
+}
+
+
+@media (max-width: 840px) {
+    body {
+        padding-top: 70px;
+    }
+}
+
+.nav-link {
+    color: #0b0a0a;
+}
+
+.main_first_header {
+    font-size: 1.2rem;
+    color: white;
+    border-radius: 30px;
+    background-color: #0d6efd;
+}
+
+/*Шапка профиля авторизованного пользователя*/
+.user-block-header img {
+    border-radius: 5px;
+    width: 40px;
+}
+
+/*Шапка пользователя в бургер меню*/
+.user-block-burger img {
+    border-radius: 5px;
+    width: 80px;
+}
+
+.user-block-burger a {
+    font-size: 16px;
+}
+
+/*Профиль*/
+
+.profile-header {
+    background-image: url("../img/bg_profile.jpg");
+    width: 100vw;
+    height: 320px;
+    background-size: cover;
+}
+
+.round-photo {
+    width: 100%;
+    max-width: 250px;
+    border-radius: 50%;
+    border: 3px solid white;
+}
+
+.username {
+    color: black;
+    font-size: 1.2rem;
+    background-color: rgb(255, 255, 255);
+}
+
+.field-input {
+    font-size: 1.2rem;
+}
+
+.warning-card-body {
+    background-color: rgba(255, 17, 48, 0.15);
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.central-logo {
+    margin-left: 0px;
+    margin-right: 100px;
+}

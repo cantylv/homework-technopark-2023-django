@@ -1,0 +1,85 @@
+<!--Copyright © 2023 tussan_pussan ivanlobanov515@gmail.com-->
+
+{% extends 'main/public/base.html' %}
+
+{% load static %}
+
+{% block title %}
+    <title>{{ user.username }}</title>
+{% endblock %}
+
+{% block link_css %} <!--Файл стилей для страницы с авторизованным пользователем-->
+    {% if user.user_token == 'XXX' %}
+        <link href="{% static 'css/css_authorized/question_authorized.css' %}" type="text/css" rel="stylesheet">
+    {% else %}
+        <link href="{% static 'css/css_unauthorized/question_unauthorized.css' %}" type="text/css" rel="stylesheet">
+    {% endif %}
+{% endblock %}
+
+
+
+<!--Это контент страницы, который не зависит от статуса пользователя: авторизован/не авторизован-->
+
+{% block question %}
+    <div class="container mb-5">
+        <!--Развернутый ответ-->
+        <div class="head_question border-bottom">
+            <h3>{{ question.title }}</h3>
+            <span class="text-body-secondary">Last updated {{ question.last_updated }} mins ago</span>
+        </div>
+
+        <div class="user-block pt-3 pe-5">
+            <img src="{% static question.user_ava %}" class="img-set" alt="{{ question.username }}' ava">
+
+            <div class="post_statistic d-flex mt-1 big-screens-ldc justify-content-center">
+                <!--Block with likes and dislikes-->
+
+                <div class="likes mt-2 me-2">{{ question.like }}
+                    <button>
+                        <img src="{% static 'svg/like.svg' %}" alt="like">
+                    </button>
+                </div>
+                <div class="dislikes mt-2 me-2">{{ question.dislike }}
+                    <button>
+                        <img src="{% static 'svg/dislike.svg' %}" alt="dislike">
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <p class="body-question mt-2">{{ question.text }}</p>
+
+
+        <div class="post-tags">
+            {% for tag in question.question_tags %}
+                <a href="{% url 'tag_url' tag_name=tag %}">{{ tag }}</a>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block content %}
+    <div class="container-fluid container-lg answers ms-2">
+        <div class="row">
+            <div class="answers col-12">
+                <div class="sorting_answers d-flex flex-row align-items-center mb-3 justify-content-end">
+                    <span class="me-2">Sorted by:</span>
+                    <select class="form-select" style="max-width: 200px">
+                        <option value="1">Newest</option>
+                        <option value="2">Highest Score</option>
+                    </select>
+                </div>
+
+                <div class="comments mt-2 text-start mb-5">
+                    <span style="font-size: 1.1rem">{{ question.comment }} Answers</span>
+                    <img src="{% static 'svg/comment.svg' %}" alt="comm">
+                </div>
+
+
+                {% include 'main/public/include/answer.html' %}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

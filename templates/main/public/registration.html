@@ -1,0 +1,103 @@
+<!--Copyright © 2023 tussan_pussan ivanlobanov515@gmail.com-->
+
+{% extends 'main/public/base.html' %}
+
+{% load static %}
+
+
+{% block link_css %} <!--Файл стилей для страницы с авторизованным пользователем-->
+    <link href="{% static 'css/registration.css' %}" type="text/css" rel="stylesheet">
+{% endblock %}
+
+{% block best_users %}
+    {% include 'main/public/include/best_users.html' %}
+{% endblock %}
+
+
+{% block authorization %}
+    <div class="field-input col-sm-8 col-auto">
+
+        <h3 class="mb-4">Registration</h3>
+
+        <div class="warning-card-body p-1 my-3">
+            Sorry, this login already in use!
+        </div>
+
+        <div class="row g-0 mb-2">
+            <div class="col">
+                <span class="me-5">Login</span>
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Login" aria-label="Login"
+                       value="ilobanovman">
+            </div>
+        </div>
+
+        <div class="warning-card-body p-1 my-3">
+            Sorry, this nickname already in use!
+        </div>
+
+        <div class="row g-0 mb-2">
+            <div class="col">
+                <span class="me-5">Username</span>
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                       value="ilobanovman">
+            </div>
+        </div>
+
+        <div class="warning-card-body p-1 my-3">
+            Sorry, this email address already in use!
+        </div>
+
+        <div class="row g-0 mb-2">
+            <div class="col">
+                <span class="me-5">Email</span>
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="E-mail" aria-label="Email"
+                       value="ilobanovman@gmail.com">
+            </div>
+        </div>
+
+        <div class="warning-card-body p-1 my-3">
+            Wrong format of the file or too big size!
+        </div>
+
+        <div class="row g-0 mb-2">
+            <div class="col">
+                <span class="me-5">Load Avatar</span>
+            </div>
+            <div class="col">
+                <input class="form-control" type="file" id="formFile">
+            </div>
+        </div>
+
+        <div class="row g-0 mb-2">
+            <div class="col">
+                <span class="me-5">Password</span>
+            </div>
+            <div class="col">
+                <input type="password" class="form-control" id="inputPassword3">
+            </div>
+        </div>
+
+        <div class="row g-0 mb-2">
+            <div class="col">
+                <span class="me-5">Repeat password</span>
+            </div>
+            <div class="col">
+                <input type="password" class="form-control" id="inputPassword3">
+            </div>
+        </div>
+
+        <div class="warning-card-body p-1 my-3">
+            Password mismatch!
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-signup-finish">Finish</button>
+    </div>
+{% endblock %}
+
+

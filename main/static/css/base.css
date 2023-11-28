@@ -1,0 +1,180 @@
+/*Copyright © 2023 tussan_pussan ivanlobanov515@gmail.com*/
+
+@font-face {
+    font-family: "Mona-Sans-Regular";
+    src: url("../otf/Mona-Sans-Regular.woff") format('woff');
+}
+
+@media (max-width: 840px) {
+    .big-screens {
+        display: none;
+    }
+
+    .central-logo {
+        margin-left: 15px !important;
+    }
+}
+
+@media (min-width: 841px) {
+    .small-screens {
+        display: none;
+    }
+}
+
+@media (max-width: 841px) {
+    html {
+        font-size: 14px !important;
+    }
+}
+
+@media (max-width: 420px) {
+    .central-logo {
+        margin-left: 5px !important;
+    }
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    /*Дымный*/
+    background-color: #F8F7F4;
+    font-family: "Mona-Sans-Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding-top: 70px;
+}
+
+.nav-link {
+    color: #0b0a0a;
+}
+
+.nav-link-bm {
+    font-size: 16px;
+}
+
+.header {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    /*Safari*/
+}
+
+.central-logo {
+    margin-left: 100px;
+}
+
+.tags {
+    font-size: 1.2rem;
+}
+
+.tag {
+    margin-right: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.tag-ref {
+    color: black;
+}
+
+.tag:hover a {
+    color: #0d6efd;
+}
+
+.ava_user {
+    border-radius: 5px;
+    width: 16px;
+    height: 16px;
+}
+
+/*SLIDER*/
+
+.slider {
+    height: 250px;
+    margin: 0;
+    position: relative;
+    width: 100%;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+}
+
+.slider-track {
+    display: flex;
+    width: calc(250px * 20);
+    animation: scroll 60s linear infinite;
+}
+
+/*.slider-track:hover {*/
+/*    animation-play-state: paused;*/
+/*}*/
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(calc(-250px * 9));
+    }
+}
+
+.slide {
+    position: relative;
+    width: 250px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    padding: 15px;
+}
+
+.slide img {
+    width: 100%;
+    border-radius: 20px;
+}
+
+.username_bestUser {
+    position: absolute;
+    bottom: 8px; /* Регулируйте положение по вертикали */
+    left: 40px; /* Регулируйте положение по горизонтали */
+    color: #fff; /* Цвет текста */
+    font-size: 16px; /* Размер шрифта */
+    border-radius: 10px;
+    border: 1px solid white;
+    padding: 2px 10px;
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/*Пагинатор*/
+
+.paginator {
+    margin-left: 20px;
+}
+
+
+/*блок с лайками и дизлайками*/
+
+.post_statistic button {
+    border: none;
+    background: none;
+    padding: 0;
+
+}
+
+.likes img {
+    vertical-align: top;
+}
+
+.comments img {
+    vertical-align: top;
+}
+
+.small-screens-ldc {
+    margin-top: 0.1rem!important;
+    margin-bottom: 1rem;
+}
+
+
+.head_question h3 {
+    margin-top: 20px !important;
+}

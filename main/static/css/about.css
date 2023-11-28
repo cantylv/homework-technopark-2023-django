@@ -1,0 +1,92 @@
+@media (max-width: 840px) {
+    .hero_title {
+        margin-top: 10px!important;
+    }
+}
+
+
+.search-bar-max {
+    display: none;
+}
+
+
+.search-bar-min {
+    display: none;
+}
+
+
+.central-logo {
+    margin-left: 100px;
+    justify-content: start!important;
+}
+
+
+.user-block-header img {
+    border-radius: 5px;
+    width: 40px;
+}
+
+
+.hero {
+    margin: 10px 30px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.hero_container {
+    display: grid;
+    grid-template-columns: auto;
+}
+
+
+.hero_about {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.hero_personal_data {
+    display: flex;
+    flex-direction: column;
+    gap: 15px
+}
+
+.hero_about_human {
+    margin-top: 20px;
+}
+
+.hero_title {
+    font-size: 48px;
+    line-height: 1.1;
+
+    margin-bottom: 20px;
+    margin-top: 40px;
+}
+
+.hero_prof {
+    color: #4facfe;
+    white-space: nowrap;
+}
+
+.hero_subtitle {
+    font-size: 32px;
+    font-weight: 400;
+}
+
+.hero_links {
+    display: flex;
+}
+
+.hero_link {
+    margin-right: 10px;
+
+    font-size: 30px;
+    color: #000;
+}
+
+.hero_link:hover {
+    color: #4facfe;
+}

@@ -20,6 +20,8 @@
     </div>
 {% endif %}
 
+
+<!--Логотип сайта в шапке-->
 <div class="col-auto col-sm-2 d-flex justify-content-end central-logo">
     <a href="{% url 'home' %}" class="d-inline-flex link-body-emphasis text-decoration-none">
         <?xml version="1.0" encoding="UTF-8"?>
@@ -32,28 +34,31 @@
     </a>
 </div>
 
+<!--Блок с юзерблоком и пользователем-->
 <div class="col-auto d-flex flex-wrap justify-content-center align-items-center">
 
-    <form class="mb-0 me-3 search-bar-max" role="search" action="{% url 'home'%}">
-        <input type="search" class="form-control" placeholder="Search..." aria-label="Search" name="title">
+    <form class="mb-0 me-3 search-bar-max" role="search" action="{% url 'home'%}" method="get">
+        <input type="search" class="form-control" placeholder="Search..." aria-label="Search" name="search"
+        {% if search_text %}
+               value="{{ search_text }}"
+        {% endif %}>
     </form>
 
     <!--Блок с пользователем, содержащий маленькую аватарку, никнейм и кнопку выхода-->
     {% if user.user_token == 'XXX' %}
         <div class="user-block-header pe-2 pt-2 d-flex flex-wrap justify-content-center align-items-center">
-            <img src="{% static user.user_ava %}" alt="{{ user.username }}' ava" class="col-12 big-screens">
+            <img src="{% static user.img %}" alt="{{ user.login }}' ava" class="col-12 big-screens">
             <a class="col-12 text-center text-decoration-none big-screens"
-               href="{% url 'profile' login=user.login%}">{{ user.username }}</a>
+               href="{% url 'profile' login=user.login%}">{{ user.login }}</a>
         </div>
         <button type="button" class="btn btn-primary btn-sign-out ms-md-0 ms-1 big-screens">Sign-out</button>
     {% else %}
         <button type="button" class="btn btn-outline-primary btn-signin me-2 big-screens">Login</button>
-        <!--need js-->
         <button type="button" class="btn btn-primary btn-signup ms-md-0 ms-1 big-screens">Sign-up</button>
     {% endif %}
 </div>
 
 <a href="#" class="text-decoration-none small-screens" data-bs-toggle="offcanvas"
-   data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">  <!--Непонятно, куда ведет ссылка-->
+   data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
     <img src="{% static 'img/bars-solid.png' %}" alt="bars">
 </a>

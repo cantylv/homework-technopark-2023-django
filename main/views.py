@@ -1,3 +1,4 @@
+from django.http import HttpResponseNotFound, Http404
 from django.shortcuts import render
 import random
 
@@ -7,13 +8,13 @@ for i in range(0, 30):
         'id': i,
         'title': 'title ' + str(i),
         'text': 'text ' + str(i),
-        'user_ava': f'img/users/user{i % 10 + 1}_ava.jpg',
-        'username': f'user_name{i}',
-        'last_updated': random.randint(1, 59),
+        'img': f'img/users/user{i % 10 + 1}_ava.jpg',
+        'login': f'login{i}',
+        'date_create': random.randint(1, 59),
         'like': random.randint(0, 100),
         'dislike': random.randint(0, 100),
         'comment': random.randint(0, 1000),
-        'question_tags': [random.choice(['django', 'python', 'go']), 'docker']
+        'tags': [random.choice(['django', 'python', 'go']), 'docker']
     })
 
 answers = []
@@ -22,9 +23,9 @@ for i in range(0, 100):
         'id': i,
         'question_id': random.randint(0, 30),
         'text': 'random text' + str(i),
-        'user_ava': f'img/users/user{i % 10 + 1}_ava.jpg',
-        'username': f'username{i}',
-        'last_updated': random.randint(1, 59),
+        'img': f'img/users/user{i % 10 + 1}_ava.jpg',
+        'login': f'login{i}',
+        'date_create': random.randint(1, 59),
         'like': random.randint(0, 100),
         'dislike': random.randint(0, 100),
         'correct': bool(random.randint(0, 1))
@@ -33,19 +34,21 @@ for i in range(0, 100):
 best_users = []
 for i in range(1, 11):
     best_users.append({
-        'username': f'user_name{i}',
-        'user_ava': f'img/users/user{i}_ava.jpg'
+        'login': f'login{i}',
+        'img': f'img/users/user{i}_ava.jpg'
     })
 
 users = []
 for i in range(1, 11):
     users.append({
         'id': i,
-        'user_ava': f'img/users/user{i % 10 + 1}_ava.jpg',
-        'username': f'username{i}',
+        'img': f'img/users/user{i % 10 + 1}_ava.jpg',
         'login': f'login{i}',
         'email': f'user{i}@mail.ru',
-        'user_token': 'XXX'
+        'password': '123',
+        'user_token': 'XXX',
+        'date_reg': f'datetime{i}',
+        'rating': f'{i * i}'
     })
 
 popular_tags = ['Django', 'Python', 'Docker', 'C++', 'Centrifugo 3',
@@ -56,21 +59,40 @@ user = random.choice(users)  # наш пользователь в системе
 
 def listing(req):
     quests = questions
-    if req.GET.get('title') != 0:
-        quests = [q for q in questions if req.GET.get('title') in q['title']]
+    search_text = req.GET.get('search', None)
+    sorting = req.GET.get('sorted', None)
+
+    if search_text is not None:
+        # нужно искать в теле и заголовке вопроса совпадение
+        quests = [q for q in questions if search_text in q['text'] or search_text in q['title']]
+
+    if sorting is not None:
+        if sorting == 'newest':
+            quests = sorted(quests, key=lambda x: x['date_create'])
+        elif sorting == 'high_score':
+            quests = sorted(quests, key=lambda x: x['like'], reverse=True)
+
     return render(req, 'main/public/listing.html', {
         'user': user,
         'questions': quests,
         'best_users': best_users,
-        'popular_tags': popular_tags
+        'popular_tags': popular_tags,
+        'search_text': search_text,
+        'sorting': sorting
     })
 
 
 def question(req, question_id):
-    print(question_id)
     found_q = next(q for q in questions if q['id'] == question_id)
-    print(found_q)
+    if found_q['id'] == -1:  # если такого вопроса нет, то прокидываем страницу 404
+        raise Http404()
     ans = [answer for answer in answers if answer['question_id'] == question_id]
+    sort = req.GET.get('sorted', None)
+    if sort is not None:
+        if sort == 'high_score':
+            ans = sorted(ans, key=lambda x: x['like'], reverse=True)
+        elif sort == 'newest':
+            ans = sorted(ans, key=lambda x: x['date_create'])
     return render(req, 'main/public/question.html', {
         'user': user,
         'question': found_q,
@@ -88,13 +110,26 @@ def profile(req, login):
 
 
 def tag(req, tag_name):
-    tag_questions = [q for q in questions if tag_name in q['question_tags']]
+    tag_questions = tag_name.split('@')
+    quests = [q for q in questions if any(t.lower() in map(str.lower, q['tags']) for t in tag_questions)]
+    count_tags = len(tag_questions)
+    if len(tag_questions) == 1:
+        tag_questions = tag_questions[0]
+
+    sorting = req.GET.get('sorted', None)
+    if sorting is not None:
+        if sorting == 'newest':
+            quests = sorted(quests, key=lambda x: x['date_create'])
+        elif sorting == 'high_score':
+            quests = sorted(quests, key=lambda x: x['like'], reverse=True)
+
     return render(req, 'main/public/tag_question.html', {
         'user': user,
-        'questions': tag_questions,
+        'questions': quests,
         'best_users': best_users,
         'popular_tags': popular_tags,
-        'selected_tag': tag_name
+        'tags': tag_questions,
+        'count_tags': count_tags
     })
 
 
@@ -120,3 +155,7 @@ def about(req):
     return render(req, 'main/public/about.html', {
         'user': user,
     })
+
+
+def page_404(req, exc):
+    return HttpResponseNotFound('<h1>Страница не найдена :(</h1>')

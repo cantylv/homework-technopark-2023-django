@@ -45,9 +45,19 @@
 
         <!--Explore existing questions + Кнопка фильтрации-->
         <div class="d-flex justify-content-start align-items-center mb-4">
-            <h1 class="text-center tittle-publications mb-0 me-1 tag-listing" style="font-size: 2rem">Tag:
-                <a href="{% url 'tag_url' tag_name=selected_tag %}">{{ selected_tag }}</a>
-            </h1>
+            {% if count_tags > 1 %}
+                <h1 class="mt-1">Tags:</h1>
+                {% for tag in tags %}
+                    <h1 class="text-center tittle-publications mb-0 me-1 tag-listing" style="font-size: 2rem">
+                        <a href="{% url 'tag' tag_name=tag %}">{{ tag }}</a>
+                    </h1>
+                {% endfor %}
+
+            {% else %}
+                <h1 class="text-center tittle-publications mb-0 me-1 tag-listing" style="font-size: 2rem">Tag:
+                    <a href="{% url 'tag' tag_name=tags %}">{{ tags }}</a>
+                </h1>
+            {% endif %}
         </div>
 
         {% include 'main/public/include/filter_menu.html' %}

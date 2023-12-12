@@ -1,78 +1,83 @@
 {% load static %}
 
-
-{% for question in questions %}
-    <div class="card mb-3">
-        <div class="row g-0">
-            <!--Статистика карточки: лайки, дизлайки и комментарии-->
-            <div class="col-md-2">
-                <div class="post_statistic text-end mt-3 big-screens-ldc">
-                    <div class="likes col-12">
-                        <div class="d-inline-flex">{{ question.like }}</div>
-                        <button>
-                            <img src="{% static 'svg/like.svg' %}" alt="like">
-                            <!--надо как-то обрабатывать нажатие на кнопки-->
-                        </button>
-                    </div>
-                    <div class="dislikes col-12 mt-2">{{ question.dislike }}
-                        <button>
-                            <img src="{% static 'svg/dislike.svg' %}" alt="dislike">
-                        </button>
-                    </div>
-                    <div class="comments col-12 mt-2">{{ question.comment }}
-                        <button>
-                            <img src="{% static 'svg/comment.svg' %}" alt="comm">
-                        </button>
+{% if questions %}
+    {% for question in questions %}
+        <div class="card mb-3">
+            <div class="row g-0">
+                <!--Статистика карточки: лайки, дизлайки и комментарии-->
+                <div class="col-md-2">
+                    <div class="post_statistic text-end mt-3 big-screens-ldc">
+                        <div class="likes col-12">
+                            <div class="d-inline-flex">{{ question.like }}</div>
+                            <button>
+                                <img src="{% static 'svg/like.svg' %}" alt="like">
+                                <!--надо как-то обрабатывать нажатие на кнопки-->
+                            </button>
+                        </div>
+                        <div class="dislikes col-12 mt-2">{{ question.dislike }}
+                            <button>
+                                <img src="{% static 'svg/dislike.svg' %}" alt="dislike">
+                            </button>
+                        </div>
+                        <div class="comments col-12 mt-2">{{ question.comment }}
+                            <button>
+                                <img src="{% static 'svg/comment.svg' %}" alt="comm">
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!--Тело карточки-->
-            <div class="col-md-10">
-                <div class="card-body">
-                    <a href="{% url 'question_url' question_id=question.id%}" class="text-decoration-none">
-                        <h5 class="card-title">{{ question.title }}</h5></a>
-                    <p class="card-text">{{ question.text }}</p>
-                    <div class="col-12 px-3 mb-1 d-flex flex-wrap justify-content-end align-items-baseline">
-                        <a class="px-1 text-decoration-none">
-                            <img src="{% static question.user_ava %}" alt="{{ question.username }}'s photo"
-                                 class="ava_user mb-1">
-                            <span class="username px-1 ">{{ question.username }}</span>
-                        </a>
+                <!--Тело карточки-->
+                <div class="col-md-10">
+                    <div class="card-body">
+                        <a href="{% url 'question' question_id=question.id %}" class="text-decoration-none">
+                            <h5 class="card-title">{{ question.title|slice:":30" }}</h5></a>
+                        <p class="card-text">{{ question.text|slice:":150" }}</p>
+                        <div class="col-12 px-3 mb-1 d-flex flex-wrap justify-content-end align-items-baseline">
+                            <a class="px-1 text-decoration-none">
+                                <img src="{% static question.img %}" alt="{{ question.login }}'s photo"
+                                     class="ava_user mb-1">
+                                <span class="username px-1 ">{{ question.login }}</span>
+                            </a>
 
-                        <span class="time_last_update px-1"><small
-                                class="text-body-secondary">Last updated {{ question.last_updated }} mins ago</small></span>
-                    </div>
+                            <span class="time_last_update px-1"><small
+                                    class="text-body-secondary">Last updated {{ question.date_create }} mins ago</small></span>
+                        </div>
 
-                    <!--Блок с лайками, комментариями и дизлайками, который будет отображаться на маленьких экранах-->
-                    <div class="post_statistic text-end mt-3 сol-12 small-screens-ldc">
-                        <!--Block with likes and dislikes-->
-                        <span class="likes me-4">{{ question.like }}
+                        <!--Блок с лайками, комментариями и дизлайками, который будет отображаться на маленьких экранах-->
+                        <div class="post_statistic text-end mt-3 сol-12 small-screens-ldc">
+                            <!--Block with likes and dislikes-->
+                            <span class="likes me-4">{{ question.like }}
                             <button>
                                 <img src="{% static 'svg/like.svg' %}" alt="like">
                             </button> <!--Возможно, нужно будет сделать ссылки, а не кнопки-->
                         </span>
 
-                        <span class="dislikes me-4">{{ question.dislike }}
+                            <span class="dislikes me-4">{{ question.dislike }}
                             <button>
                                 <img src="{% static 'svg/dislike.svg' %}" alt="dislike">
                             </button>
                         </span>
-                        <span class="comments me-4">{{ question.comment }}
+                            <span class="comments me-4">{{ question.comment }}
                             <button>
                                 <img src="{% static 'svg/comment.svg' %}" alt="comm">
                             </button>
                         </span>
-                    </div>
+                        </div>
 
-                    <div class="tag-listing text-end me-3">
-                        {% for tag in question.question_tags %}
-                            <a href="{% url 'tag_url' tag_name=tag %}">{{ tag }}</a>
-                        {% endfor %}
-                    </div>
+                        <div class="tag-listing text-end me-3">
+                            {% for tag in question.tags %}
+                                <a href="{% url 'tag' tag_name=tag %}">{{ tag }}</a>
+                            {% endfor %}
+                        </div>
 
+                    </div>
                 </div>
             </div>
         </div>
+    {% endfor %}
+{% else %}
+    <div>
+        <h4>There are no questions associated with this tag :(</h4>
     </div>
-{% endfor %}
+{% endif %}

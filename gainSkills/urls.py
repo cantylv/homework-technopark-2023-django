@@ -17,7 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from main.views import page_404
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main.urls'))
 ]
+
+handler404 = page_404

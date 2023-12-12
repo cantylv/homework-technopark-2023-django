@@ -28,12 +28,12 @@
             </div>
 
             <div>
-                <img src="{% static answer.user_ava %}" alt="{{ answer.username }}'s photo"
+                <img src="{% static answer.img %}" alt="{{ answer.login }}'s photo"
                      class="ava_user mb-1">
-                <span class="username px-1 ">{{ answer.username }}</span>
+                <span class="username px-1 ">{{ answer.login }}</span>
 
                 <span class="time_last_update px-1"><small
-                        class="text-body-secondary">Last updated {{ answer.last_updated }} mins ago</small>
+                        class="text-body-secondary">Last updated {{ answer.date_create }} mins ago</small>
                         </span>
             </div>
         </div>

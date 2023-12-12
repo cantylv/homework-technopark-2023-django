@@ -60,7 +60,7 @@ body {
 }
 
 .central-logo {
-    margin-left: 100px;
+    margin-left: 40px;
 }
 
 .tags {
@@ -70,6 +70,10 @@ body {
 .tag {
     margin-right: 1rem;
     margin-bottom: 0.5rem;
+}
+
+.tag_filter_menu {
+    margin-right: 15px;
 }
 
 .tag-ref {
@@ -170,11 +174,12 @@ body {
 }
 
 .small-screens-ldc {
-    margin-top: 0.1rem!important;
+    margin-top: 0.1rem !important;
     margin-bottom: 1rem;
 }
-
 
 .head_question h3 {
     margin-top: 20px !important;
 }
+
+

@@ -5,7 +5,7 @@
 {% load static %}
 
 {% block title %}
-    <title>{{ user.username }}</title>
+    <title>{{ user.login }}</title>
 {% endblock %}
 
 {% block link_css %} <!--Файл стилей для страницы с авторизованным пользователем-->
@@ -25,11 +25,11 @@
         <!--Развернутый ответ-->
         <div class="head_question border-bottom">
             <h3>{{ question.title }}</h3>
-            <span class="text-body-secondary">Last updated {{ question.last_updated }} mins ago</span>
+            <span class="text-body-secondary">Last updated {{ question.date_create }} mins ago</span>
         </div>
 
         <div class="user-block pt-3 pe-5">
-            <img src="{% static question.user_ava %}" class="img-set" alt="{{ question.username }}' ava">
+            <img src="{% static question.img %}" class="img-set" alt="{{ question.login }}' ava">
 
             <div class="post_statistic d-flex mt-1 big-screens-ldc justify-content-center">
                 <!--Block with likes and dislikes-->
@@ -63,14 +63,16 @@
     <div class="container-fluid container-lg answers ms-2">
         <div class="row">
             <div class="answers col-12">
-                <div class="sorting_answers d-flex flex-row align-items-center mb-3 justify-content-end">
-                    <span class="me-2">Sorted by:</span>
-                    <select class="form-select" style="max-width: 200px">
-                        <option value="1">Newest</option>
-                        <option value="2">Highest Score</option>
-                    </select>
-                </div>
-
+                <form action="{% url 'question' question_id=question.id%}" method="get">
+                    <div class="sorting_answers d-flex flex-row align-items-center mb-3 justify-content-end">
+                        <span class="me-2">Sorted by:</span>
+                        <select name="sorted" class="form-select" style="max-width: 200px">
+                            <option value="newest">Newest</option>
+                            <option value="high_score">Highest Score</option>
+                        </select>
+                        <input type="submit" class="btn btn-primary ms-2" value="Apply">
+                    </div>
+                </form>
                 <div class="comments mt-2 text-start mb-5">
                     <span style="font-size: 1.1rem">{{ question.comment }} Answers</span>
                     <img src="{% static 'svg/comment.svg' %}" alt="comm">

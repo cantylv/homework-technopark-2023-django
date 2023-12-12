@@ -9,7 +9,7 @@
             <!--Никнейм пользователя в раскрытом бургер меню-->
             {% if user.user_token == 'XXX' %}
                 <a class="col-12 text-center text-decoration-none me-2" href="{% url 'profile' login=user.login%}"
-                   style="font-size: 1.2rem">{{ user.username }}</a>
+                   style="font-size: 1.2rem">{{ user.login }}</a> <!--Лучше использовать юзернейм-->
             {% endif %}
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
@@ -19,7 +19,7 @@
             <!--Бургер меню в раскрытом виде для авторизованного пользователя-->
             {% if user.user_token == 'XXX' %}
                 <div class="user-block-burger mb-2">
-                    <img src="{% static user.user_ava %}" alt="{{ user.username }}' ava">
+                    <img src="{% static user.img %}" alt="{{ user.login }}' ava">
                 </div>
                 <div>
                     <div class="mb-1"><a href="{% url 'home' %}" class="nav-link nav-link-bm">Home</a></div>
@@ -46,5 +46,6 @@
 
 <!--Search bar, который будет рендериться, когда экран станет маленьким-->
 <form class="mb-2 mx-3 search-bar-min" role="search">
-    <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+    <input type="search" class="form-control" placeholder="Search..." aria-label="Search" name="title">
 </form>
+

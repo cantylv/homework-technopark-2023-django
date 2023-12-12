@@ -2,28 +2,38 @@
 
 
 <!--Меню для выбора тегов и сортировки-->
-<div class="collapse mb-3" id="filter-menu">
-    <div class="card p-3">
-        <div class="row border-bottom">
-            <form class="col">
-                <h4 class="col-12 fw-bold">Sorted with</h4>
-                <p><input name="sorting" type="radio" value="newest"> Newest</p>
-                <p><input name="sorting" type="radio" value="high_score"> Highest Score</p>
-            </form>
 
-            <form class="col">
+
+<div class="{% if not sorting %}collapse{% endif %} mb-3" id="filter-menu">
+    <div class="card p-3">
+        <form class="row" id="sortingForm" method="get">
+
+            <div class="col">
+                <h4 class="col-12 fw-bold">Sorted with</h4>
+                <p><input name="sorted" type="radio" value="newest"> Newest</p>
+                <p><input name="sorted" type="radio" value="high_score"> Highest Score</p>
+            </div>
+
+            <div class="col">
                 <h4 class="col-12 fw-bold">Tagged with</h4>
-                <div class="d-flex flex-wrap"> <!--возможно, потом сюда нужно будет вставить блок -->
+                <div class="d-flex flex-wrap">
                     {% for tag in popular_tags %}
-                        <a class="tag" href="{% url 'tag_url' tag_name=tag %}"><input type="radio"> {{ tag }} </a>
-                    {% endfor %} <!--нужно также передавать ссылку на страницу с этим тегом-->
+                        <div>
+                            <input type="checkbox" value="{{ tag }}">
+                            <span class="tag_filter_menu">{{ tag }}</span>
+                        </div>
+                    {% endfor %}
                 </div>
-            </form>
-        </div>
-        <div class="footer_sort_menu d-inline-flex pt-2 justify-content-between">
-            <button class="btn btn-primary fsm_btn_apply">Apply changes</button> <!--FooterSortMenu - fsm-->
-            <button class="btn btn-primary fsm_btn_cancel">Cancel</button>
-        </div>
+            </div>
+
+            <div class="footer_sort_menu col-12 d-inline-flex pt-2 border-top">
+                <button class="btn btn-primary fsm_btn_apply me-3" type="submit">Apply changes</button>
+                <!--FooterSortMenu - fsm-->
+                <button class="btn btn-primary fsm_btn_cancel" type="reset">Cancel</button>
+            </div>
+
+        </form>
+
     </div>
 </div>
 

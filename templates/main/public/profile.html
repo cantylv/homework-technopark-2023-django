@@ -13,9 +13,9 @@
 {% block profile_block %} <!--Центральные надписи на странице-->
     <div class="profile-header d-flex flex-wrap justify-content-start align-items-center mx-0">
         <div class="user-block d-flex flex-wrap justify-content-center">
-            <img src="{% static user.user_ava %}" alt="{{ user.username }}' ava" class="round-photo col-12">
+            <img src="{% static user.img %}" alt="{{ user.login }}' ava" class="round-photo col-12">
             <div class="col-12 mt-2 text-center">
-                <span class="username">{{ user.username }}</span>
+                <span class="username">{{ user.login }}</span>
             </div>
         </div>
     </div>
@@ -26,13 +26,11 @@
     <div class="container mt-5">
         <h2 class="mb-4">Settings</h2>
         <div class="settings row">
-            <div class="field-input col-lg-6 col-md-8 col-auto col-auto">
+            <form class="field-input col-lg-6 col-md-8 col-auto col-auto" id="profileForm">
 
                 <div class="row g-0 mb-3">
 
-                    <div class="warning-card-body p-1 mb-3">
-                        Sorry, this login already in use!
-                    </div>
+                    <div id="loginRow"></div>
 
                     <div class="col">
                         <span>Login</span>
@@ -40,12 +38,12 @@
 
                     <div class="col">
                         <input type="text" class="form-control" placeholder="Login" aria-label="Login"
-                               value="{{ user.login }}">
+                               value="{{ user.login }}" id="loginInput">
                     </div>
                 </div>
 
 
-                <div class="row g-0 mb-3">
+                <!--<div class="row g-0 mb-3">
 
                     <div class="warning-card-body p-1 mb-3">
                         Sorry, this username already in use!
@@ -58,13 +56,11 @@
                         <input type="text" class="form-control" placeholder="Username" aria-label="Username"
                                value="{{ user.username }}">
                     </div>
-                </div>
+                </div> -->
 
                 <div class="row g-0 mb-3">
 
-                    <div class="warning-card-body p-1 mb-3">
-                        Sorry, this email address already in use!
-                    </div>
+                    <div id="emailRow"></div>
 
                     <div class="col">
                         <span>Email</span>
@@ -72,31 +68,26 @@
 
                     <div class="col">
                         <input type="text" class="form-control" placeholder="E-mail" aria-label="Email"
-                               value="{{ user.email }}">
+                               value="{{ user.email }}" id="emailInput">
                     </div>
                 </div>
 
                 <div class="row g-0">
-
-                    <div class="warning-card-body p-1 mb-3">
-                        Wrong format of the file or too big size!
-                    </div>
 
                     <div class="col">
                         <span>Upload Avatar</span>
                     </div>
 
                     <div class="col">
-                        <input class="form-control" type="file" id="formFile">
+                        <input class="form-control" type="file" id="avatarInput" value="{{ user.img }}">
                     </div>
                 </div>
 
 
                 <div class="col mt-2">
-                    <button class="btn btn-primary btn-save-changes">Save changes</button>
+                    <button class="btn btn-primary btn-save-changes" type="submit">Save changes</button>
                 </div>
-
-            </div>
+            </form>
         </div>
     </div>
 {% endblock %}

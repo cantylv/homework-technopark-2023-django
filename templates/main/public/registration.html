@@ -15,13 +15,11 @@
 
 
 {% block authorization %}
-    <div class="field-input col-sm-8 col-auto">
+    <form class="field-input col-sm-8 col-auto" id="regForm">
 
         <h3 class="mb-4">Registration</h3>
 
-        <div class="warning-card-body p-1 my-3">
-            Sorry, this login already in use!
-        </div>
+        <div id="loginRow"></div>
 
         <div class="row g-0 mb-2">
             <div class="col">
@@ -29,11 +27,11 @@
             </div>
             <div class="col">
                 <input type="text" class="form-control" placeholder="Login" aria-label="Login"
-                       value="ilobanovman">
+                       value="ilobanovman" id="loginInput">
             </div>
         </div>
 
-        <div class="warning-card-body p-1 my-3">
+        <!--<div class="warning-card-body p-1 my-3">
             Sorry, this nickname already in use!
         </div>
 
@@ -45,11 +43,10 @@
                 <input type="text" class="form-control" placeholder="Username" aria-label="Username"
                        value="ilobanovman">
             </div>
-        </div>
+        </div>-->
 
-        <div class="warning-card-body p-1 my-3">
-            Sorry, this email address already in use!
-        </div>
+
+        <div id="emailRow"></div>
 
         <div class="row g-0 mb-2">
             <div class="col">
@@ -57,29 +54,29 @@
             </div>
             <div class="col">
                 <input type="text" class="form-control" placeholder="E-mail" aria-label="Email"
-                       value="ilobanovman@gmail.com">
+                       value="ilobanovman@gmail.com" id="emailInput">
             </div>
         </div>
 
-        <div class="warning-card-body p-1 my-3">
-            Wrong format of the file or too big size!
-        </div>
+
+        <div id="avatarRow"></div>
 
         <div class="row g-0 mb-2">
             <div class="col">
                 <span class="me-5">Load Avatar</span>
             </div>
             <div class="col">
-                <input class="form-control" type="file" id="formFile">
+                <input class="form-control" type="file" id="avatarInput">
             </div>
         </div>
+
 
         <div class="row g-0 mb-2">
             <div class="col">
                 <span class="me-5">Password</span>
             </div>
             <div class="col">
-                <input type="password" class="form-control" id="inputPassword3">
+                <input type="password" class="form-control" id="passInput">
             </div>
         </div>
 
@@ -88,16 +85,14 @@
                 <span class="me-5">Repeat password</span>
             </div>
             <div class="col">
-                <input type="password" class="form-control" id="inputPassword3">
+                <input type="password" class="form-control" id="passInputRepeat">
             </div>
         </div>
 
-        <div class="warning-card-body p-1 my-3">
-            Password mismatch!
-        </div>
+        <div id="passRow"></div>
 
         <button type="submit" class="btn btn-primary btn-signup-finish">Finish</button>
-    </div>
+    </form>
 {% endblock %}
 
 

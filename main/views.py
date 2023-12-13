@@ -1,70 +1,35 @@
 from django.http import HttpResponseNotFound, Http404
 from django.shortcuts import render
-import random
+from .models import *
+from faker import Faker
 
-questions = []
-for i in range(0, 30):
-    questions.append({
-        'id': i,
-        'title': 'title ' + str(i),
-        'text': 'text ' + str(i),
-        'img': f'img/users/user{i % 10 + 1}_ava.jpg',
-        'login': f'login{i}',
-        'date_create': random.randint(1, 59),
-        'like': random.randint(0, 100),
-        'dislike': random.randint(0, 100),
-        'comment': random.randint(0, 1000),
-        'tags': [random.choice(['django', 'python', 'go']), 'docker']
-    })
 
-answers = []
-for i in range(0, 100):
-    answers.append({
-        'id': i,
-        'question_id': random.randint(0, 30),
-        'text': 'random text' + str(i),
-        'img': f'img/users/user{i % 10 + 1}_ava.jpg',
-        'login': f'login{i}',
-        'date_create': random.randint(1, 59),
-        'like': random.randint(0, 100),
-        'dislike': random.randint(0, 100),
-        'correct': bool(random.randint(0, 1))
-    })
+def fillUsers() -> None:
+    fake = Faker('en_US')
+    for i in range(10000):
+        user = Users()
+        user.img = 'users/fitness.img'
+        user.login = fake.unique.user_name()
+        user.email = fake.unique.free_email()
+        user.password = fake.password(length=10)
+        user.date_reg = fake.date()
+        user.rating = fake.pyint()
+        user.save()
 
-best_users = []
-for i in range(1, 11):
-    best_users.append({
-        'login': f'login{i}',
-        'img': f'img/users/user{i}_ava.jpg'
-    })
 
-users = []
-for i in range(1, 11):
-    users.append({
-        'id': i,
-        'img': f'img/users/user{i % 10 + 1}_ava.jpg',
-        'login': f'login{i}',
-        'email': f'user{i}@mail.ru',
-        'password': '123',
-        'user_token': 'XXX',
-        'date_reg': f'datetime{i}',
-        'rating': f'{i * i}'
-    })
-
-popular_tags = ['Django', 'Python', 'Docker', 'C++', 'Centrifugo 3',
-                'TP Web', 'Webpack', 'Jinja2', 'Golang', 'OS']
-
-user = random.choice(users)  # наш пользователь в системе
+user = Users.objects.get(id=1)
+best_users = Users.objects.order_by('-rating')[:10]
+popular_tags =['docker', 'golang', 'database', 'python', 'django']
 
 
 def listing(req):
-    quests = questions
+    quests = Questions.objects.all()
     search_text = req.GET.get('search', None)
     sorting = req.GET.get('sorted', None)
 
     if search_text is not None:
         # нужно искать в теле и заголовке вопроса совпадение
-        quests = [q for q in questions if search_text in q['text'] or search_text in q['title']]
+        quests = [q for q in quests if search_text in q['text'] or search_text in q['title']]
 
     if sorting is not None:
         if sorting == 'newest':
@@ -83,10 +48,10 @@ def listing(req):
 
 
 def question(req, question_id):
-    found_q = next(q for q in questions if q['id'] == question_id)
+    found_q = next(q for q in Questions.objects.all() if q['id'] == question_id)
     if found_q['id'] == -1:  # если такого вопроса нет, то прокидываем страницу 404
         raise Http404()
-    ans = [answer for answer in answers if answer['question_id'] == question_id]
+    ans = [answer for answer in Answers.objects.all if answer['question_id'] == question_id]
     sort = req.GET.get('sorted', None)
     if sort is not None:
         if sort == 'high_score':
@@ -103,7 +68,7 @@ def question(req, question_id):
 
 
 def profile(req, login):
-    selected_user = next(u for u in users if u['login'] == login)
+    selected_user = next(u for u in Users.objects.all() if u['login'] == login)
     return render(req, 'main/public/profile.html', {
         'user': selected_user
     })
@@ -111,7 +76,7 @@ def profile(req, login):
 
 def tag(req, tag_name):
     tag_questions = tag_name.split('@')
-    quests = [q for q in questions if any(t.lower() in map(str.lower, q['tags']) for t in tag_questions)]
+    quests = [q for q in Questions.objects.all() if any(t.lower() in map(str.lower, q['tags']) for t in tag_questions)]
     count_tags = len(tag_questions)
     if len(tag_questions) == 1:
         tag_questions = tag_questions[0]

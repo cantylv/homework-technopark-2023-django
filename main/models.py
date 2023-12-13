@@ -1,5 +1,11 @@
 from django.db import models
 
+from faker import Faker
+
+Faker.seed()
+
+fake = Faker()
+
 
 class Answers(models.Model):
     text = models.TextField(blank=True, null=True)
@@ -47,10 +53,10 @@ class Tagquestions(models.Model):
 
 
 class Users(models.Model):
-    img = models.ImageField(upload_to="")
-    login = models.CharField(max_length=20)
-    email = models.CharField(max_length=30)
-    password = models.CharField(max_length=50)
+    img = models.ImageField(upload_to="users/")  # url: uploads/users/photo.png
+    login = models.CharField(max_length=40)
+    email = models.CharField(max_length=40)
+    password = models.CharField(max_length=10)
     date_reg = models.DateField(auto_now_add=True)
     rating = models.IntegerField(default=0)
 

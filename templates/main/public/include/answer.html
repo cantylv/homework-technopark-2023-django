@@ -1,7 +1,7 @@
 {% load static %}
 
 
-{% for answer in answers %}
+{% for answer in context.object_list %}
     <div class="ans border-bottom mb-3">
         <div class="form-check mb-1">
             {% if question.correct == True %}

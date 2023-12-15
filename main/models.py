@@ -22,7 +22,7 @@ class Answers(models.Model):
 
 
 class Questions(models.Model):
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=100)
     text = models.TextField(blank=True, null=True)
     user = models.ForeignKey('Users', models.DO_NOTHING)
     date_create = models.DateField(auto_now_add=True)

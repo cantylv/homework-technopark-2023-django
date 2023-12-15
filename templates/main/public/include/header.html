@@ -1,8 +1,14 @@
 <!--Copyright © 2023 tussan_pussan ivanlobanov515@gmail.com-->
 {% load static %}
 
+
+<!--Загрузим пользователя системы (временно)-->
+{% load main_tags %}
+{% get_user as user %}
+
+
 <!--Навигационное меню в шапке страницы-->
-{% if user.user_token == 'XXX' %}
+{% if user.login != 'XXX' %}
     <div class="pt-2 big-screens">
         <ul class="nav">
             <li><a href="{% url 'home' %}" class="nav-link px-2">Home</a></li>
@@ -45,7 +51,7 @@
     </form>
 
     <!--Блок с пользователем, содержащий маленькую аватарку, никнейм и кнопку выхода-->
-    {% if user.user_token == 'XXX' %}
+    {% if user.login != 'XXX' %}
         <div class="user-block-header pe-2 pt-2 d-flex flex-wrap justify-content-center align-items-center">
             <img src="{% static user.img %}" alt="{{ user.login }}' ava" class="col-12 big-screens">
             <a class="col-12 text-center text-decoration-none big-screens"

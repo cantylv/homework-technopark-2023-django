@@ -1,5 +1,8 @@
 {% load static %}
 
+{% load main_tags %}
+{% get_user as user %}
+
 <!--Содержимое бургер-меню-->
 <div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop"
      aria-labelledby="staticBackdropLabel">
@@ -7,7 +10,7 @@
         <h5 class="offcanvas-title" id="staticBackdropLabel" style="font-size: 1.5rem">Gain Skills</h5>
         <div>
             <!--Никнейм пользователя в раскрытом бургер меню-->
-            {% if user.user_token == 'XXX' %}
+            {% if user.login != 'XXX' %}
                 <a class="col-12 text-center text-decoration-none me-2" href="{% url 'profile' login=user.login%}"
                    style="font-size: 1.2rem">{{ user.login }}</a> <!--Лучше использовать юзернейм-->
             {% endif %}
@@ -17,7 +20,7 @@
     <div class="offcanvas-body">
         <div>
             <!--Бургер меню в раскрытом виде для авторизованного пользователя-->
-            {% if user.user_token == 'XXX' %}
+            {% if user.login != 'XXX' %}
                 <div class="user-block-burger mb-2">
                     <img src="{% static user.img %}" alt="{{ user.login }}' ava">
                 </div>

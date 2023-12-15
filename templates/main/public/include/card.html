@@ -1,7 +1,7 @@
 {% load static %}
 
-{% if questions %}
-    {% for question in questions %}
+{% if context.object_list %}
+    {% for question in context.object_list %}
         <div class="card mb-3">
             <div class="row g-0">
                 <!--Статистика карточки: лайки, дизлайки и комментарии-->

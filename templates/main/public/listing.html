@@ -4,13 +4,18 @@
 
 {% load static %}
 
+<!--Загрузим пользовательские теги-->
+{% load main_tags %}
+
+{% get_user as user %}
+
 {% block title %}
     <title>Gain Skills - Where Developers Learn, Share & Build Careers</title>
 {% endblock %}
 
 
 {% block link_css %} <!--Файл стилей для страницы с вопросами-->
-    {% if user.user_token == 'XXX' %}
+    {% if user.login != 'XXX' %}
         <link href="{% static 'css/css_authorized/listing_authorized.css' %}" type="text/css" rel="stylesheet">
     {% else %}
         <link href="{% static 'css/css_unauthorized/listing_unauthorized.css' %}" type="text/css" rel="stylesheet">

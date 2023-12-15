@@ -4,6 +4,11 @@
 
 {% load static %}
 
+{% load main_tags %}
+
+{% get_best_users as best_users %}
+{% get_user as user%}
+
 
 {% block link_css %} <!--Файл стилей для страницы с авторизованным пользователем-->
     {% if user.user_token == 'XXX' %}

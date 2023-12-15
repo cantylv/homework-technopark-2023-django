@@ -4,6 +4,12 @@
 
 {% load static %}
 
+<!--Загрузим пользовательские теги-->
+{% load main_tags %}
+
+{% get_best_users as best_users %}
+{% get_user as user %}
+
 {% block title %}
     <title>{{ user.login }}</title>
 {% endblock %}
@@ -51,7 +57,7 @@
 
 
         <div class="post-tags">
-            {% for tag in question.question_tags %}
+            {% for tag in question.question_tags %}  <!-- Работать не будет, так как поменялось структура (ВНИМАНИЕ) -->
                 <a href="{% url 'tag_url' tag_name=tag %}">{{ tag }}</a>
             {% endfor %}
         </div>

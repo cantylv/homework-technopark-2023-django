@@ -1,11 +1,5 @@
 from django.db import models
 
-from faker import Faker
-
-Faker.seed()
-
-fake = Faker()
-
 
 class Answers(models.Model):
     text = models.TextField(blank=True, null=True)

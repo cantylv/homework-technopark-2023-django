@@ -11,11 +11,11 @@
 {% get_user as user %}
 
 {% block title %}
-    <title>{{ user.login }}</title>
+    <title>{{ question.title }}</title>
 {% endblock %}
 
 {% block link_css %} <!--Файл стилей для страницы с авторизованным пользователем-->
-    {% if user.user_token == 'XXX' %}
+    {% if user.login != 'XXX' %}
         <link href="{% static 'css/css_authorized/question_authorized.css' %}" type="text/css" rel="stylesheet">
     {% else %}
         <link href="{% static 'css/css_unauthorized/question_unauthorized.css' %}" type="text/css" rel="stylesheet">
@@ -31,11 +31,11 @@
         <!--Развернутый ответ-->
         <div class="head_question border-bottom">
             <h3>{{ question.title }}</h3>
-            <span class="text-body-secondary">Last updated {{ question.date_create }} mins ago</span>
+            <span class="text-body-secondary">Last updated {{ question.date_create }}</span>
         </div>
 
         <div class="user-block pt-3 pe-5">
-            <img src="{% static question.img %}" class="img-set" alt="{{ question.login }}' ava">
+            <img src="{{ question.img }}" class="img-set" alt="{{ question.login }}' ava">
 
             <div class="post_statistic d-flex mt-1 big-screens-ldc justify-content-center">
                 <!--Block with likes and dislikes-->
@@ -69,7 +69,7 @@
     <div class="container-fluid container-lg answers ms-2">
         <div class="row">
             <div class="answers col-12">
-                <form action="{% url 'question' question_id=question.id%}" method="get">
+                <form action="{% url 'question' question_id=question.id %}" method="get">
                     <div class="sorting_answers d-flex flex-row align-items-center mb-3 justify-content-end">
                         <span class="me-2">Sorted by:</span>
                         <select name="sorted" class="form-select" style="max-width: 200px">
@@ -89,5 +89,13 @@
 
             </div>
         </div>
+    </div>
+{% endblock %}
+
+
+{% block paginator %}
+    <div class="d-flex justify-content-end">
+        <!--Пагинатор (выбор определенной страницы запроса)-->
+        {% include 'main/public/include/paginator.html' %}
     </div>
 {% endblock %}

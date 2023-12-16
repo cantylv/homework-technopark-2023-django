@@ -11,7 +11,7 @@
 
 
 {% block link_css %} <!--Файл стилей для страницы с авторизованным пользователем-->
-    {% if user.user_token == 'XXX' %}
+    {% if user.login != 'XXX' %}
         <link href="{% static 'css/ask.css' %}" type="text/css" rel="stylesheet">
     {% endif %}
 {% endblock %}
@@ -80,25 +80,6 @@
                     <textarea class="col-12 py-1 form-control" id="bodyInput"></textarea>
                 </div>
             </div>
-
-        <!--Блок с ожиданиями-->
-
-            <!--
-            <div class="card mt-3">
-                <div class="card-body warning-card-body">
-                    Minimum 20 symbols
-                </div>
-            </div>
-
-            <div class="card mt-3 d-inline-flex">
-                <div class="card-body">
-                    <span style="font-size: 1.3rem">What did you try and what were you expecting?</span>
-                    <p class="mb-1" style="font-size: 0.9rem">Describe what you tried, what you expected to
-                        happen, and what actually resulted. Minimum 20 characters</p>
-                    <textarea type="text" class="col-12 py-1 form-control"></textarea>
-                </div>
-            </div> -->
-
 
             <div id="tagRow"></div>
 

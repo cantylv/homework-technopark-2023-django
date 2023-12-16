@@ -35,13 +35,13 @@
                         <p class="card-text">{{ question.text|slice:":150" }}</p>
                         <div class="col-12 px-3 mb-1 d-flex flex-wrap justify-content-end align-items-baseline">
                             <a class="px-1 text-decoration-none">
-                                <img src="{% static question.img %}" alt="{{ question.login }}'s photo"
+                                <img src="{{ question.img }}" alt="{{ question.login }}'s photo"
                                      class="ava_user mb-1">
                                 <span class="username px-1 ">{{ question.login }}</span>
                             </a>
 
                             <span class="time_last_update px-1"><small
-                                    class="text-body-secondary">Last updated {{ question.date_create }} mins ago</small></span>
+                                    class="text-body-secondary">Last updated {{ question.date_create }}</small></span>
                         </div>
 
                         <!--Блок с лайками, комментариями и дизлайками, который будет отображаться на маленьких экранах-->

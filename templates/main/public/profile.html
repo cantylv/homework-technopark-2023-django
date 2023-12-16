@@ -9,11 +9,14 @@
     <link href="{% static 'css/profile.css' %}" type="text/css" rel="stylesheet">
 {% endblock %}
 
+<!--{% load main_tags %}
+{% get_user as user %}-->
+
 
 {% block profile_block %} <!--Центральные надписи на странице-->
     <div class="profile-header d-flex flex-wrap justify-content-start align-items-center mx-0">
         <div class="user-block d-flex flex-wrap justify-content-center">
-            <img src="{% static user.img %}" alt="{{ user.login }}' ava" class="round-photo col-12">
+            <img src="{{ user.img.url }}" alt="{{ user.login }}' ava" class="round-photo col-12">
             <div class="col-12 mt-2 text-center">
                 <span class="username">{{ user.login }}</span>
             </div>

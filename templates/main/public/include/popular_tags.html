@@ -1,12 +1,17 @@
 <!--Copyright © 2023 tussan_pussan ivanlobanov515@gmail.com-->
 
 
+<!--Загрузим пользовательские теги-->
+{% load main_tags %}
+
+{% get_popular_tags as popular_tags %}
+
 <!--Популярные теги справа на странице-->
 <div class="popular_tags col-md-3 p-2">
     <h3 class="text-center">Popular tags</h3>
     <div class="tags container d-flex flex-wrap justify-content-center align-content-center">
         {% for tag in popular_tags %}
-            <div class="tag"><a href="{% url 'tag' tag_name=tag %}" class="tag-ref text-decoration-none">{{ tag }}</a></div>
+            <div class="tag"><a href="{% url 'tag' tag_name=tag.name %}" class="tag-ref text-decoration-none">{{ tag.name }}</a></div>
         {% endfor %}
     </div>
 </div>

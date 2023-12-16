@@ -1,25 +1,14 @@
 <!--Пагинатор (выбор определенной страницы запроса)-->
 <nav aria-label="Page navigation" class="paginator ms-0">
     <ul class="pagination">
-        <!-- <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li> -->
-        {% for btn in context.paginator_btns %}
-            {% if btn != '...' %}
-                <li class="page-item"><a class="page-link" href="{% url 'home' %}?page={{ btn }}">{{ btn }}</a></li>
-            {% else %}
-                <span class="page-item">{{ btn }}</span>
-            {% endif %}
-        {% endfor %}
+        {% if context.paginator_btns_size > 1 %}
+            {% for btn in context.paginator_btns %}
+                {% if btn != '...' %}
+                    <li class="page-item"><a class="page-link" href="{% url 'home' %}?page={{ btn }}">{{ btn }}</a></li>
+                {% else %}
+                    <span class="page-link p-not-number">{{ btn }}</span>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
     </ul>
 </nav>

@@ -1,5 +1,5 @@
 from django.core.paginator import Paginator
-from django.http import HttpResponseNotFound, Http404
+from django.http import HttpResponseNotFound
 from django.shortcuts import render
 from .models import *
 from .utils import *
@@ -11,8 +11,10 @@ def paginate(object_list, req, per_page=10):
     page = req.GET.get('page', 1)
 
     if search_text is not None:
+        search_text_lower = search_text.lower()
         # нужно искать в теле и заголовке вопроса совпадение
-        object_list = [q for q in object_list if search_text in q['text'] or search_text in q['title']]
+        object_list = [q for q in object_list if
+                       search_text_lower in q['text'].lower() or search_text_lower in q['title'].lower()]
 
     if sorting is not None:
         if sorting == 'newest':
@@ -22,7 +24,7 @@ def paginate(object_list, req, per_page=10):
 
     # orphans - кол-во элементов, которое будет переноситься с последней страницы на предыдущую, если на последней
     # окажется <= orphans элементов
-    p = Paginator(object_list, per_page, orphans=per_page * 0.3)
+    p = Paginator(object_list, per_page)
 
     # Фильтрация заглушек "..."
     paginator_btns = p.get_elided_page_range(page, on_each_side=1, on_ends=1)

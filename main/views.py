@@ -46,10 +46,10 @@ def listing(req):
 
 
 def question(req, question_id):
-    found_q = get_question(question_id)[0]
+    found_q = get_question_by_id(question_id)[0]
     # if found_q.id == -1: если такого вопроса нет, то прокидываем страницу 404 (надо уточнить насчет проверки)
     #     raise Http404()
-    ans = get_answers(question_id)
+    ans = get_answers_by_id(question_id)
     context = paginate(ans, req)  # вернется список ответов на какой-то странице
     return render(req, 'main/public/question.html', {
         'question': found_q,
@@ -68,7 +68,8 @@ def tag(req, tag_name):
     tag_questions = tag_name.split('@')
     # нужно создать таблицу с тегами и таблицу для связи м-м с вопросами и тегами
     # нужно будет делать sql-запрос
-    quests = [q for q in Questions.objects.all() if any(t.lower() in map(str.lower, q.tags) for t in tag_questions)]
+    print(tag_questions)
+    quests = get_question_by_tags(tag_questions)
     count_tags = len(tag_questions)
     if len(tag_questions) == 1:
         tag_questions = tag_questions[0]

@@ -1,18 +1,24 @@
 <!--Copyright © 2023 tussan_pussan ivanlobanov515@gmail.com-->
 
 
+{% load main_tags %}
+{% get_popular_tags as popular_tags %}
+
 <!--Меню для выбора тегов и сортировки-->
-
-
-<div class="{% if not sorting %}collapse{% endif %} mb-3" id="filter-menu">
+<div class="{% if not context.get_params.sorted %}collapse{% endif %} mb-3" id="filter-menu">
     <div class="card p-3">
         <form class="row" id="sortingForm" method="get">
 
             <div class="col">
                 <h4 class="col-12 fw-bold">Sorted with</h4>
-                <p><input name="sorted" type="radio" value="newest"> Newest</p>
-                <p><input name="sorted" type="radio" value="high_score"> Highest Score</p>
-                <input name="page" type="hidden" value="1">
+                <p><input name="sorted" type="radio" value="newest"
+                          {% if context.get_params.sorted == 'newest' %}checked{% endif %}> Newest</p>
+                <p><input name="sorted" type="radio" value="high_score"
+                          {% if context.get_params.sorted == 'high_score' %}checked{% endif %}> Highest Score</p>
+                <input name="page" type="hidden" value="{{ context.get_params.page|default_if_none:1|default:1 }}">
+                {% if context.get_params.search %}
+                    <input name="search" type="hidden" value="{{ context.get_params.search }}">
+                {% endif %}
             </div>
 
             <div class="col">
@@ -20,8 +26,9 @@
                 <div class="d-flex flex-wrap">
                     {% for tag in popular_tags %}
                         <div>
-                            <input type="checkbox" value="{{ tag }}">
-                            <span class="tag_filter_menu">{{ tag }}</span>
+                            <input type="checkbox" value="{{ tag.name }}"
+                                   {% if tag.name in tags %}checked{% endif %}>
+                            <span class="tag_filter_menu">{{ tag.name }}</span>
                         </div>
                     {% endfor %}
                 </div>

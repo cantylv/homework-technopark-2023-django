@@ -13,7 +13,7 @@
         <ul class="nav">
             <li><a href="{% url 'home' %}" class="nav-link px-2">Home</a></li>
             <li><a href="{% url 'ask' %}" class="nav-link px-2">Ask</a></li>
-            <li><a href="{% url 'profile' login=user.login%}" class="nav-link px-2">Profile</a></li>
+            <li><a href="{% url 'profile' login=user.login %}" class="nav-link px-2">Profile</a></li>
             <li><a href="{% url 'about' %}" class="nav-link px-2">About</a></li>
         </ul>
     </div>
@@ -43,11 +43,17 @@
 <!--Блок с юзерблоком и пользователем-->
 <div class="col-auto d-flex flex-wrap justify-content-center align-items-center">
 
-    <form class="mb-0 me-3 search-bar-max" role="search" action="{% url 'home'%}" method="get">
+    <form class="mb-0 me-3 search-bar-max" role="search" method="get">
         <input type="search" class="form-control" placeholder="Search..." aria-label="Search" name="search"
-        {% if search_text %}
-               value="{{ search_text }}"
-        {% endif %}>
+                {% if context.get_params.search %}
+               value="{{ context.get_params.search }}"
+                {% endif %}>
+        {% if context.get_params.sorted %}
+            <input name="sorted" type="hidden" value="{{ context.get_params.sorted }}">
+        {% endif %}
+        {% if context.get_params.page %}
+            <input name="page" type="hidden" value="{{ context.get_params.page }}">
+        {% endif %}
     </form>
 
     <!--Блок с пользователем, содержащий маленькую аватарку, никнейм и кнопку выхода-->
@@ -55,7 +61,7 @@
         <div class="user-block-header pe-2 pt-2 d-flex flex-wrap justify-content-center align-items-center">
             <img src="{{ user.img.url }}" alt="{{ user.login }}' ava" class="col-12 big-screens">
             <a class="col-12 text-center text-decoration-none big-screens"
-               href="{% url 'profile' login=user.login%}">{{ user.login }}</a>
+               href="{% url 'profile' login=user.login %}">{{ user.login }}</a>
         </div>
         <button type="button" class="btn btn-primary btn-sign-out ms-md-0 ms-1 big-screens">Sign-out</button>
     {% else %}

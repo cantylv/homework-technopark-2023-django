@@ -14,10 +14,8 @@ document.addEventListener('DOMContentLoaded', function () {
         var tagIndex = currentUrl.indexOf('/tag/');
         if (tagIndex !== -1) {
             currentUrl = currentUrl.substring(0, tagIndex);
-        }
-        if (tagIndex === -1 && currentUrl.indexOf('?') !== -1) {
-            var paramIndex = currentUrl.indexOf('?');
-            currentUrl = currentUrl.substring(0, paramIndex);
+        } else if (tagIndex === -1 && currentUrl.indexOf('?') !== -1){
+            currentUrl = currentUrl.substring(0, currentUrl.indexOf('?'))
         }
 
         var url = currentUrl;
@@ -25,12 +23,13 @@ document.addEventListener('DOMContentLoaded', function () {
         if (tags.length > 0) {
             var tagString = tags.join('@');
             if (tagIndex === -1) {
-                url += 'tag/'
+                url += 'tag/';
             } else {
-                url += '/tag/'
+                url += '/tag/';
             }
-            url += tagString
+            url += tagString;
         }
+
         form.action = url;
     }
 

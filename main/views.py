@@ -9,6 +9,11 @@ def paginate(object_list, req, per_page=10):
     search_text = req.GET.get('search', None)
     sorting = req.GET.get('sorted', None)
     page = req.GET.get('page', 1)
+    get_params = {
+        'search': search_text,
+        'sorted': sorting,
+        'page': page
+    }
 
     if search_text is not None:
         search_text_lower = search_text.lower()
@@ -31,6 +36,7 @@ def paginate(object_list, req, per_page=10):
     paginator_btns = [btn if isinstance(btn, int) else '...' for btn in paginator_btns]
 
     context = {
+        'get_params': get_params,
         'object_list': p.get_page(page),
         'paginator_btns': paginator_btns,
         'paginator_btns_size': len(paginator_btns)
@@ -67,9 +73,8 @@ def profile(req, login):
 
 
 def tag(req, tag_name):
+    print(tag_name)
     tag_questions = tag_name.split('@')
-    # нужно создать таблицу с тегами и таблицу для связи м-м с вопросами и тегами
-    # нужно будет делать sql-запрос
     print(tag_questions)
     quests = get_question_by_tags(tag_questions)
     count_tags = len(tag_questions)

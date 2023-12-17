@@ -4,7 +4,9 @@
         {% if context.paginator_btns_size > 1 %}
             {% for btn in context.paginator_btns %}
                 {% if btn != '...' %}
-                    <li class="page-item"><a class="page-link" href="{% url 'home' %}?page={{ btn }}">{{ btn }}</a></li>
+                    <li class="page-item"><a class="page-link" href="{% url 'home' %}?page={{ btn }}
+{% if context.get_params.sorted %}&sorted={{ context.get_params.sorted }}{% endif %}
+{% if context.get_params.search %}&search={{ context.get_params.search }}{% endif %}">{{ btn }}</a></li>
                 {% else %}
                     <span class="page-link p-not-number">{{ btn }}</span>
                 {% endif %}

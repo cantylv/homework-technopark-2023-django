@@ -10,8 +10,8 @@ def get_questions():
                 q.id,
                 q.title,
                 q.text,
-                u.login as login,
-                u.img as img,
+                u.login,
+                u.img,
                 q.date_create,
                 q.like,
                 q.dislike,
@@ -32,7 +32,6 @@ def get_questions():
             """, [question['id']])
             tags = cursor.fetchall()
             question['tags'] = [tag[0] for tag in tags]
-
             question['img'] = '/uploads/' + question['img']
 
     return result
@@ -56,6 +55,8 @@ def get_question_by_id(q_id):
         columns = [col[0] for col in cursor.description]
         result = [dict(zip(columns, row)) for row in cursor.fetchall()]
 
+        if not result:
+            return result
         # Поскольку мы тянем из бд чисто данные, то префикс не добавляется автоматически
         for question in result:
             cursor.execute("""
@@ -75,15 +76,14 @@ def get_question_by_tags(tags):
     with connection.cursor() as cursor:
         # Формируем строку с тегами для каждого запроса
         tags_str = ', '.join([f"'{_}'" for _ in tags])
-        print(tags_str)
 
         cursor.execute(f"""
             SELECT DISTINCT
                 questions.id,
                 questions.title,
                 questions.text,
-                users.login as login,
-                users.img as img,
+                users.login,
+                users.img,
                 questions.date_create,
                 questions.like,
                 questions.dislike,
@@ -119,8 +119,8 @@ def get_answers_by_id(q_id):
     with connection.cursor() as cursor:
         cursor.execute(
             "SELECT answers.text, "
-            "users.login as login, "
-            "users.img as img, "
+            "users.login, "
+            "users.img, "
             "answers.date_create, "
             "answers.like,"
             "answers.dislike,"

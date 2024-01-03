@@ -14,3 +14,7 @@ from django.core.asgi import get_asgi_application
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'gainSkills.settings')
 
 application = get_asgi_application()
+
+# Файл asgi.py в Django представляет собой ASGI (Asynchronous Server Gateway Interface) конфигурацию для вашего проекта.
+# ASGI - это интерфейс для взаимодействия между веб-серверами и веб-приложениями в асинхронном стиле, что позволяет
+# обрабатывать больше одновременных соединений и асинхронных операций.

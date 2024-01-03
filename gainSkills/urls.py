@@ -15,8 +15,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.conf.urls.static import static
-from django.contrib import admin
 from django.urls import path, include
+from django.contrib import admin
 
 from gainSkills import settings
 from main.views import page_404
@@ -26,7 +26,11 @@ urlpatterns = [
     path('', include('main.urls'))
 ]
 
+# Обработка статических файлов в режиме отладки
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
+
+# на все ошибки 404 будет вызываться функция main.views.page_404
 handler404 = page_404

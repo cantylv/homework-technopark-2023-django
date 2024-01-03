@@ -15,7 +15,7 @@
                           {% if context.get_params.sorted == 'newest' %}checked{% endif %}> Newest</p>
                 <p><input name="sorted" type="radio" value="high_score"
                           {% if context.get_params.sorted == 'high_score' %}checked{% endif %}> Highest Score</p>
-                <input name="page" type="hidden" value="{{ context.get_params.page|default_if_none:1|default:1 }}">
+                <input id="pageInput" name="page" type="hidden" value="{{ context.get_params.page|default_if_none:1 }}">
                 {% if context.get_params.search %}
                     <input name="search" type="hidden" value="{{ context.get_params.search }}">
                 {% endif %}

@@ -60,7 +60,7 @@ body {
 }
 
 .central-logo {
-    margin-left: 40px;
+    margin-left: 80px;
 }
 
 .tags {
@@ -187,3 +187,6 @@ body {
     border-left: none !important;
 }
 
+.cur-page {
+    background-color: #95cbff !important;
+}

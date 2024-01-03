@@ -22,7 +22,7 @@
             <!--Бургер меню в раскрытом виде для авторизованного пользователя-->
             {% if user.login != 'XXX' %}
                 <div class="user-block-burger mb-2">
-                    <img src="{% static user.img %}" alt="{{ user.login }}' ava">
+                    <img src="{{ user.img.url }}" alt="{{ user.login }}' ava">
                 </div>
                 <div>
                     <div class="mb-1"><a href="{% url 'home' %}" class="nav-link nav-link-bm">Home</a></div>

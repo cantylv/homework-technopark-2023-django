@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-g@@-sggo!g%6p39q$_p)oddz9#l!*d$ue46i-eoh@wdm#&=*b5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -53,8 +53,7 @@ ROOT_URLCONF = 'gainSkills.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -108,25 +107,30 @@ LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
 
-USE_I18N = True
+USE_I18N = False
 
-USE_TZ = True
+USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
 
-STATICFILES_DIRS = [
-    BASE_DIR / "main/static/",
-    BASE_DIR / "uploads/users/"
-]
+STATIC_ROOT = os.path.join(BASE_DIR, 'main/static/')
+
+# дополнительное место, в котором утилита collectstatic будет искать все статические файлы для переноса их на веб-сервер
+# STATICFILES_DIRS = [
+#     BASE_DIR / "main/static/",
+#     BASE_DIR / "uploads/users/"
+# ]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_URL = '/uploads/'
+MEDIA_URL = 'uploads/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
+
+

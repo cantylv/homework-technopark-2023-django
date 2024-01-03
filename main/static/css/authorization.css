@@ -30,3 +30,8 @@ footer {
 .auth-title {
     margin-top: 100px;
 }
+
+.central-logo {
+    margin-left: 0px!important;
+    margin-right: 70px;
+}

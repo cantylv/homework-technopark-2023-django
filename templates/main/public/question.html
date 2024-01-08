@@ -6,7 +6,6 @@
 
 <!--Загрузим пользовательские теги-->
 {% load main_tags %}
-
 {% get_best_users as best_users %}
 {% get_user as user %}
 
@@ -15,7 +14,7 @@
 {% endblock %}
 
 {% block link_css %} <!--Файл стилей для страницы с авторизованным пользователем-->
-    {% if user.login != 'XXX' %}
+    {% if user.username != 'XXX' %}
         <link href="{% static 'css/css_authorized/question_authorized.css' %}" type="text/css" rel="stylesheet">
     {% else %}
         <link href="{% static 'css/css_unauthorized/question_unauthorized.css' %}" type="text/css" rel="stylesheet">
@@ -27,6 +26,9 @@
 <!--Это контент страницы, который не зависит от статуса пользователя: авторизован/не авторизован-->
 
 {% block question %}
+    <!--Сперва получим все данные для отображения вопроса (лайки и т.п.)-->
+    {% get_question_like q_id=question.id as like %}
+    {% get_question_dislike q_id=question.id as dislike %}
     <div class="container mb-5">
         <!--Развернутый ответ-->
         <div class="head_question border-bottom">
@@ -35,17 +37,17 @@
         </div>
 
         <div class="user-block pt-3 pe-5">
-            <img src="{{ question.img }}" class="img-set" alt="{{ question.login }}' ava">
+            <img src="{{ question.user.profile.avatar.url }}" class="img-set" alt="{{ question.username }}' ava">
 
             <div class="post_statistic d-flex mt-1 big-screens-ldc justify-content-center">
                 <!--Block with likes and dislikes-->
 
-                <div class="likes mt-2 me-2">{{ question.like }}
+                <div class="likes mt-2 me-2">{{ like }}
                     <button>
                         <img src="{% static 'svg/like.svg' %}" alt="like">
                     </button>
                 </div>
-                <div class="dislikes mt-2 me-2">{{ question.dislike }}
+                <div class="dislikes mt-2 me-2">{{ dislike }}
                     <button>
                         <img src="{% static 'svg/dislike.svg' %}" alt="dislike">
                     </button>
@@ -55,9 +57,9 @@
 
         <p class="body-question mt-2">{{ question.text }}</p>
 
-
+        {% get_question_tags q_id=question.id as tags %}
         <div class="post-tags">
-            {% for tag in question.tags %}  <!-- Работать не будет, так как поменялось структура (ВНИМАНИЕ) -->
+            {% for tag in tags %}  <!-- Работать не будет, так как поменялось структура (ВНИМАНИЕ) -->
                 <a href="{% url 'tag' tag_name=tag %}">{{ tag }}</a>
             {% endfor %}
         </div>
@@ -66,6 +68,8 @@
 
 
 {% block content %}
+    <!--Загрузим кол-во ответов-->
+    {% get_question_ans q_id=question.id as ans %}
     <div class="container-fluid container-lg answers ms-2">
         <div class="row">
             <div class="answers col-12">
@@ -80,7 +84,7 @@
                     </div>
                 </form>
                 <div class="comments mt-2 text-start mb-5">
-                    <span style="font-size: 1.1rem">{{ question.comment }} Answers</span>
+                    <span style="font-size: 1.1rem">{{ ans }} Answers</span>
                     <img src="{% static 'svg/comment.svg' %}" alt="comm">
                 </div>
 

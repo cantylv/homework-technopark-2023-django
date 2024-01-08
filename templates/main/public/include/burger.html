@@ -10,9 +10,9 @@
         <h5 class="offcanvas-title" id="staticBackdropLabel" style="font-size: 1.5rem">Gain Skills</h5>
         <div>
             <!--Никнейм пользователя в раскрытом бургер меню-->
-            {% if user.login != 'XXX' %}
-                <a class="col-12 text-center text-decoration-none me-2" href="{% url 'profile' login=user.login%}"
-                   style="font-size: 1.2rem">{{ user.login }}</a> <!--Лучше использовать юзернейм-->
+            {% if user.username != 'XXX' %}
+                <a class="col-12 text-center text-decoration-none me-2" href="{% url 'profile' username=user.username%}"
+                   style="font-size: 1.2rem">{{ user.username }}</a> <!--Лучше использовать юзернейм-->
             {% endif %}
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
@@ -20,14 +20,14 @@
     <div class="offcanvas-body">
         <div>
             <!--Бургер меню в раскрытом виде для авторизованного пользователя-->
-            {% if user.login != 'XXX' %}
+            {% if user.username != 'XXX' %}
                 <div class="user-block-burger mb-2">
-                    <img src="{{ user.img.url }}" alt="{{ user.login }}' ava">
+                    <img src="{{ user.profile.avatar.url }}" alt="{{ user.username }}' ava">
                 </div>
                 <div>
                     <div class="mb-1"><a href="{% url 'home' %}" class="nav-link nav-link-bm">Home</a></div>
                     <div class="mb-1"><a href="{% url 'ask' %}" class="nav-link nav-link-bm">Ask</a></div>
-                    <div class="mb-1"><a href="{% url 'profile' login=user.login%}" class="nav-link nav-link-bm">Profile</a></div>
+                    <div class="mb-1"><a href="{% url 'profile' username=user.username%}" class="nav-link nav-link-bm">Profile</a></div>
                     <div class="mb-1"><a href="{% url 'about' %}" class="nav-link nav-link-bm">About</a></div>
                 </div>
                 <div class="d-flex justify-content-end">

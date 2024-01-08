@@ -6,12 +6,11 @@
 
 {% load main_tags %}
 
-{% get_best_users as best_users %}
 {% get_user as user%}
 
 
 {% block link_css %} <!--Файл стилей для страницы с авторизованным пользователем-->
-    {% if user.login != 'XXX' %}
+    {% if user.username != 'XXX' %}
         <link href="{% static 'css/ask.css' %}" type="text/css" rel="stylesheet">
     {% endif %}
 {% endblock %}

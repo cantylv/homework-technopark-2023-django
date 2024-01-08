@@ -9,16 +9,16 @@
     <link href="{% static 'css/profile.css' %}" type="text/css" rel="stylesheet">
 {% endblock %}
 
-<!--{% load main_tags %}
-{% get_user as user %}-->
+{% load main_tags %}
+{% get_user as user %}
 
 
 {% block profile_block %} <!--Центральные надписи на странице-->
     <div class="profile-header d-flex flex-wrap justify-content-start align-items-center mx-0">
         <div class="user-block d-flex flex-wrap justify-content-center">
-            <img src="{{ user.img.url }}" alt="{{ user.login }}' ava" class="round-photo col-12">
+            <img src="{{ user.profile.avatar.url }}" alt="{{ user.username }}' ava" class="round-photo col-12">
             <div class="col-12 mt-2 text-center">
-                <span class="username">{{ user.login }}</span>
+                <span class="username">{{ user.username }}</span>
             </div>
         </div>
     </div>
@@ -41,7 +41,7 @@
 
                     <div class="col">
                         <input type="text" class="form-control" placeholder="Login" aria-label="Login"
-                               value="{{ user.login }}" id="loginInput">
+                               value="{{ user.username }}" id="loginInput">
                     </div>
                 </div>
 
@@ -82,7 +82,7 @@
                     </div>
 
                     <div class="col">
-                        <input class="form-control" type="file" id="avatarInput" value="{{ user.img }}">
+                        <input class="form-control" type="file" id="avatarInput" value="{{ user.profile.avatar.url }}">
                     </div>
                 </div>
 

@@ -1,8 +1,8 @@
 <!--Пагинатор (выбор определенной страницы запроса)-->
 <nav aria-label="Page navigation" class="paginator ms-0">
     <ul class="pagination">
-        {% if context.paginator_btns_size > 1 %}
-            {% for btn in context.paginator_btns %}
+        {% if context.paginator.size > 1 %}
+            {% for btn in context.paginator.btns %}
                 {% if btn != '...' %}
                     {% if context.get_params.page|stringformat:"s" == btn|stringformat:"s" %}
                         <span class="page-link p-not-number cur-page">{{ btn }}</span>

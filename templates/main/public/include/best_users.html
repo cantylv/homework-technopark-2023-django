@@ -14,17 +14,17 @@
     <div class="slider-track">
         {% for best_user in best_users %}
             <div class="slide">
-                <img src="{{ best_user.img.url }}" alt="{{ best_user.login }}'s photo">
+                <img src="{{ best_user.profile.avatar.url }}" alt="{{ best_user.username }}'s photo">
                 <!--Нужно также выводить на карточке имя пользователя-->
-                <div class="username_bestUser">{{ best_user.login }}</div>
+                <div class="username_bestUser">{{ best_user.username }}</div>
             </div>
         {% endfor %}
 
         {% for best_user in best_users %}
             <div class="slide">
-                <img src="{{ best_user.img.url }}" alt="{{ best_user.login }}'s photo">
+                <img src="{{ best_user.profile.avatar.url }}" alt="{{ best_user.username }}'s photo">
                 <!--Нужно также выводить на карточке имя пользователя-->
-                <div class="username_bestUser">{{ best_user.login }}</div>
+                <div class="username_bestUser">{{ best_user.username }}</div>
             </div>
         {% endfor %}
     </div>

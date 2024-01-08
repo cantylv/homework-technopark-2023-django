@@ -8,7 +8,7 @@ urlpatterns = [
     path('tag/<str:tag_name>/', views.tag, name='tag'),  # tagged questions
     path('question/<int:question_id>/', views.question, name='question'),  # question and answers
     # если такого пользователя не существует, делаем редирект на главную страницу или на нашего юзера
-    path('user/profile/<str:login>/', views.profile, name='profile'),  # user profile
+    path('user/profile/<str:username>/', views.profile, name='profile'),  # user profile
     path('user/auth/', views.authorization, name='auth'),  # login
     path('user/reg/', views.registration, name='reg'),  # registration
     path('user/ask/', views.ask, name='ask'),  # ask question
@@ -21,5 +21,5 @@ urlpatterns = [
     re_path(r'^user/auth/.*', RedirectView.as_view(pattern_name='auth')),
     re_path(r'^user/reg/.*', RedirectView.as_view(pattern_name='reg')),
     re_path(r'^user/ask/.*', RedirectView.as_view(pattern_name='ask')),
-    re_path(r'^(?!uploads/users/).+$', RedirectView.as_view(pattern_name='home'))
+    re_path(r'^(?!uploads/users/|admin($|/)).*$', RedirectView.as_view(url='/'))
 ]

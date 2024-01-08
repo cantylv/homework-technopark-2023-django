@@ -8,12 +8,12 @@
 
 
 <!--Навигационное меню в шапке страницы-->
-{% if user.login != 'XXX' %}
+{% if user.username != 'XXX' %}
     <div class="pt-2 big-screens">
         <ul class="nav">
             <li><a href="{% url 'home' %}" class="nav-link px-2">Home</a></li>
             <li><a href="{% url 'ask' %}" class="nav-link px-2">Ask</a></li>
-            <li><a href="{% url 'profile' login=user.login %}" class="nav-link px-2">Profile</a></li>
+            <li><a href="{% url 'profile' username=user.username %}" class="nav-link px-2">Profile</a></li>
             <li><a href="{% url 'about' %}" class="nav-link px-2">About</a></li>
         </ul>
     </div>
@@ -57,11 +57,11 @@
     </form>
 
     <!--Блок с пользователем, содержащий маленькую аватарку, никнейм и кнопку выхода-->
-    {% if user.login != 'XXX' %}
+    {% if user.username != 'XXX' %}
         <div class="user-block-header pe-2 pt-2 d-flex flex-wrap justify-content-center align-items-center">
-            <img src="{{ user.img.url }}" alt="{{ user.login }}' ava" class="col-12 big-screens">
+            <img src="{{ user.profile.avatar.url }}" alt="{{ user.username }}' ava" class="col-12 big-screens">
             <a class="col-12 text-center text-decoration-none big-screens"
-               href="{% url 'profile' login=user.login %}">{{ user.login }}</a>
+               href="{% url 'profile' username=user.username %}">{{ user.username }}</a>
         </div>
         <button type="button" class="btn btn-primary btn-sign-out ms-md-0 ms-1 big-screens">Sign-out</button>
     {% else %}

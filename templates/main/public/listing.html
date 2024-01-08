@@ -15,7 +15,7 @@
 
 
 {% block link_css %} <!--Файл стилей для страницы с вопросами-->
-    {% if user.login != 'XXX' %}
+    {% if user.username != 'XXX' %}
         <link href="{% static 'css/css_authorized/listing_authorized.css' %}" type="text/css" rel="stylesheet">
     {% else %}
         <link href="{% static 'css/css_unauthorized/listing_unauthorized.css' %}" type="text/css" rel="stylesheet">

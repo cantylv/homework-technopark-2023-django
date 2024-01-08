@@ -10,7 +10,7 @@
 {% get_best_users as best_users %}
 
 {% block link_css %} <!--Файл стилей для страницы с авторизованным пользователем-->
-    {% if user.login != 'XXX' %}
+    {% if user.username != 'XXX' %}
         <link href="{% static 'css/css_authorized/listing_authorized.css' %}" type="text/css" rel="stylesheet">
     {% else %}
         <link href="{% static 'css/css_unauthorized/listing_unauthorized.css' %}" type="text/css" rel="stylesheet">
@@ -49,19 +49,12 @@
 
         <!--Explore existing questions + Кнопка фильтрации-->
         <div class="d-flex justify-content-start align-items-center mb-4">
-            {% if count_tags > 1 %}
-                <h1 class="mt-1">Tags:</h1>
-                {% for tag in tags %}
-                    <h1 class="text-center tittle-publications mb-0 me-1 tag-listing" style="font-size: 2rem">
-                        <a href="{% url 'tag' tag_name=tag %}">{{ tag }}</a>
-                    </h1>
-                {% endfor %}
-
-            {% else %}
-                <h1 class="text-center tittle-publications mb-0 me-1 tag-listing" style="font-size: 2rem">Tag:
-                    <a href="{% url 'tag' tag_name=tags %}">{{ tags }}</a>
+            <h1 class="mt-1">Tags:</h1>
+            {% for tag in tags %}
+                <h1 class="text-center tittle-publications mb-0 me-1 tag-listing" style="font-size: 2rem">
+                    <a href="{% url 'tag' tag_name=tag %}">{{ tag }}</a>
                 </h1>
-            {% endif %}
+            {% endfor %}
         </div>
 
         {% include 'main/public/include/filter_menu.html' %}

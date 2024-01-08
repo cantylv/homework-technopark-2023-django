@@ -94,10 +94,7 @@
 }
 
 .post-tags a {
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-bottom: 5px;
-    padding-top: 5px;
+    padding: 5px 10px;
     background-color: #95cbff;
     border-radius: 5px;
     text-decoration: none;
@@ -115,4 +112,10 @@
 .form-check {
     margin-left: 0;
     padding-left: 0;
+}
+
+.body-question {
+    display: block;
+    margin-top: 15px!important;
+    word-wrap: break-word;
 }

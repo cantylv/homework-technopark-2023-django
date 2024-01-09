@@ -1,30 +1,26 @@
 {% load static %}
-{% load main_tags %}
 
 {% if context.object_list %}
     {% for question in context.object_list %}
         <!--Сперва получим все данные для отображения вопроса (лайки и т.п.)-->
-        {% get_question_like q_id=question.id as like %}
-        {% get_question_dislike q_id=question.id as dislike %}
-        {% get_question_ans q_id=question.id as ans %}
         <div class="card mb-3">
             <div class="row g-0">
                 <!--Статистика карточки: лайки, дизлайки и комментарии-->
                 <div class="col-md-2">
                     <div class="post_statistic text-end mt-3 big-screens-ldc">
                         <div class="likes col-12">
-                            <div class="d-inline-flex">{{ like }}</div>
+                            <div class="d-inline-flex">{{ question.like }}</div>
                             <button>
                                 <img src="{% static 'svg/like.svg' %}" alt="like">
                                 <!--надо как-то обрабатывать нажатие на кнопки-->
                             </button>
                         </div>
-                        <div class="dislikes col-12 mt-2">{{ dislike }}
+                        <div class="dislikes col-12 mt-2">{{ question.dislike }}
                             <button>
                                 <img src="{% static 'svg/dislike.svg' %}" alt="dislike">
                             </button>
                         </div>
-                        <div class="comments col-12 mt-2">{{ ans }}
+                        <div class="comments col-12 mt-2">{{ question.comment }}
                             <button>
                                 <img src="{% static 'svg/comment.svg' %}" alt="ans">
                             </button>
@@ -52,28 +48,28 @@
                         <!--Блок с лайками, комментариями и дизлайками, который будет отображаться на маленьких экранах-->
                         <div class="post_statistic text-end mt-3 сol-12 small-screens-ldc">
                             <!--Block with likes and dislikes-->
-                            <span class="likes me-4">{{ like }}
+                            <span class="likes me-4">{{ question.like }}
                             <button>
                                 <img src="{% static 'svg/like.svg' %}" alt="like">
                             </button> <!--Возможно, нужно будет сделать ссылки, а не кнопки-->
                         </span>
 
-                            <span class="dislikes me-4">{{ dislike }}
+                            <span class="dislikes me-4">{{ question.dislike }}
                             <button>
                                 <img src="{% static 'svg/dislike.svg' %}" alt="dislike">
                             </button>
                         </span>
-                            <span class="comments me-4">{{ ans }}
+                            <span class="comments me-4">{{ question.comment }}
                             <button>
                                 <img src="{% static 'svg/comment.svg' %}" alt="comm">
                             </button>
                         </span>
                         </div>
 
-                        {% get_question_tags q_id=question.id as tags %}
+
                         <div class="tag-listing text-end me-3">
-                            {% for tag in tags %}
-                                <a href="{% url 'tag' tag_name=tag %}">{{ tag }}</a>
+                            {% for tag in question.tags.all %}
+                                <a href="{% url 'tag' tag_name=tag.name %}">{{ tag.name }}</a>
                             {% endfor %}
                         </div>
 

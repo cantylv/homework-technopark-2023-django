@@ -3,7 +3,9 @@ from main.models import *
 
 # Библиотека для генерации случайных данных
 from faker import Faker
-from faker.providers.lorem.en_US import Provider
+
+# Для получения случайных элементов
+import random
 
 
 class Command(BaseCommand):
@@ -19,7 +21,9 @@ class Command(BaseCommand):
 
         generator = Faker('en_US')
 
-        # User
+        user_list = []
+        profile_list = []
+        # User and Profile
         for i in range(ratio):
             user = User()
             user.password = generator.password(length=10)
@@ -32,86 +36,145 @@ class Command(BaseCommand):
             user.is_staff = False
             user.is_active = True
             user.date_reg = generator.date()
-            user.rating = generator.pyint()
             user.date_joined = generator.date_time()
-            user.save()
+            user_list.append(user)
+
             # Profile
             profile = Profile()
             profile.user = user
             profile.avatar = 'users/user.jpg'
-            profile.save()
+            profile_list.append(profile)
 
-        # Question
-        for i in range(ratio*10):
-            q = Question()
-            q.title = generator.paragraph(nb_sentences=1)
-            q.text = generator.paragraph(nb_sentences=5)
-            # Получаем случайного пользователя из базы данных
-            random_user = User.objects.order_by('?').first()
-            q.date_create = generator.date()
-            q.rating = generator.pyint(max_value=ratio)
-            q.user = random_user
-            q.save()
+        # Удалять user_list не будем, потому что будем брать из него данные, а не в бд лазить
+        User.objects.bulk_create(user_list)
 
-        # Answer
-        for i in range(ratio*100):
-            a = Answer()
-            a.text = generator.paragraph(nb_sentences=5)
-            a.date_create = generator.date()
-            a.correct = generator.boolean(chance_of_getting_true=10)
-            a.rating = generator.pyint(max_value=ratio)
-            # Получаем случайного пользователя из базы данных
-            random_user = User.objects.order_by('?').first()
-            a.user = random_user
-            # Получаем случайный вопрос из базы данных
-            random_question = Question.objects.order_by('?').first()
-            a.question = random_question
-            a.save()
+        Profile.objects.bulk_create(profile_list)
+        del profile_list
 
+        print('_________Users were added_________')
+        print('_________Profiles were added_________')
+
+        tag_list = []
         # Tag
         for i in range(ratio):
             tag = Tag()
             tag.name = generator.word()
-            tag.rating = generator.pyint()
-            tag.save()
+            tag.rating = generator.pyint(max_value=ratio * 10)
+            tag_list.append(tag)
 
-        # TagQuestion
-        for i in range(ratio*10):
-            unit = TagQuestion()
-            unit.question = generator.pyint(min_value=1, max_value=100)
-            unit.tag = generator.pyint(min_value=1, max_value=100)
-            unit.save()
+        Tag.objects.bulk_create(tag_list)
+        print('_________Tags were added_________')
 
-        # Likes
-        for i in range(ratio*200):
-            like_question = LikeQuestion()
-            like_answer = LikeAnswer()
+        question_list = []
+        # Question
+        for i in range(ratio * 10):
+            q = Question()
+            q.title = generator.paragraph(nb_sentences=1)
+            q.text = generator.paragraph(nb_sentences=2)
+            # Получаем случайного пользователя из базы данных
+            # random_user = User.objects.order_by('?').first()
 
-            random_user = User.objects.order_by('?').first()
-            random_question = Question.objects.order_by('?').first()
-            random_answer = Answer.objects.order_by('?').first()
+            # всего ratio пользователей, поэтому обращения к несуществующим данным не будет
+            random_user = user_list[i % ratio]
+            q.date_create = generator.date()
+            q.rating = generator.pyint(max_value=ratio * 4)
+            q.like = generator.pyint(max_value=ratio)
+            q.dislike = generator.pyint(max_value=ratio)
+            q.comment = generator.pyint(max_value=ratio)
+            q.user = random_user
+            question_list.append(q)
 
-            like_question.user = random_user
-            like_question.question = random_question
-            like_question.save()
+        # Удалять question_list не будем, потому что будем брать из него данные, а не в бд лазить
+        Question.objects.bulk_create(question_list)
+        # Теперь память под теги можно освободить
+        del tag_list
 
-            like_answer.user = random_user
-            like_answer.answer = random_answer
-            like_answer.save()
+        print('_________Questions were added_________')
 
-        # Dislikes
-        for i in range(ratio * 200):
-            dislike_question = DislikeQuestion()
-            dislike_answer = DislikeAnswer()
+        answer_list = []
+        # Answer
+        for i in range(ratio * 100):
+            a = Answer()
+            a.text = generator.paragraph(nb_sentences=2)
+            a.date_create = generator.date()
+            a.correct = generator.boolean(chance_of_getting_true=10)
+            a.rating = generator.pyint(max_value=ratio * 4)
+            a.like = generator.pyint(max_value=ratio)
+            a.dislike = generator.pyint(max_value=ratio)
+            # Получаем пользователя из списка
+            random_user = user_list[i % ratio]
+            a.user = random_user
+            # Получаем случайный вопрос из базы данных
+            random_question = question_list[i % ratio * 10]
+            a.question = random_question
+            answer_list.append(a)
 
-            random_user = User.objects.order_by('?').first()
-            random_question = Question.objects.order_by('?').first()
-            random_answer = Answer.objects.order_by('?').first()
+        Answer.objects.bulk_create(answer_list)
 
-            dislike_question.user = random_user
-            dislike_question.question = random_question
-            dislike_question.save()
+        print('_________Answers were added_________')
 
-            dislike_answer.user = random_user
-            dislike_answer.answer = random_answer
-            dislike_answer.save()
+        likeQuestion_list = []
+        dislikeQuestion_list = []
+
+        likeAnswer_list = []
+        dislikeAnswer_list = []
+
+        # Likes and Dislikes
+        div_quest = ratio * 10  # кол-во вопросов
+        div_ans = ratio * 100  # кол-во ответов
+        for user in range(ratio):
+            for i in range(1, 201):
+                # Instances
+                like_question = LikeQuestion()
+                dislike_question = DislikeQuestion()
+
+                like_answer = LikeAnswer()
+                dislike_answer = DislikeAnswer()
+
+                # Users
+                user_like = user_list[user]
+                user_dislike = user_list[ratio - user - 1]
+
+
+                like_question.user = user_like
+                dislike_question.user = user_dislike
+
+                like_answer.user = user_like
+                dislike_answer.user = user_dislike
+
+                # Get Question from List
+                question = question_list[(user + 1) * i % div_quest]
+
+                # Get Answer From List
+                answer = answer_list[(user + 1) * i % div_ans]
+
+                # Fill Fields
+                like_question.question = question
+                dislike_question.question = question
+
+                like_answer.answer = answer
+                dislike_answer.answer = answer
+
+                # Append into Lists
+                likeQuestion_list.append(like_question)
+                dislikeQuestion_list.append(dislike_question)
+
+                # Answer
+                likeAnswer_list.append(like_answer)
+                dislikeAnswer_list.append(dislike_answer)
+
+
+            if user % 1000 == 0:
+                print(user)
+
+        LikeQuestion.objects.bulk_create(likeQuestion_list)
+        LikeAnswer.objects.bulk_create(likeAnswer_list)
+
+        DislikeQuestion.objects.bulk_create(dislikeQuestion_list)
+        DislikeAnswer.objects.bulk_create(dislikeAnswer_list)
+
+        print('_________LikeQuestions were added_________')
+        print('_________LikeAnswers were added_________')
+        print('_________DislikeQuestions were added_________')
+        print('_________DislikeAnswers were added_________')
+        print('END')

@@ -27,8 +27,6 @@
 
 {% block question %}
     <!--Сперва получим все данные для отображения вопроса (лайки и т.п.)-->
-    {% get_question_like q_id=question.id as like %}
-    {% get_question_dislike q_id=question.id as dislike %}
     <div class="container mb-5">
         <!--Развернутый ответ-->
         <div class="head_question border-bottom">
@@ -42,12 +40,12 @@
             <div class="post_statistic d-flex mt-1 big-screens-ldc justify-content-center">
                 <!--Block with likes and dislikes-->
 
-                <div class="likes mt-2 me-2">{{ like }}
+                <div class="likes mt-2 me-2">{{ question.like }}
                     <button>
                         <img src="{% static 'svg/like.svg' %}" alt="like">
                     </button>
                 </div>
-                <div class="dislikes mt-2 me-2">{{ dislike }}
+                <div class="dislikes mt-2 me-2">{{ question.dislike }}
                     <button>
                         <img src="{% static 'svg/dislike.svg' %}" alt="dislike">
                     </button>
@@ -57,10 +55,9 @@
 
         <span class="body-question">{{ question.text }}</span>
 
-        {% get_question_tags q_id=question.id as tags %}
         <div class="post-tags">
-            {% for tag in tags %}  <!-- Работать не будет, так как поменялось структура (ВНИМАНИЕ) -->
-                <a href="{% url 'tag' tag_name=tag %}">{{ tag }}</a>
+            {% for tag in question.tags.all %}  <!-- Работать не будет, так как поменялось структура (ВНИМАНИЕ) -->
+                <a href="{% url 'tag' tag_name=tag.name %}">{{ tag.name }}</a>
             {% endfor %}
         </div>
     </div>
@@ -69,7 +66,6 @@
 
 {% block content %}
     <!--Загрузим кол-во ответов-->
-    {% get_question_ans q_id=question.id as ans %}
     <div class="container-fluid container-lg answers ms-2">
         <div class="row">
             <div class="answers col-12">
@@ -84,7 +80,7 @@
                     </div>
                 </form>
                 <div class="comments mt-2 text-start mb-5">
-                    <span style="font-size: 1.1rem">{{ ans }} Answers</span>
+                    <span style="font-size: 1.1rem">{{ question.comment }} Answers</span>
                     <img src="{% static 'svg/comment.svg' %}" alt="comm">
                 </div>
 

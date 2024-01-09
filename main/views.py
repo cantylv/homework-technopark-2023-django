@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect
 from .models import *
 
 
+# проверять валидность per_page и ограничить кол-во выводимых элементов <=100 не будем, так как это зашито в бэке
 def paginate(object_list, req, per_page=20):
     search_text = req.GET.get('search', None)
     sorting = req.GET.get('sorted', None)
@@ -13,12 +14,6 @@ def paginate(object_list, req, per_page=20):
         page = int(req.GET.get('page', 1))
     except ValueError:
         page = 1
-
-    get_params = {
-        'search': search_text,
-        'sorted': sorting,
-        'page': page
-    }
 
     if search_text is not None:
         search_text_lower = search_text.lower()
@@ -46,8 +41,13 @@ def paginate(object_list, req, per_page=20):
         page = p.num_pages
     if page <= 0:
         page = 1
-    # обновим значение в словаре get_params, так как условия выше могли поменять значение page
-    get_params['page'] = page
+
+    # Будем передавать значения GET-параметров в шаблон, поскольку они будут пропадать, если их не передавать в формы
+    get_params = {
+        'search': search_text,
+        'sorted': sorting,
+        'page': page
+    }
 
     # Фильтрация заглушек "..."
     paginator_btns = p.get_elided_page_range(page, on_each_side=1, on_ends=1)

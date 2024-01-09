@@ -1,12 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models import F
 
 
 # У нас есть готовая модель User-а (django.contrib.auth.models.User)
 # Создадим модель Profile, чтобы дополнить модель User аватаркой пользователя
+# Вообще я бы так не делал, но это функциональное требование системы
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, unique=True)
     avatar = models.ImageField(upload_to='users/')
 
     class Meta:
@@ -14,10 +14,17 @@ class Profile(models.Model):
         db_table = 'Profile'
 
 
-class ManagerQuestion(models.Manager):
-    def get_queryset(self):
-        return Question.objects.select_related('user__profile')
+# Связь многие-ко-многим с сущностью Question
+class Tag(models.Model):
+    name = models.CharField(max_length=30)
+    rating = models.IntegerField(null=True, default=0)
 
+    class Meta:
+        managed = True
+        db_table = 'Tag'
+
+
+class ManagerQuestion(models.Manager):
     def getNewestQuestions(self):
         return self.order_by('-date_create')
 
@@ -28,15 +35,20 @@ class ManagerQuestion(models.Manager):
     # Сейчас пользователь может добавить много лайков к вопросу
     def getQuestionsByTag(self, tags):  # tags - строка, содержащая теги, разделенные символом @
         tags = tags.split('@')  # получили массив тегов
-        return self.filter(tagquestion__tag__name__in=tags).distinct(), tags
+        return self.filter(tag__name__in=tags), tags
 
 
+# Нужно добавить в модель систему рейтинга
 class Question(models.Model):
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     title = models.CharField(max_length=100)
     text = models.TextField(blank=True, null=True)
     date_create = models.DateField(auto_now_add=True)
     rating = models.IntegerField(null=True, default=0)
+    like = models.IntegerField(null=True, default=0)
+    dislike = models.IntegerField(null=True, default=0)
+    comment = models.IntegerField(null=True, default=0)
+    tags = models.ManyToManyField(Tag, blank=True)
 
     class Meta:
         managed = True
@@ -47,10 +59,6 @@ class Question(models.Model):
 
 
 class ManagerAnswer(models.Manager):
-
-    def get_queryset(self):
-        return Answer.objects.all().select_related('user__profile')
-
     def getNewestAnswers(self):
         return self.order_by('-date_create')
 
@@ -61,6 +69,7 @@ class ManagerAnswer(models.Manager):
         return self.filter(question=question_id)
 
 
+# Нужно добавить в модель систему рейтинга
 class Answer(models.Model):
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
@@ -68,6 +77,8 @@ class Answer(models.Model):
     date_create = models.DateField(auto_now_add=True)
     correct = models.BooleanField(default=False)
     rating = models.IntegerField(null=True, default=0)
+    like = models.IntegerField(null=True, default=0)
+    dislike = models.IntegerField(null=True, default=0)
 
     class Meta:
         managed = True
@@ -77,24 +88,6 @@ class Answer(models.Model):
     ansManager = ManagerAnswer()
 
 
-class Tag(models.Model):
-    name = models.CharField(max_length=30)
-    rating = models.IntegerField(null=True, default=0)
-
-    class Meta:
-        managed = True
-        db_table = 'Tag'
-
-
-class TagQuestion(models.Model):
-    question = models.ForeignKey(Question, models.CASCADE)
-    tag = models.ForeignKey(Tag, models.CASCADE)
-
-    class Meta:
-        managed = True
-        db_table = 'TagQuestion'
-
-
 class AbstractReactionQuestion(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
@@ -102,6 +95,7 @@ class AbstractReactionQuestion(models.Model):
     class Meta:
         managed = False
         abstract = True
+        unique_together = ["user", "question"]
 
 
 class AbstractReactionAnswer(models.Model):
@@ -111,8 +105,11 @@ class AbstractReactionAnswer(models.Model):
     class Meta:
         managed = False
         abstract = True
+        unique_together = ["user", "answer"]
 
 
+# Ниже приведенные таблицы нужны исключительно для того, чтобы понимать, делать пользователь отметку на посте,
+# комментарии или нет
 class LikeQuestion(AbstractReactionQuestion):
     class Meta:
         managed = True

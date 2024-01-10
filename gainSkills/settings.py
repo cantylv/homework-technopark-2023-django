@@ -136,6 +136,8 @@ MEDIA_URL = 'uploads/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 
 CRONJOBS = [
-    # ('*/1 * * * *', 'main.management.cron.best_users.updateBestUsers'),
-    ('*/1 * * * *', 'main.management.cron.popular_tags.updatePopularTags')
+    # “At 06:00 on Monday.”
+    ('* */6 * * */1', 'main.management.cron.best_users.updateBestUsers'),
+    # “At minute 0.” - каждый час без минуты
+    ('*/0 * * * *', 'main.management.cron.popular_tags.updatePopularTags')
 ]

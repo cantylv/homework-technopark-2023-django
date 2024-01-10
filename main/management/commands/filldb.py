@@ -113,7 +113,7 @@ class Command(BaseCommand):
             random_user = user_list[i % ratio]
             a.user = random_user
             # Получаем случайный вопрос из базы данных
-            random_question = question_list[i % ratio * 10]
+            random_question = question_list[i % (ratio * 10)]
             a.question = random_question
             answer_list.append(a)
 

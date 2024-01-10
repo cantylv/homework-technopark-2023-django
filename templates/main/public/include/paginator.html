@@ -1,3 +1,5 @@
+{% load main_tags %}
+
 <!--Пагинатор (выбор определенной страницы запроса)-->
 <nav aria-label="Page navigation" class="paginator ms-0">
     <ul class="pagination">
@@ -8,7 +10,11 @@
                         <span class="page-link p-not-number cur-page">{{ btn }}</span>
                     {% else %}
                        <li class="page-item">
-                            <a class="page-link" href="{% url 'home' %}?{% if context.get_params.sorted %}sorted={{ context.get_params.sorted }}&{% endif %}page={{ btn }}{% if context.get_params.search %}&search={{ context.get_params.search }}{% endif %}">{{ btn }}</a>
+                            {% if context.object_list.object_list|isQuestion %}
+                                <a class="page-link" href="{% url 'home' %}?{% if context.get_params.sorted %}sorted={{ context.get_params.sorted }}&{% endif %}page={{ btn }}{% if context.get_params.search %}&search={{ context.get_params.search }}{% endif %}">{{ btn }}</a>
+                            {% else %}
+                                 <a class="page-link" href="{% url 'question' question.id %}?{% if context.get_params.sorted %}sorted={{ context.get_params.sorted }}&{% endif %}page={{ btn }}{% if context.get_params.search %}&search={{ context.get_params.search }}{% endif %}">{{ btn }}</a>
+                            {% endif %}
                         </li>
                     {% endif %}
                 {% else %}

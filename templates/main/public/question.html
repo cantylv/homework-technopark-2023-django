@@ -73,8 +73,12 @@
                     <div class="sorting_answers d-flex flex-row align-items-center mb-3 justify-content-end">
                         <span class="me-2">Sorted by:</span>
                         <select name="sorted" class="form-select" style="max-width: 200px">
-                            <option value="newest">Newest</option>
-                            <option value="high_score">Highest Score</option>
+                            <option value="newest" {% if context.get_params.sorted == "newest" %} selected {% endif %}>
+                                Newest
+                            </option>
+                            <option value="high_score" {% if context.get_params.sorted == "high_score" %}
+                                    selected {% endif %}>Highest Score
+                            </option>
                         </select>
                         <input type="submit" class="btn btn-primary ms-2" value="Apply">
                     </div>

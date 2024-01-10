@@ -1,6 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+weightParam = {
+    'like': 4,
+    'dislike': 1,
+    'comment': 2
+}
+
 
 # У нас есть готовая модель User-а (django.contrib.auth.models.User)
 # Создадим модель Profile, чтобы дополнить модель User аватаркой пользователя
@@ -35,7 +41,7 @@ class ManagerQuestion(models.Manager):
     # Сейчас пользователь может добавить много лайков к вопросу
     def getQuestionsByTag(self, tags):  # tags - строка, содержащая теги, разделенные символом @
         tags = tags.split('@')  # получили массив тегов
-        return self.filter(tag__name__in=tags), tags
+        return self.filter(tags__name__in=tags), tags
 
 
 # Нужно добавить в модель систему рейтинга
@@ -56,6 +62,10 @@ class Question(models.Model):
 
     objects = models.Manager()
     questManager = ManagerQuestion()
+
+    def countRating(self):
+        self.rating = (weightParam['like'] * self.like + weightParam['dislike'] * self.dislike +
+                       weightParam['comment'] * self.comment)
 
 
 class ManagerAnswer(models.Manager):
@@ -86,6 +96,9 @@ class Answer(models.Model):
 
     objects = models.Manager()
     ansManager = ManagerAnswer()
+
+    def countRating(self):
+        self.rating = weightParam['like'] * self.like + weightParam['dislike'] * self.dislike
 
 
 class AbstractReactionQuestion(models.Model):

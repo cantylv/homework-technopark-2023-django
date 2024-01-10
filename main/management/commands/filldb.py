@@ -89,6 +89,14 @@ class Command(BaseCommand):
         # Теперь память под теги можно освободить
         del tag_list
 
+        current_tag_id = 1
+        for q in question_list:
+            tag_number = random.randint(0, 3)
+            q.tags.set(Tag.objects.filter(id__gte=current_tag_id).filter(id__lt=current_tag_id+tag_number))
+            current_tag_id += tag_number
+            current_tag_id %= ratio
+
+
         print('_________Questions were added_________')
 
         answer_list = []
@@ -135,7 +143,6 @@ class Command(BaseCommand):
                 user_like = user_list[user]
                 user_dislike = user_list[ratio - user - 1]
 
-
                 like_question.user = user_like
                 dislike_question.user = user_dislike
 
@@ -162,7 +169,6 @@ class Command(BaseCommand):
                 # Answer
                 likeAnswer_list.append(like_answer)
                 dislikeAnswer_list.append(dislike_answer)
-
 
             if user % 1000 == 0:
                 print(user)

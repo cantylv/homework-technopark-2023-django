@@ -132,3 +132,14 @@ class DislikeAnswer(AbstractReactionAnswer):
     class Meta:
         managed = True
         db_table = 'DislikeAnswer'
+
+
+# Эти таблицы нужны для выборки лучших пользователей и тегов. Особенность в том, что их значение будет меняться только
+# через cron-скрипты
+
+class BestUsers(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    class Meta:
+        managed = True
+        db_table = 'BestUsers'

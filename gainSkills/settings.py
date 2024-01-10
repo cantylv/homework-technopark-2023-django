@@ -36,7 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
-    'main.apps.MainConfig'
+    'main.apps.MainConfig',
+    'django_crontab'
 ]
 
 MIDDLEWARE = [
@@ -134,4 +135,7 @@ MEDIA_URL = 'uploads/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 
-
+CRONJOBS = [
+    # ('*/1 * * * *', 'main.management.cron.best_users.updateBestUsers'),
+    ('*/1 * * * *', 'main.management.cron.popular_tags.updatePopularTags')
+]

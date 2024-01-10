@@ -1,6 +1,4 @@
 from django import template
-from django.db.models import Max, Value
-from django.db.models.functions import Coalesce
 
 from main.models import *
 
@@ -22,20 +20,5 @@ def get_popular_tags():
 # Получение топ-10 пользователей с самыми популярными ответами
 @register.simple_tag()
 def get_best_users():
-    # Вернется QuerySet из tuple
-    top_users_questions = User.objects.annotate(
-        rating=Coalesce(Max('question__rating'), Value(0))).order_by('-rating').select_related('profile')[:10]
+    return BestUsers.objects.all()[:10]
 
-    top_users_answers = User.objects.annotate(
-        rating=Coalesce(Max('answer__rating'), Value(0))).order_by('-rating').select_related('profile')[:10]
-
-    top_users = top_users_questions.union(top_users_answers).order_by('-rating')
-
-    users = []
-    for user in top_users:
-        if user not in users:
-            users.append(user)
-        if len(users) == 10:
-            break
-
-    return users

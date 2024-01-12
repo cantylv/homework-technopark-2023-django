@@ -3,6 +3,8 @@ from django.core.paginator import Paginator
 from django.db.models import Q  # для сложных условий в методе filter
 from django.http import HttpResponseNotFound
 from django.shortcuts import render, redirect
+from django.views.decorators.http import require_GET
+
 from .models import *
 
 
@@ -64,6 +66,7 @@ def paginate(object_list, req, per_page=20):
     return context
 
 
+@require_GET
 def listing(req):
     quest = Question.questManager.all()
     context = paginate(quest, req)
@@ -72,6 +75,7 @@ def listing(req):
     })
 
 
+@require_GET
 def question(req, question_id):
     try:
         found_q = Question.questManager.get(id=question_id)
@@ -85,6 +89,7 @@ def question(req, question_id):
     })
 
 
+@require_GET
 def profile(req, username):
     try:
         selected_user = User.objects.get(username=username)
@@ -96,6 +101,7 @@ def profile(req, username):
     })
 
 
+@require_GET
 def tag(req, tag_name):
     # проверка на пустоту массива необязательна, поскольку эта функция не вызовется, если не будут переданы теги
     quests, tags = Question.questManager.getQuestionsByTag(tag_name)
@@ -118,6 +124,7 @@ def ask(req):
     return render(req, 'main/public/ask.html')
 
 
+@require_GET
 def about(req):
     return render(req, 'main/public/about.html')
 

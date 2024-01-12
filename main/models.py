@@ -22,8 +22,9 @@ class Profile(models.Model):
 
 # Связь многие-ко-многим с сущностью Question
 class Tag(models.Model):
-    name = models.CharField(max_length=30)
-    rating = models.IntegerField(null=True, default=0)
+    name = models.CharField(max_length=30, db_index=True)
+    # можем проиндексировать, потому что менять рейтинг тега мы будем с помощью cron-скрипта не так часто
+    rating = models.IntegerField(null=True, default=0, db_index=True)
 
     class Meta:
         managed = True

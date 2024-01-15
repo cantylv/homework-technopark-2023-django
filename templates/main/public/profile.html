@@ -10,15 +10,14 @@
 {% endblock %}
 
 {% load main_tags %}
-{% get_user as user %}
-
 
 {% block profile_block %} <!--Центральные надписи на странице-->
     <div class="profile-header d-flex flex-wrap justify-content-start align-items-center mx-0">
         <div class="user-block d-flex flex-wrap justify-content-center">
-            <img src="{{ user.profile.avatar.url }}" alt="{{ user.username }}' ava" class="round-photo col-12">
+            <img src="{{ data_user.profile.avatar.url }}" alt="{{ data_user.user.username }}' ava"
+                 class="round-photo col-12">
             <div class="col-12 mt-2 text-center">
-                <span class="username">{{ user.username }}</span>
+                <span class="username">{{ data_user.user.username }}</span>
             </div>
         </div>
     </div>
@@ -29,64 +28,17 @@
     <div class="container mt-5">
         <h2 class="mb-4">Settings</h2>
         <div class="settings row">
-            <form class="field-input col-lg-6 col-md-8 col-auto col-auto" id="profileForm">
-
-                <div class="row g-0 mb-3">
-
-                    <div id="loginRow"></div>
-
-                    <div class="col">
-                        <span>Login</span>
+            <form class="field-input col-lg-6 col-md-8 col-auto col-auto" id="profileForm" method="post"
+                  action="{% url 'profile' username=data_user.user.username %}" enctype="multipart/form-data">
+            {% csrf_token %}
+                {% for row in form %}
+                    <div class="row g-0 mb-3">
+                        <div class="form-error">{{ row.errors }}</div>
+                        <div class="col"><span>{{ row.label }}</span></div>
+                        <div class="col">{{ row }}</div>
                     </div>
-
-                    <div class="col">
-                        <input type="text" class="form-control" placeholder="Login" aria-label="Login"
-                               value="{{ user.username }}" id="loginInput">
-                    </div>
-                </div>
-
-
-                <!--<div class="row g-0 mb-3">
-
-                    <div class="warning-card-body p-1 mb-3">
-                        Sorry, this username already in use!
-                    </div>
-
-                    <div class="col">
-                        <span>Username</span>
-                    </div>
-                    <div class="col">
-                        <input type="text" class="form-control" placeholder="Username" aria-label="Username"
-                               value="{{ user.username }}">
-                    </div>
-                </div> -->
-
-                <div class="row g-0 mb-3">
-
-                    <div id="emailRow"></div>
-
-                    <div class="col">
-                        <span>Email</span>
-                    </div>
-
-                    <div class="col">
-                        <input type="text" class="form-control" placeholder="E-mail" aria-label="Email"
-                               value="{{ user.email }}" id="emailInput">
-                    </div>
-                </div>
-
-                <div class="row g-0">
-
-                    <div class="col">
-                        <span>Upload Avatar</span>
-                    </div>
-
-                    <div class="col">
-                        <input class="form-control" type="file" id="avatarInput" value="{{ user.profile.avatar.url }}">
-                    </div>
-                </div>
-
-
+                {% endfor %}
+                {{ form.non_field_errors }}
                 <div class="col mt-2">
                     <button class="btn btn-primary btn-save-changes" type="submit">Save changes</button>
                 </div>

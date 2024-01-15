@@ -17,83 +17,18 @@
 
 
 {% block authorization %}
-    <form class="field-input col-sm-8 col-auto" id="regForm">
-
+    <form class="field-input col-sm-8 col-auto" id="regForm" method="post" action="{% url 'reg' %}">
+        {% csrf_token %}
         <h3 class="mb-4">Registration</h3>
-
-        <div id="loginRow"></div>
-
-        <div class="row g-0 mb-2">
-            <div class="col">
-                <span class="me-5">Username</span>
+        {% for row in form %}
+            <div class="row g-0 mb-2">
+                <div class="form-error">{{ row.errors }}</div>
+                <div class="col"><span class="me-5">{{ row.label }}</span></div>
+                <div class="col">{{ row }}</div>
             </div>
-            <div class="col">
-                <input type="text" class="form-control" placeholder="Login" aria-label="Login"
-                       value="ilobanovman" id="loginInput">
-            </div>
-        </div>
-
-        <!--<div class="warning-card-body p-1 my-3">
-            Sorry, this nickname already in use!
-        </div>
-
-        <div class="row g-0 mb-2">
-            <div class="col">
-                <span class="me-5">Username</span>
-            </div>
-            <div class="col">
-                <input type="text" class="form-control" placeholder="Username" aria-label="Username"
-                       value="ilobanovman">
-            </div>
-        </div>-->
-
-
-        <div id="emailRow"></div>
-
-        <div class="row g-0 mb-2">
-            <div class="col">
-                <span class="me-5">Email</span>
-            </div>
-            <div class="col">
-                <input type="text" class="form-control" placeholder="E-mail" aria-label="Email"
-                       value="ilobanovman@gmail.com" id="emailInput">
-            </div>
-        </div>
-
-
-        <div id="avatarRow"></div>
-
-        <div class="row g-0 mb-2">
-            <div class="col">
-                <span class="me-5">Load Avatar</span>
-            </div>
-            <div class="col">
-                <input class="form-control" type="file" id="avatarInput">
-            </div>
-        </div>
-
-
-        <div class="row g-0 mb-2">
-            <div class="col">
-                <span class="me-5">Password</span>
-            </div>
-            <div class="col">
-                <input type="password" class="form-control" id="passInput">
-            </div>
-        </div>
-
-        <div class="row g-0 mb-2">
-            <div class="col">
-                <span class="me-5">Repeat password</span>
-            </div>
-            <div class="col">
-                <input type="password" class="form-control" id="passInputRepeat">
-            </div>
-        </div>
-
-        <div id="passRow"></div>
-
-        <button type="submit" class="btn btn-primary btn-signup-finish">Finish</button>
+        {% endfor %}
+        {{ form.non_field_errors }}
+        <button type="submit" class="btn btn-primary btn-signup-finish">Sign in</button>
     </form>
 {% endblock %}
 

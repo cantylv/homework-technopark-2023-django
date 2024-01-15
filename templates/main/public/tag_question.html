@@ -6,11 +6,10 @@
 
 {% load main_tags %}
 
-{% get_user as user %}
 {% get_best_users as best_users %}
 
 {% block link_css %} <!--Файл стилей для страницы с авторизованным пользователем-->
-    {% if user.username != 'XXX' %}
+    {% if data_user.user.is_authenticated %}
         <link href="{% static 'css/css_authorized/listing_authorized.css' %}" type="text/css" rel="stylesheet">
     {% else %}
         <link href="{% static 'css/css_unauthorized/listing_unauthorized.css' %}" type="text/css" rel="stylesheet">

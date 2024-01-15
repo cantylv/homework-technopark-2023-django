@@ -1,5 +1,6 @@
 from django.urls import path, re_path
 from django.views.generic.base import RedirectView
+from django.urls import reverse
 from . import views
 
 urlpatterns = [
@@ -14,12 +15,12 @@ urlpatterns = [
     path('user/ask/', views.ask, name='ask'),  # ask question
 
     # общий путь для перенаправлений на соответствующие страницы с помощью рег выражений
-    re_path(r'^about.*$', RedirectView.as_view(pattern_name='about')),
+    re_path(r'^about(/.*)?$', RedirectView.as_view(url='/about/')),
     re_path(r'^tag/(?P<tag_name>[\w-]+)/.*$', RedirectView.as_view(pattern_name='tag')),
     re_path(r'^question/(?P<question_id>\d+)/.*$', RedirectView.as_view(pattern_name='question')),
-    re_path(r'^user/profile/(?P<login>[\w-]+)/.*$', RedirectView.as_view(pattern_name='profile')),
-    re_path(r'^user/auth/.*', RedirectView.as_view(pattern_name='auth')),
-    re_path(r'^user/reg/.*', RedirectView.as_view(pattern_name='reg')),
-    re_path(r'^user/ask/.*', RedirectView.as_view(pattern_name='ask')),
-    re_path(r'^(?!uploads/users/|admin($|/)).*$', RedirectView.as_view(url='/'))
+    re_path(r'^user/profile/(?P<username>[\w-]+)/.*$', RedirectView.as_view(pattern_name='profile')),
+    re_path(r'^user/auth/.*', RedirectView.as_view(url='/user/auth/')),
+    re_path(r'^user/reg/.*', RedirectView.as_view(url='/user/reg/')),
+    re_path(r'^user/ask(/.*)?$', RedirectView.as_view(url="/user/ask/")),
+    re_path(r'^(?!uploads/users/|admin($|/)).*$', RedirectView.as_view(url="/"))
 ]

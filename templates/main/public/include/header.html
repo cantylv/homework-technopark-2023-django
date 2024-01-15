@@ -4,16 +4,14 @@
 
 <!--Загрузим пользователя системы (временно)-->
 {% load main_tags %}
-{% get_user as user %}
-
 
 <!--Навигационное меню в шапке страницы-->
-{% if user.username != 'XXX' %}
+{% if data_user.user.is_authenticated %}
     <div class="pt-2 big-screens">
         <ul class="nav">
             <li><a href="{% url 'home' %}" class="nav-link px-2">Home</a></li>
             <li><a href="{% url 'ask' %}" class="nav-link px-2">Ask</a></li>
-            <li><a href="{% url 'profile' username=user.username %}" class="nav-link px-2">Profile</a></li>
+            <li><a href="{% url 'profile' username=data_user.user.username %}" class="nav-link px-2">Profile</a></li>
             <li><a href="{% url 'about' %}" class="nav-link px-2">About</a></li>
         </ul>
     </div>
@@ -21,6 +19,7 @@
     <div class="pt-2 big-screens">
         <ul class="nav">
             <li><a href="{% url 'home' %}" class="nav-link px-2">Home</a></li>
+            <li><a href="{% url 'ask' %}" class="nav-link px-2">Ask</a></li>
             <li><a href="{% url 'about' %}" class="nav-link px-2">About</a></li>
         </ul>
     </div>
@@ -57,16 +56,16 @@
     </form>
 
     <!--Блок с пользователем, содержащий маленькую аватарку, никнейм и кнопку выхода-->
-    {% if user.username != 'XXX' %}
+    {% if data_user.user.is_authenticated %}
         <div class="user-block-header pe-2 pt-2 d-flex flex-wrap justify-content-center align-items-center">
-            <img src="{{ user.profile.avatar.url }}" alt="{{ user.username }}' ava" class="col-12 big-screens">
+            <img src="{{ data_user.profile.avatar.url }}" alt="{{ data_user.user.username }}' ava" class="col-12 big-screens">
             <a class="col-12 text-center text-decoration-none big-screens"
-               href="{% url 'profile' username=user.username %}">{{ user.username }}</a>
+               href="{% url 'profile' username=data_user.user.username %}">{{ data_user.user.username }}</a>
         </div>
-        <button type="button" class="btn btn-primary btn-sign-out ms-md-0 ms-1 big-screens">Sign-out</button>
+        <button type="button" class="btn btn-primary btn-sign-out ms-md-0 ms-1 big-screens">Sign out</button>
     {% else %}
-        <button type="button" class="btn btn-outline-primary btn-signin me-2 big-screens">Login</button>
-        <button type="button" class="btn btn-primary btn-signup ms-md-0 ms-1 big-screens">Sign-up</button>
+        <button type="button" class="btn btn-outline-primary btn-signin me-2 big-screens">Sign in</button>
+        <button type="button" class="btn btn-primary btn-signup ms-md-0 ms-1 big-screens">Sign up</button>
     {% endif %}
 </div>
 

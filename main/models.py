@@ -1,6 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import datetime
 
+
+# Нужно будет добавить красивую админ-панель
+# Словарь, который содержит вес параметра оценки рейтинга в моей системе
 weightParam = {
     'like': 4,
     'dislike': 1,

@@ -35,7 +35,6 @@ class Command(BaseCommand):
             user.email = generator.unique.free_email()
             user.is_staff = False
             user.is_active = True
-            user.date_reg = generator.date()
             user.date_joined = generator.date_time()
             user_list.append(user)
 

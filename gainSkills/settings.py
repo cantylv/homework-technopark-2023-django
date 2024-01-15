@@ -141,3 +141,5 @@ CRONJOBS = [
     # “At minute 0.” - каждый час без минуты
     ('*/0 * * * *', 'main.management.cron.popular_tags.updatePopularTags')
 ]
+
+LOGIN_URL = '/user/auth/'

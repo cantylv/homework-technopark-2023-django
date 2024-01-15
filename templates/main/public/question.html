@@ -102,3 +102,22 @@
         {% include 'main/public/include/paginator.html' %}
     </div>
 {% endblock %}
+
+{% block answer %}
+    <div class="answer">
+        <div class="mb-3">
+            <form id="authForm" method="post" action="{% url 'question' question_id=question.id %}">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                {% for row in form %}
+                    <div class="row g-0 mb-2">
+                        <div class="form-error">{{ row.errors }}</div>
+                        <label for="exampleFormControlTextarea1" class="form-label">{{ row.label }}</label>
+                        <div>{{ row }}</div>
+                    </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary btn-submit mt-3">Submit</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

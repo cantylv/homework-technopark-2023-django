@@ -80,7 +80,7 @@ class ManagerAnswer(models.Manager):
         return self.order_by('-rating')
 
     def getAnswersByQuestId(self, question_id):
-        return self.filter(question=question_id)
+        return self.filter(question=question_id).order_by('date_create')
 
 
 # Нужно добавить в модель систему рейтинга
@@ -130,7 +130,6 @@ class LikeQuestion(AbstractReactionQuestion):
         managed = True
         db_table = 'LikeQuestion'
         unique_together = ["user", "question"]
-
 
 
 class LikeAnswer(AbstractReactionAnswer):

@@ -315,4 +315,20 @@ class AddQuestionForm(forms.Form):
 
 
 class AddAnswerForm(forms.Form):
-    pass
+    text = forms.CharField(min_length=3, required=True, strip=True, label="Your answer",
+                           widget=forms.Textarea(attrs={"class": "col-12 py-1 form-control", "rows": 6}),
+                           help_text="Introduce the problem and expand on what you put in the title. "
+                                     "Minimum 20 characters.")
+
+    def clean_text(self):
+        text = self.cleaned_data['text']
+        if len(text) < 3:
+            raise forms.ValidationError(
+                "text must contain minimum 3 characters"
+            )
+        return text
+
+    def save(self, question_id, user):
+        text = self.cleaned_data['text']
+        q = Question.objects.get(id=question_id)
+        return Answer.objects.create(text=text, question=q, user=user)

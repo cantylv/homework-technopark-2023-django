@@ -95,10 +95,15 @@ def listing(req):
 # обрабатывает POST-запросы на добавление ответа, а также GET-запрос на отображение вопроса и его ответов
 def question(req, question_id):
     if req.method == 'POST':
-        pass
+        form = AddAnswerForm(req.POST)
+        if form.is_valid():
+            if req.user.is_authenticated:
+                form.save(question_id=question_id, user=req.user)
+                return redirect(reverse('question', kwargs={'question_id': question_id}))
+            else:
+                form.add_error(None, "You need to authorize!")
     else:
-        pass
-
+        form = AddAnswerForm()
     try:
         found_q = Question.questManager.get(id=question_id)
     except ObjectDoesNotExist:
@@ -113,7 +118,8 @@ def question(req, question_id):
     return render(req, 'main/public/question.html', {
         'question': found_q,
         'context': context,
-        'data_user': data_user
+        'data_user': data_user,
+        'form': form
     })
 
 
@@ -232,5 +238,3 @@ def about(req):
 # Функции служебные
 def page_404(req, exc):
     return HttpResponseNotFound('<h1>Page not found :(</h1>')
-
-

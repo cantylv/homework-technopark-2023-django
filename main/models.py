@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
 
-
 # Нужно будет добавить красивую админ-панель
 # Словарь, который содержит вес параметра оценки рейтинга в моей системе
 weightParam = {
@@ -26,7 +25,7 @@ class Profile(models.Model):
 
 # Связь многие-ко-многим с сущностью Question
 class Tag(models.Model):
-    name = models.CharField(max_length=30, db_index=True)
+    name = models.CharField(max_length=30, unique=True, db_index=True)
     # можем проиндексировать, потому что менять рейтинг тега мы будем с помощью cron-скрипта не так часто
     rating = models.IntegerField(null=True, default=0, db_index=True)
 
@@ -113,7 +112,6 @@ class AbstractReactionQuestion(models.Model):
     class Meta:
         managed = False
         abstract = True
-        unique_together = ["user", "question"]
 
 
 class AbstractReactionAnswer(models.Model):
@@ -123,7 +121,6 @@ class AbstractReactionAnswer(models.Model):
     class Meta:
         managed = False
         abstract = True
-        unique_together = ["user", "answer"]
 
 
 # Ниже приведенные таблицы нужны исключительно для того, чтобы понимать, делать пользователь отметку на посте,
@@ -132,24 +129,29 @@ class LikeQuestion(AbstractReactionQuestion):
     class Meta:
         managed = True
         db_table = 'LikeQuestion'
+        unique_together = ["user", "question"]
+
 
 
 class LikeAnswer(AbstractReactionAnswer):
     class Meta:
         managed = True
         db_table = 'LikeAnswer'
+        unique_together = ["user", "answer"]
 
 
 class DislikeQuestion(AbstractReactionQuestion):
     class Meta:
         managed = True
         db_table = 'DislikeQuestion'
+        unique_together = ["user", "question"]
 
 
 class DislikeAnswer(AbstractReactionAnswer):
     class Meta:
         managed = True
         db_table = 'DislikeAnswer'
+        unique_together = ["user", "answer"]
 
 
 # Эти таблицы нужны для выборки лучших пользователей и тегов. Особенность в том, что их значение будет меняться только

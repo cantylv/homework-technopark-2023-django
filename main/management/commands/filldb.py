@@ -26,7 +26,7 @@ class Command(BaseCommand):
         # User and Profile
         for i in range(ratio):
             user = User()
-            user.password = generator.password(length=10)
+            user.password = generator.password(length=5)
             user.last_login = generator.date_time()
             user.is_superuser = False
             user.username = generator.unique.user_name()
@@ -57,8 +57,9 @@ class Command(BaseCommand):
         # Tag
         for i in range(ratio):
             tag = Tag()
-            tag.name = generator.word()
-            tag.rating = generator.pyint(max_value=ratio * 10)
+            # tag.name = generator.unique.word()  -- не может найти уникальное кол-во записей за макс кол-во итераций
+            tag.name = generator.unique.user_name()
+            tag.rating = 0
             tag_list.append(tag)
 
         Tag.objects.bulk_create(tag_list)
@@ -70,17 +71,13 @@ class Command(BaseCommand):
             q = Question()
             q.title = generator.paragraph(nb_sentences=1)
             q.text = generator.paragraph(nb_sentences=2)
-            # Получаем случайного пользователя из базы данных
-            # random_user = User.objects.order_by('?').first()
-
-            # всего ratio пользователей, поэтому обращения к несуществующим данным не будет
-            random_user = user_list[i % ratio]
             q.date_create = generator.date()
-            q.rating = generator.pyint(max_value=ratio * 4)
-            q.like = generator.pyint(max_value=ratio)
-            q.dislike = generator.pyint(max_value=ratio)
-            q.comment = generator.pyint(max_value=ratio)
-            q.user = random_user
+            q.rating = 0
+            q.like = 0
+            q.dislike = 0
+            q.comment = 0
+            # всего ratio пользователей, поэтому обращения к несуществующим данным не будет
+            q.user = user_list[i % ratio]
             question_list.append(q)
 
         # Удалять question_list не будем, потому что будем брать из него данные, а не в бд лазить
@@ -91,10 +88,9 @@ class Command(BaseCommand):
         current_tag_id = 1
         for q in question_list:
             tag_number = random.randint(0, 3)
-            q.tags.set(Tag.objects.filter(id__gte=current_tag_id).filter(id__lt=current_tag_id+tag_number))
+            q.tags.set(Tag.objects.filter(id__gte=current_tag_id).filter(id__lt=current_tag_id + tag_number))
             current_tag_id += tag_number
             current_tag_id %= ratio
-
 
         print('_________Questions were added_________')
 
@@ -105,15 +101,13 @@ class Command(BaseCommand):
             a.text = generator.paragraph(nb_sentences=2)
             a.date_create = generator.date()
             a.correct = generator.boolean(chance_of_getting_true=10)
-            a.rating = generator.pyint(max_value=ratio * 4)
-            a.like = generator.pyint(max_value=ratio)
-            a.dislike = generator.pyint(max_value=ratio)
+            a.rating = 0
+            a.like = 0
+            a.dislike = 0
             # Получаем пользователя из списка
-            random_user = user_list[i % ratio]
-            a.user = random_user
+            a.user = user_list[i % ratio]
             # Получаем случайный вопрос из базы данных
-            random_question = question_list[i % (ratio * 10)]
-            a.question = random_question
+            a.question = question_list[i % (ratio * 10)]
             answer_list.append(a)
 
         Answer.objects.bulk_create(answer_list)
@@ -130,29 +124,31 @@ class Command(BaseCommand):
         div_quest = ratio * 10  # кол-во вопросов
         div_ans = ratio * 100  # кол-во ответов
         for user in range(ratio):
-            for i in range(1, 201):
+            # Users
+            user_like = user_list[user]
+            user_dislike = user_list[ratio - user - 1]
+            for i in range(0, 200):
                 # Instances
                 like_question = LikeQuestion()
                 dislike_question = DislikeQuestion()
 
                 like_answer = LikeAnswer()
                 dislike_answer = DislikeAnswer()
+                #############################
 
                 # Users
-                user_like = user_list[user]
-                user_dislike = user_list[ratio - user - 1]
-
                 like_question.user = user_like
                 dislike_question.user = user_dislike
 
                 like_answer.user = user_like
                 dislike_answer.user = user_dislike
+                #############################
 
                 # Get Question from List
-                question = question_list[(user + 1) * i % div_quest]
+                question = question_list[(user * 200 + i) % div_quest]
 
                 # Get Answer From List
-                answer = answer_list[(user + 1) * i % div_ans]
+                answer = answer_list[(user * 200 + i) % div_ans]
 
                 # Fill Fields
                 like_question.question = question
@@ -170,7 +166,7 @@ class Command(BaseCommand):
                 dislikeAnswer_list.append(dislike_answer)
 
             if user % 1000 == 0:
-                print(user)
+                print(user / 1000, '%')
 
         LikeQuestion.objects.bulk_create(likeQuestion_list)
         LikeAnswer.objects.bulk_create(likeAnswer_list)

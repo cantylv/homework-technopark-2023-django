@@ -27,7 +27,7 @@
     <div class="form-question col-12 col-lg-9 d-flex flex-column">
 
         <!--Информационная карточка об этапах написания вопроса-->
-        <div class="card q-card-info bg-color-card-info d-inline-flex">
+        <div class="card q-card-info bg-color-card-info d-inline-flex mb-3">
 
             <div class="mt-4 ms-3" style="font-size: 1.3rem">Writing a good question</div>
 
@@ -45,56 +45,34 @@
             </div>
         </div>
 
-        <form id="askForm" class="col-12 d-flex flex-column">
+        <form id="askForm" class="col-12 d-flex flex-column" method="post" action="{% url 'ask' %}">
+            {% csrf_token %}
 
-            <!--Заголовок запроса-->
+            {% for row in form %}
+                {{ row.errors }}
+                <div class="card mt-1 mb-2 d-inline-flex">
+                    <div class="card-body">
+                        {% if row.label == "Tags" %}
+                            <div class="d-flex justify-content-between">
+                                <span style="font-size: 1.3rem">{{ row.label }}</span>
 
-            <div id="titleRow"></div>
-
-            <div class="card mt-3 d-inline-flex">
-                <div class="card-body">
-                    <span style="font-size: 1.3rem">Title</span>
-                    <p class="mb-1" style="font-size: 0.9rem">Be specific and imagine you’re asking a question
-                        to
-                        another
-                        person.</p>
-                    <input type="text" class="col-12 py-1 form-control"
-                           placeholder=" e.g. Is there an R function for finding the index of an element in a vector?"
-                           id="titleInput">
-                </div>
-            </div>
-
-            <!--Тело вопроса-->
-
-            <div id="bodyRow"></div>
-            <div class="card mt-3 d-inline-flex">
-                <div class="card-body">
-                    <span style="font-size: 1.3rem">Body</span>
-                    <p class="mb-1">What are the details of your problem?</p>
-                    <p class="mb-1" style="font-size: 0.9rem">Introduce the problem and expand on what you put
-                        in the title. Minimum 20 characters.</p>
-                    <textarea class="col-12 py-1 form-control" id="bodyInput"></textarea>
-                </div>
-            </div>
-
-            <div id="tagRow"></div>
-
-            <div class="card mt-3 d-inline-flex">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <span style="font-size: 1.3rem">Tags</span>
-                        <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#popularTags" aria-expanded="false" aria-controls="popularTags">
-                            Popular tags
-                        </button>
+                                <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#popularTags" aria-expanded="false" aria-controls="popularTags">
+                                    Popular tags
+                                </button>
+                            </div>
+                            <p class="mb-1" style="font-size: 0.9rem">{{ row.help_text }}</p>
+                            <p class="mb-1" style="font-size: 0.9rem"></p>
+                            {{ row }}
+                        {% else %}
+                            <span style="font-size: 1.3rem">{{ row.label }}</span>
+                            <p class="mb-1" style="font-size: 0.9rem">{{ row.help_text }}</p>
+                            {{ row }}
+                        {% endif %}
                     </div>
-                    <p class="mb-1" style="font-size: 0.9rem">Add up to 3 tags to describe what your question is
-                        about.
-                        Start typing to see suggestions.</p>
-                    <input type="text" class="col-12 py-1 form-control"
-                           placeholder=" e.g. (windows, database, vga)" id="tagInput">
                 </div>
-            </div>
+            {% endfor %}
+            {{ form.non_field_errors }}
 
             <div class="collapse mt-3" id="popularTags">
                 <div class="card card-body">

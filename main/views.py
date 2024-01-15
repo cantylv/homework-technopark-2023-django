@@ -13,7 +13,6 @@ from gainSkills.settings import LOGIN_URL
 from urllib.parse import urlsplit
 
 from .models import *
-
 from .forms import *
 
 
@@ -128,8 +127,7 @@ def profile(req, username):
     if req.method == "POST":
         form = ChangeProfile(data=req.POST, files=req.FILES)
         if form.is_valid():
-            form.save(req.user.id)
-            user = User.objects.get(id=req.user.id)
+            user = form.save(req.user.id)
             update_session_auth_hash(req, user)
             return redirect(reverse('profile', kwargs={'username': req.user.username}))
         print(form.is_valid())
@@ -146,7 +144,6 @@ def tag(req, tag_name):
     # проверка на пустоту массива необязательна, поскольку эта функция не вызовется, если не будут переданы теги
     quests, tags = Question.questManager.getQuestionsByTag(tag_name)
     context = paginate(quests, req)
-
     data_user = {'user': req.user}
     if req.user.is_authenticated:
         data_user['profile'] = Profile.objects.get(user=req.user.id)
@@ -170,7 +167,6 @@ def authorization(req):
             if user is not None:
                 login(req, user)
                 next_url = req.POST.get('next', '/')
-                print(next_url)
                 return redirect(next_url)
             else:
                 print("eblan")
@@ -193,7 +189,7 @@ def registration(req):
                 username = form.cleaned_data['username']
                 user = User.objects.get(username=username)
                 login(req, user)
-                return redirect(reverse('profile'))
+                return redirect(reverse('home'))
             except User.DoesNotExist:
                 form.add_error(None, "Unexpected error, please try to register once more!")
     else:
@@ -209,8 +205,17 @@ def ask(req):
     data_user = {'user': req.user}
     if req.user.is_authenticated:
         data_user['profile'] = Profile.objects.get(user=req.user.id)
+
+    if req.method == 'POST':
+        form = AddQuestionForm(req.POST)
+        if form.is_valid():
+            q = form.save(req.user)
+            return redirect(reverse("question", kwargs={"question_id": q.id}))
+    else:
+        form = AddQuestionForm()
     return render(req, 'main/public/ask.html', {
-        'data_user': data_user
+        'data_user': data_user,
+        'form': form
     })
 
 
@@ -229,6 +234,3 @@ def page_404(req, exc):
     return HttpResponseNotFound('<h1>Page not found :(</h1>')
 
 
-def is_safe_url(url, allowed_hosts):
-    parts = urlsplit(url)
-    return parts.netloc in allowed_hosts

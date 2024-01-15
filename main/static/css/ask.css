@@ -72,3 +72,14 @@
 .warning-card-body {
     background-color: rgba(255, 17, 48, 0.15);
 }
+
+.errorlist {
+    list-style-type: none; /* Убираем маркеры списка */
+    background-color: #FFDDDD; /* Задаем цвет фона ошибки */
+    padding: 10px 5px 10px 5px; /* Убираем внутренний отступ у списка */
+    color: #FF0000; /* Задаем цвет текста ошибки */
+}
+
+ul {
+    margin-bottom: 5px;
+}

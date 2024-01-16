@@ -119,3 +119,10 @@
     margin-top: 15px!important;
     word-wrap: break-word;
 }
+
+.errorlist {
+    list-style-type: none; /* Убираем маркеры списка */
+    background-color: #FFDDDD; /* Задаем цвет фона ошибки */
+    padding: 10px 5px 10px 5px; /* Убираем внутренний отступ у списка *
+    color: #FF0000; /* Задаем цвет текста ошибки */
+}

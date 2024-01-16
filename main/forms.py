@@ -60,11 +60,19 @@ class AddRegistrationForm(forms.Form):
             raise forms.ValidationError(
                 "Username must contain 8 or more characters: a-z/(A-Z), 0-9, _ and begin with a letter", code=1
             )
-        if User.objects.filter(username=username).count() > 1:
+        if User.objects.filter(username=username).count():
             raise forms.ValidationError(
                 "This username already in use. Please write another", code=1
             )
         return username
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if User.objects.filter(email=email).count():
+            raise forms.ValidationError(
+                "User with this email already exist. Please write another", code=1
+            )
+        return email
 
     def clean_last_name(self):
         last_name = self.cleaned_data['last_name']

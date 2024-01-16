@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login, update_session_auth_hash
+from django.contrib.auth import authenticate, login, update_session_auth_hash, logout
 from django.core.exceptions import FieldError, ObjectDoesNotExist
 from django.core.paginator import Paginator, EmptyPage
 from django.db.models import Q  # для сложных условий в методе filter
@@ -17,7 +17,7 @@ from .forms import *
 
 
 # проверять валидность per_page и ограничить кол-во выводимых элементов <=100 не будем, так как это зашито в бэке
-def paginate(object_list, req, per_page=20):
+def paginate(object_list, req, ans_id=None, per_page=10):
     search_text = req.GET.get('search', None)
     sorting = req.GET.get('sorted', None)
     try:
@@ -50,6 +50,18 @@ def paginate(object_list, req, per_page=20):
         page = p.num_pages
     if page <= 0:
         page = 1
+
+    # находим страницу, на которую был добавлен ответ
+    if ans_id is not None:
+        try:
+            ans = Answer.objects.get(id=ans_id)
+            for i in p.page_range:
+                if ans in p.page(i).object_list:
+                    page = i
+                    break
+        except Answer.DoesNotExist:
+            pass
+
     try:
         object_list = p.page(page)
     except EmptyPage:
@@ -98,29 +110,46 @@ def question(req, question_id):
         form = AddAnswerForm(req.POST)
         if form.is_valid():
             if req.user.is_authenticated:
-                form.save(question_id=question_id, user=req.user)
+                ans = form.save(question_id=question_id, user=req.user)
+                # Добавим данные в сессию
+                req.session['ans_id'] = ans.id
                 return redirect(reverse('question', kwargs={'question_id': question_id}))
             else:
                 form.add_error(None, "You need to authorize!")
     else:
         form = AddAnswerForm()
+
     try:
         found_q = Question.questManager.get(id=question_id)
     except ObjectDoesNotExist:
         return redirect('home')
 
-    ans = Answer.ansManager.getAnswersByQuestId(question_id)
-    context = paginate(ans, req)  # вернется список ответов на какой-то странице
+    ans = Answer.ansManager.getAnswersByQuestId(question_id).order_by('-correct')
+
+    # Проверим, есть ли данные в сессии
+    ans_id = req.session.pop('ans_id', None)
+    if ans_id:
+        context = paginate(ans, req, ans_id)
+    else:
+        context = paginate(ans, req)  # вернется список ответов на какой-то странице
 
     data_user = {'user': req.user}
     if req.user.is_authenticated:
         data_user['profile'] = Profile.objects.get(user=req.user.id)
-    return render(req, 'main/public/question.html', {
+
+    # придется тут сформировать context, потому что перед return его необходимо изменить при условии
+
+    html_context = {
         'question': found_q,
         'context': context,
         'data_user': data_user,
         'form': form
-    })
+    }
+
+    if ans_id:
+        html_context['ans_id'] = ans_id
+
+    return render(req, 'main/public/question.html', html_context)
 
 
 @login_required(login_url=f'{LOGIN_URL}')
@@ -233,6 +262,12 @@ def about(req):
     return render(req, 'main/public/about.html', {
         'data_user': data_user
     })
+
+
+@login_required(login_url=f'{LOGIN_URL}')
+def clear_user_session(req):
+    logout(req)
+    return redirect(reverse('home'))
 
 
 # Функции служебные

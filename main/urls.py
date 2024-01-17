@@ -13,6 +13,7 @@ urlpatterns = [
     path('user/auth/', views.authorization, name='auth'),  # login
     path('user/reg/', views.registration, name='reg'),  # registration
     path('user/ask/', views.ask, name='ask'),  # ask question
+    path('changeReaction/', views.changeReaction, name='like'),
 
     # общий путь для перенаправлений на соответствующие страницы с помощью рег выражений
     re_path(r'^about(/.*)?$', RedirectView.as_view(url='/about/')),

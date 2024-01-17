@@ -16,13 +16,19 @@
         </div>
         <div class="col-12 px-0 mb-1 d-flex flex-wrap justify-content-between align-items-baseline">
 
-            <div class="post-statistic d-flex flex-wrap mb-1">
+            <div class="answer-statistic  d-flex flex-wrap mb-1" answer_id="{{ answer.id }}">
 
-                <div class="likes mt-2 me-2">{{ answer.like }}
-                    <img src="{% static 'svg/like.svg' %}" alt="like" class="mb-2">
+                <div class="likes mt-2 me-2">
+                    <span>{{ answer.like }}</span>
+                    <button>
+                        <img src="{% static 'svg/like.svg' %}" alt="like" class="mb-2">
+                    </button>
                 </div>
-                <div class="dislikes mt-2 me-2">{{ answer.dislike }}
-                    <img src="{% static 'svg/dislike.svg' %}" alt="dislike">
+                <div class="dislikes mt-2 me-2">
+                    <span>{{ answer.dislike }}</span>
+                    <button>
+                        <img src="{% static 'svg/dislike.svg' %}" alt="dislike">
+                    </button>
                 </div>
 
             </div>

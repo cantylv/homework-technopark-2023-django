@@ -7,22 +7,24 @@
             <div class="row g-0">
                 <!--Статистика карточки: лайки, дизлайки и комментарии-->
                 <div class="col-md-2">
-                    <div class="post_statistic text-end mt-3 big-screens-ldc">
+                    <div class="question-statistic text-end mt-3 big-screens-ldc" question_id="{{ question.id }}">
                         <div class="likes col-12">
-                            <div class="d-inline-flex">{{ question.like }}</div>
+                            <div class="d-inline-flex value">{{ question.like }}</div>
                             <button>
                                 <img src="{% static 'svg/like.svg' %}" alt="like">
                                 <!--надо как-то обрабатывать нажатие на кнопки-->
                             </button>
                         </div>
-                        <div class="dislikes col-12 mt-2">{{ question.dislike }}
+                        <div class="dislikes col-12 mt-2">
+                            <div class="d-inline-flex value">{{ question.dislike }}</div>
                             <button>
                                 <img src="{% static 'svg/dislike.svg' %}" alt="dislike">
                             </button>
                         </div>
-                        <div class="comments col-12 mt-2">{{ question.comment }}
+                        <div class="comments col-12 mt-2">
+                            <div class="d-inline-flex value">{{ question.comment }}</div>
                             <button>
-                                <img src="{% static 'svg/comment.svg' %}" alt="ans">
+                                <a href="{% url 'question' question_id=question.id %}"><img src="{% static 'svg/comment.svg' %}" alt="ans"></a>
                             </button>
                         </div>
                     </div>
@@ -36,7 +38,8 @@
                         <p class="card-text">{{ question.text|slice:":150" }}</p>
                         <div class="col-12 px-3 mb-1 d-flex flex-wrap justify-content-end align-items-baseline">
                             <a class="px-1 text-decoration-none">
-                                <img src="{{ question.user.profile.avatar.url }}" alt="{{ question.user.username }}'s photo"
+                                <img src="{{ question.user.profile.avatar.url }}"
+                                     alt="{{ question.user.username }}'s photo"
                                      class="ava_user mb-1">
                                 <span class="username px-1 ">{{ question.user.username }}</span>
                             </a>
@@ -45,25 +48,30 @@
                                     class="text-body-secondary">Last updated {{ question.date_create }}</small></span>
                         </div>
 
-                        <!--Блок с лайками, комментариями и дизлайками, который будет отображаться на маленьких экранах-->
-                        <div class="post_statistic text-end mt-3 сol-12 small-screens-ldc">
-                            <!--Block with likes and dislikes-->
-                            <span class="likes me-4">{{ question.like }}
-                            <button>
-                                <img src="{% static 'svg/like.svg' %}" alt="like">
-                            </button> <!--Возможно, нужно будет сделать ссылки, а не кнопки-->
-                        </span>
 
-                            <span class="dislikes me-4">{{ question.dislike }}
-                            <button>
-                                <img src="{% static 'svg/dislike.svg' %}" alt="dislike">
-                            </button>
-                        </span>
-                            <span class="comments me-4">{{ question.comment }}
-                            <button>
-                                <img src="{% static 'svg/comment.svg' %}" alt="comm">
-                            </button>
-                        </span>
+                        <!--Блок с лайками, комментариями и дизлайками, который будет отображаться на маленьких экранах-->
+                        <div class="question-statistic text-end mt-3 сol-12 small-screens-ldc"
+                             question_id="{{ question.id }}">
+                            <!--Block with likes and dislikes-->
+                            <span class="likes me-4">
+                                <span class="value">{{ question.like }}</span>
+                                <button>
+                                    <img src="{% static 'svg/like.svg' %}" alt="like">
+                                </button>
+                            </span>
+
+                            <span class="dislikes me-4">
+                                <span class="value">{{ question.dislike }}</span>
+                                <button>
+                                    <img src="{% static 'svg/dislike.svg' %}" alt="dislike">
+                                </button>
+                            </span>
+                            <span class="comments me-4">
+                                <span class="value">{{ question.comment }}</span>
+                                <button>
+                                    <img src="{% static 'svg/comment.svg' %}" alt="comm">
+                                </button>
+                            </span>
                         </div>
 
 

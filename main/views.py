@@ -2,18 +2,16 @@ from django.contrib.auth import authenticate, login, update_session_auth_hash, l
 from django.core.exceptions import FieldError, ObjectDoesNotExist
 from django.core.paginator import Paginator, EmptyPage
 from django.db.models import Q  # для сложных условий в методе filter
-from django.http import HttpResponseNotFound, HttpResponseRedirect
+from django.http import HttpResponseNotFound, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.http import require_GET
 from django.contrib.auth.decorators import login_required
 from gainSkills.settings import LOGIN_URL
 
-# для блокировки кроссдоменных переходов
-from urllib.parse import urlsplit
-
-from .models import *
 from .forms import *
+import json
 
 
 # проверять валидность per_page и ограничить кол-во выводимых элементов <=100 не будем, так как это зашито в бэке
@@ -104,7 +102,7 @@ def listing(req):
     })
 
 
-# обрабатывает POST-запросы на добавление ответа, а также GET-запрос на отображение вопроса и его ответов
+@csrf_protect
 def question(req, question_id):
     if req.method == 'POST':
         form = AddAnswerForm(req.POST)
@@ -153,6 +151,7 @@ def question(req, question_id):
 
 
 @login_required(login_url=f'{LOGIN_URL}')
+@csrf_protect
 # обрабатывает POST-запросы на изменение учетных данных, а также GET-запросы на получение профиля пользователя
 def profile(req, username):
     data_user = {
@@ -190,6 +189,7 @@ def tag(req, tag_name):
 
 
 # обрабатывает POST-запросы на аутентификацию пользователя, а также GET-запросы на получение пустой формы
+@csrf_protect
 def authorization(req):
     if req.user.is_authenticated:
         return redirect(reverse('home'))
@@ -213,6 +213,7 @@ def authorization(req):
 
 
 # обрабатывает POST-запросы на регистрацию пользователя, а также GET-запросы на получение пустой формы
+@csrf_protect
 def registration(req):
     if req.user.is_authenticated:
         return redirect(reverse('home'))
@@ -235,6 +236,7 @@ def registration(req):
 
 
 @login_required(login_url=f'{LOGIN_URL}')
+@csrf_protect
 # обрабатывает POST-запросы на добавление запроса, а также GET-запросы на страницы с формой ввода вопроса
 def ask(req):
     data_user = {'user': req.user}
@@ -264,10 +266,92 @@ def about(req):
     })
 
 
+# выход еще не работает
 @login_required(login_url=f'{LOGIN_URL}')
+@csrf_protect
 def clear_user_session(req):
     logout(req)
     return redirect(reverse('home'))
+
+
+# для AJAX запросов
+@login_required(login_url=f'{LOGIN_URL}')
+@csrf_protect
+def changeReaction(req):
+    user = req.user
+    body = req.body.decode('utf-8')  # Декодирование байтов в строку
+    body_decoded = json.loads(body)  # Парсинг JSON
+
+    object_id = body_decoded.get('object_id')
+    operationType = body_decoded.get('operation')
+    objectType = body_decoded.get('objectType')
+
+    if objectType == 'Q':
+        try:
+            q = Question.objects.get(id=object_id)
+        except Question.DoesNotExist:
+            return JsonResponse({
+                "status": 502,
+                "needAddReaction": False
+            })
+
+        if operationType == "L":
+            queryset = LikeQuestion.objects.filter(user=user, question=q)
+        else:
+            queryset = DislikeQuestion.objects.filter(user=user, question=q)
+
+        reaction_exist = queryset.exists()
+
+        if reaction_exist:
+            queryset.delete()
+            if operationType == "L":
+                q.like -= 1
+            else:
+                q.dislike -= 1
+            needAddReaction = False
+        else:
+            if operationType == "L":
+                LikeQuestion.objects.create(user=user, question=q)
+                q.like += 1
+            else:
+                DislikeQuestion.objects.create(user=user, question=q)
+                q.dislike += 1
+            needAddReaction = True
+        q.countRating()
+    else:
+        try:
+            a = Answer.objects.get(id=object_id)
+        except Answer.DoesNotExist:
+            return JsonResponse({
+                "status": 502,
+                "needAddReaction": False
+            })
+        if operationType == "L":
+            queryset = LikeAnswer.objects.filter(user=user, answer=a)
+        else:
+            queryset = DislikeAnswer.objects.filter(user=user, answer=a)
+
+        reaction_exist = queryset.exists()
+        if reaction_exist:
+            queryset.delete()
+            if operationType == "L":
+                a.like -= 1
+            else:
+                a.dislike -= 1
+            needAddReaction = False
+        else:
+            if operationType == "L":
+                LikeAnswer.objects.create(user=user, answer=a)
+                a.like += 1
+            else:
+                DislikeAnswer.objects.create(user=user, answer=a)
+                a.dislike += 1
+            needAddReaction = True
+        a.countRating()
+    return JsonResponse({
+        "status": 200,
+        "needAddReaction": needAddReaction
+    })
 
 
 # Функции служебные

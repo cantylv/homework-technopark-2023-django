@@ -158,11 +158,16 @@ body {
 
 /*блок с лайками и дизлайками*/
 
-.post_statistic button {
+.question-statistic  button {
     border: none;
     background: none;
     padding: 0;
+}
 
+.answer-statistic button {
+    border: none;
+    background: none;
+    padding: 0;
 }
 
 .likes img {

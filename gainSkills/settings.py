@@ -135,11 +135,15 @@ MEDIA_URL = 'uploads/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 
+# запускаем с помощью python manage.py crontab add -- начинает исполнять все cron-скрипты
 CRONJOBS = [
     # “At 06:00 on Monday.”
-    ('* */6 * * */1', 'main.management.cron.best_users.updateBestUsers'),
+    ('* 6 * * */1', 'main.management.cron.best_users.updateBestUsers'),
     # “At minute 0.” - каждый час без минуты
-    ('*/0 * * * *', 'main.management.cron.popular_tags.updatePopularTags')
-]
+    ('0 * * * *', 'main.management.cron.popular_tags.updatePopularTags')
 
+    # для теста
+    # ('*/1 * * * *', 'main.management.cron.best_users.updateBestUsers'),
+    # ('*/1 * * * *', 'main.management.cron.popular_tags.updatePopularTags')
+]
 LOGIN_URL = '/user/auth/'

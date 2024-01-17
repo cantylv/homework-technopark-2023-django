@@ -35,15 +35,16 @@
         <div class="user-block pt-3 pe-5">
             <img src="{{ question.user.profile.avatar.url }}" class="img-set" alt="{{ question.username }}' ava">
 
-            <div class="post_statistic d-flex mt-1 big-screens-ldc justify-content-center">
+            <div class="question-statistic d-flex mt-1 big-screens-ldc justify-content-center">
                 <!--Block with likes and dislikes-->
-
-                <div class="likes mt-2 me-2">{{ question.like }}
+                <div class="likes mt-2 me-2">
+                    <div>{{ question.like }}</div>
                     <button>
                         <img src="{% static 'svg/like.svg' %}" alt="like">
                     </button>
                 </div>
-                <div class="dislikes mt-2 me-2">{{ question.dislike }}
+                <div class="dislikes mt-2 me-2">
+                    <div>{{ question.dislike }}</div>
                     <button>
                         <img src="{% static 'svg/dislike.svg' %}" alt="dislike">
                     </button>
@@ -54,7 +55,7 @@
         <span class="body-question">{{ question.text }}</span>
 
         <div class="post-tags">
-            {% for tag in question.tags.all %}  <!-- Работать не будет, так как поменялось структура (ВНИМАНИЕ) -->
+            {% for tag in question.tags.all %}
                 <a href="{% url 'tag' tag_name=tag.name %}">{{ tag.name }}</a>
             {% endfor %}
         </div>

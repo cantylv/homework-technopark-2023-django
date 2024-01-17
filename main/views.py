@@ -109,6 +109,10 @@ def question(req, question_id):
         if form.is_valid():
             if req.user.is_authenticated:
                 ans = form.save(question_id=question_id, user=req.user)
+                # после добавления ответа нужно пересчитать рейтинг вопроса
+                ans.question.comment += 1
+                ans.question.countRating()
+                ans.question.save()
                 # Добавим данные в сессию
                 req.session['ans_id'] = ans.id
                 return redirect(reverse('question', kwargs={'question_id': question_id}))
@@ -269,7 +273,7 @@ def about(req):
 # выход еще не работает
 @login_required(login_url=f'{LOGIN_URL}')
 @csrf_protect
-def clear_user_session(req):
+def user_logout(req):
     logout(req)
     return redirect(reverse('home'))
 

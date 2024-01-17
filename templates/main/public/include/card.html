@@ -2,7 +2,6 @@
 
 {% if context.object_list %}
     {% for question in context.object_list %}
-        <!--Сперва получим все данные для отображения вопроса (лайки и т.п.)-->
         <div class="card mb-3">
             <div class="row g-0">
                 <!--Статистика карточки: лайки, дизлайки и комментарии-->
@@ -24,7 +23,8 @@
                         <div class="comments col-12 mt-2">
                             <div class="d-inline-flex value">{{ question.comment }}</div>
                             <button>
-                                <a href="{% url 'question' question_id=question.id %}"><img src="{% static 'svg/comment.svg' %}" alt="ans"></a>
+                                <a href="{% url 'question' question_id=question.id %}"><img
+                                        src="{% static 'svg/comment.svg' %}" alt="ans"></a>
                             </button>
                         </div>
                     </div>
@@ -41,7 +41,8 @@
                                 <img src="{{ question.user.profile.avatar.url }}"
                                      alt="{{ question.user.username }}'s photo"
                                      class="ava_user mb-1">
-                                <span class="username px-1 ">{{ question.user.username }}</span>
+                                <span class="username px-1
+                                        {% if question.user.username == data_user.user.username %}current-user{% endif %}">{{ question.user.username }}</span>
                             </a>
 
                             <span class="time_last_update px-1"><small

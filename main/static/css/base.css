@@ -195,3 +195,15 @@ body {
 .cur-page {
     background-color: #95cbff !important;
 }
+
+.current-user {
+    padding: 3px 2px 3px 2px;
+    color: white !important;
+    background-color: #0d6efd;
+    border-radius: 5px;
+}
+
+.username {
+    color: #0d6efd;
+}
+

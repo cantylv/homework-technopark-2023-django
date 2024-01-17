@@ -45,7 +45,7 @@
             <div>
                 <img src="{{ answer.user.profile.avatar.url }}" alt="{{ answer.user.username }}'s photo"
                      class="ava_user mb-1">
-                <span class="username px-1 ">{{ answer.user.username }}</span>
+                <span class="username px-1 {% if data_user.user.id == answer.user.id %}current-user{% endif %}">{{ answer.user.username }}</span>
 
                 <span class="time_last_update px-1"><small
                         class="text-body-secondary">Last updated {{ answer.date_create }}</small>

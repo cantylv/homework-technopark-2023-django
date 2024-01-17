@@ -35,18 +35,29 @@
         <div class="user-block pt-3 pe-5">
             <img src="{{ question.user.profile.avatar.url }}" class="img-set" alt="{{ question.username }}' ava">
 
-            <div class="question-statistic d-flex mt-1 big-screens-ldc justify-content-center" question_id="{{ question.id }}">
+            <div class="question-statistic d-flex mt-1 big-screens-ldc justify-content-center"
+                 question_id="{{ question.id }}">
                 <!--Block with likes and dislikes-->
                 <div class="likes mt-2 me-2">
                     <div>{{ question.like }}</div>
                     <button>
-                        <img src="{% static 'svg/like.svg' %}" alt="like">
+                        {% get_questions_likes data_user.user as question_likes %}
+                        {% if question in question_likes %}
+                            <img src="{% static 'svg/like_add.svg' %}" alt="like">
+                        {% else %}
+                            <img src="{% static 'svg/like.svg' %}" alt="like">
+                        {% endif %}
                     </button>
                 </div>
                 <div class="dislikes mt-2 me-2">
                     <div>{{ question.dislike }}</div>
                     <button>
-                        <img src="{% static 'svg/dislike.svg' %}" alt="dislike">
+                        {% get_questions_dislikes data_user.user as question_dislikes %}
+                        {% if question in question_dislikes %}
+                            <img src="{% static 'svg/dislike_add.svg' %}" alt="like">
+                        {% else %}
+                            <img src="{% static 'svg/dislike.svg' %}" alt="like">
+                        {% endif %}
                     </button>
                 </div>
             </div>

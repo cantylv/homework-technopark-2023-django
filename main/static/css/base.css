@@ -207,3 +207,11 @@ body {
     color: #0d6efd;
 }
 
+.user-auth {
+    text-decoration: none!important;
+    color: white!important;
+}
+
+.user-auth-signin {
+    text-decoration: none!important;
+}

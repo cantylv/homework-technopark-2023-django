@@ -12,6 +12,7 @@ urlpatterns = [
     path('user/profile/<str:username>/', views.profile, name='profile'),  # user profile
     path('user/auth/', views.authorization, name='auth'),  # login
     path('user/reg/', views.registration, name='reg'),  # registration
+    path('user/logout', views.user_logout, name='logout'),
     path('user/ask/', views.ask, name='ask'),  # ask question
 
     path('changeReaction/', views.changeReaction, name='reaction'),

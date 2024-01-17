@@ -2,6 +2,9 @@
 let questions = document.getElementsByClassName("question-statistic")
 let answers = document.getElementsByClassName("answer-statistic")
 let checkForms = document.getElementsByClassName("isRightAnswer")
+let btnsSignOut = document.getElementsByClassName("btn-sign-out")
+let btnsSignIn = document.getElementsByClassName("btn-signin")
+let btnsSignUp = document.getElementsByClassName("btn-signup")
 
 // получаем токен, чтобы можно было делать js инъекции в работе программы
 const csrftoken = getCookie('csrftoken')
@@ -47,7 +50,6 @@ if (answers.length) {
         // L - ставим лайк, D - дизлайк
     }
 }
-
 
 function changeReaction(object, object_id, objectType, operation, url, csrftoken) {
 
@@ -117,6 +119,44 @@ function getCookie(name) {
     return cookieValue;
 }
 
+// for (let btn of btnsSignOut) {
+//     btn.addEventListener('click', () => {
+//         user_auth('/user/logout/')
+//     })
+// }
+//
+//
+// for (let btn of btnsSignIn) {
+//     btn.addEventListener('click', () => {
+//         user_auth('/user/auth/')
+//     })
+// }
+//
+//
+// for (let btn of btnsSignUp) {
+//     btn.addEventListener('click', () => {
+//         user_auth('/user/reg/')
+//     })
+// }
+//
+//
+// function user_auth(url) {
+//     const req = new Request(url, {
+//         method: 'GET',
+//         headers: {'X-CSRFToken': csrftoken},
+//         mode: 'same-origin'
+//     })
+//     fetch(req)
+//         .then((response) => {
+//             return response.json()
+//         })
+//         .then((data) => {
+//             console.log(data.message)
+//         })
+//         .catch((e) => {
+//             console.log("error:", e)
+//         })
+// }
 
 
 

@@ -58,14 +58,21 @@
     <!--Блок с пользователем, содержащий маленькую аватарку, никнейм и кнопку выхода-->
     {% if data_user.user.is_authenticated %}
         <div class="user-block-header pe-2 pt-2 d-flex flex-wrap justify-content-center align-items-center">
-            <img src="{{ data_user.profile.avatar.url }}" alt="{{ data_user.user.username }}' ava" class="col-12 big-screens">
+            <img src="{{ data_user.profile.avatar.url }}" alt="{{ data_user.user.username }}' ava"
+                 class="col-12 big-screens">
             <a class="col-12 text-center text-decoration-none big-screens"
                href="{% url 'profile' username=data_user.user.username %}">{{ data_user.user.username }}</a>
         </div>
-        <button type="button" class="btn btn-primary btn-sign-out ms-md-0 ms-1 big-screens">Sign out</button>
+        <button type="button" class="btn btn-primary btn-sign-out ms-md-0 ms-1 big-screens">
+            <a href="{% url 'logout' %}" class="user-auth">Sign out</a>
+        </button>
     {% else %}
-        <button type="button" class="btn btn-outline-primary btn-signin me-2 big-screens">Sign in</button>
-        <button type="button" class="btn btn-primary btn-signup ms-md-0 ms-1 big-screens">Sign up</button>
+        <button type="button" class="btn btn-outline-primary btn-signin me-2 big-screens">
+            <a href="{% url 'auth' %}" class="user-auth-signin">Sign in</a>
+        </button>
+        <button type="button" class="btn btn-primary btn-signup ms-md-0 ms-1 big-screens">
+            <a href="{% url 'reg' %}" class="user-auth">Sign up</a>
+        </button>
     {% endif %}
 </div>
 

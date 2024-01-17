@@ -10,7 +10,8 @@
         <div>
             <!--Никнейм пользователя в раскрытом бургер меню-->
             {% if data_user.user.is_authenticated %}
-                <a class="col-12 text-center text-decoration-none me-2" href="{% url 'profile' username=data_user.user.username%}"
+                <a class="col-12 text-center text-decoration-none me-2"
+                   href="{% url 'profile' username=data_user.user.username %}"
                    style="font-size: 1.2rem">{{ data_user.user.username }}</a> <!--Лучше использовать юзернейм-->
             {% endif %}
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -26,11 +27,14 @@
                 <div>
                     <div class="mb-1"><a href="{% url 'home' %}" class="nav-link nav-link-bm">Home</a></div>
                     <div class="mb-1"><a href="{% url 'ask' %}" class="nav-link nav-link-bm">Ask</a></div>
-                    <div class="mb-1"><a href="{% url 'profile' username=data_user.user.username %}" class="nav-link nav-link-bm">Profile</a></div>
+                    <div class="mb-1"><a href="{% url 'profile' username=data_user.user.username %}"
+                                         class="nav-link nav-link-bm">Profile</a></div>
                     <div class="mb-1"><a href="{% url 'about' %}" class="nav-link nav-link-bm">About</a></div>
                 </div>
                 <div class="d-flex justify-content-end">
-                    <button type="button" class="btn btn-primary btn-sign-out ms-1">Sign out</button>
+                    <button type="button" class="btn btn-primary btn-sign-out ms-1">
+                        <a href="{% url 'logout' %}" class="user-auth">Sign out</a>
+                    </button>
                 </div>
             {% else %}
                 <div>
@@ -39,8 +43,12 @@
                     <div class="mb-1"><a href="{% url 'about' %}" class="nav-link nav-link-bm">About</a></div>
                 </div>
                 <div class="d-flex justify-content-end">
-                    <button type="button" class="btn btn-outline-primary btn-signin me-2">Sign in</button>
-                    <button type="button" class="btn btn-primary btn-signup ms-1">Sign up</button>
+                    <button type="button" class="btn btn-outline-primary btn-signin me-2">
+                        <a href="{% url 'auth' %}" class="user-auth-signin">Sign in</a>
+                    </button>
+                    <button type="button" class="btn btn-primary btn-signup ms-1">
+                        <a href="{% url 'reg' %}" class="user-auth">Sign up</a>
+                    </button>
                 </div>
             {% endif %}
         </div>

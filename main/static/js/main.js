@@ -1,10 +1,10 @@
 // получили массив div-ов
 let questions = document.getElementsByClassName("question-statistic")
 let answers = document.getElementsByClassName("answer-statistic")
+let checkFormes = document.getElementsByClassName("form-check")
 
 // получаем токен, чтобы можно было делать js инъекции в работе программы
 const csrftoken = getCookie('csrftoken')
-console.log(csrftoken)
 
 if (questions.length) {
     let objectType = 'Q'  // соответствует вопросу
@@ -38,12 +38,16 @@ if (answers.length) {
         block_dislikes.children[1].addEventListener('click', () => {
             changeReaction(block_dislikes.children[0], answer_id, objectType, 'D', '/changeReaction/', csrftoken)
         })
+        // checkFormes[i].children[0] --> чекбокс
+        checkFormes[i].children[0].addEventListener('change', () => {
+            changeReaction(checkFormes[i].children[1], answer_id, objectType, 'C', '/rightAnswer/', csrftoken)
+        })
         // L - ставим лайк, D - дизлайк
     }
 }
 
 
-function changeReaction(number_reaction, object_id, objectType, operation, url, csrftoken) {
+function changeReaction(object, object_id, objectType, operation, url, csrftoken) {
 
     const req = new Request(url, {
         method: 'POST',
@@ -56,26 +60,44 @@ function changeReaction(number_reaction, object_id, objectType, operation, url, 
         mode: 'same-origin'
     })
 
-    console.log(req)
-
-
-    fetch(req)
-        .then((response) => {
-            return response.json()
-        })
-        .then(data => {
-            console.log(data)
-            if (data.status === 200) {
-                if (data.needAddReaction) {
-                    number_reaction.innerHTML = Number(number_reaction.innerHTML) + 1
+    if (operation === 'C') {
+        fetch(req)
+            .then((response) => {
+                return response.json()
+            })
+            .then(data => {
+                console.log(data)
+                if (data.status === 200) {
+                    if (data.isRightAnswer) {
+                        object.innerHTML = "Correct"
+                    } else {
+                        object.innerHTML = "Is correct ?"
+                    }
                 } else {
-                    number_reaction.innerHTML = Number(number_reaction.innerHTML) - 1
+                    console.log(data.status, ': ', data.message)
                 }
-            }
-        })
-        .catch(error => console.error('Ошибка:', error));
-}
+            })
 
+    } else {
+        fetch(req)
+            .then((response) => {
+                return response.json()
+            })
+            .then(data => {
+                if (data.status === 200) {
+                    if (data.needAddReaction) {
+                        object.innerHTML = Number(object.innerHTML) + 1
+                    } else {
+                        object.innerHTML = Number(object.innerHTML) - 1
+                    }
+                } else {
+                    console.log(data.status, ': ', data.message)
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+}
 
 function getCookie(name) {
     let cookieValue = null;

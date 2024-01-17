@@ -68,8 +68,10 @@ class Question(models.Model):
     questManager = ManagerQuestion()
 
     def countRating(self):
-        self.rating = (weightParam['like'] * self.like + weightParam['dislike'] * self.dislike +
-                       weightParam['comment'] * self.comment)
+        rating_like = weightParam['like'] * self.like
+        rating_dislike = weightParam['dislike'] * self.dislike
+        rating_comment = weightParam['comment'] * self.comment
+        self.rating = rating_like + rating_dislike + rating_comment
 
 
 class ManagerAnswer(models.Manager):

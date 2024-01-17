@@ -292,7 +292,8 @@ def changeReaction(req):
         except Question.DoesNotExist:
             return JsonResponse({
                 "status": 502,
-                "needAddReaction": False
+                "needAddReaction": False,
+                "message": "Object question does not exits"
             })
 
         if operationType == "L":
@@ -318,13 +319,15 @@ def changeReaction(req):
                 q.dislike += 1
             needAddReaction = True
         q.countRating()
+        q.save()
     else:
         try:
             a = Answer.objects.get(id=object_id)
         except Answer.DoesNotExist:
             return JsonResponse({
                 "status": 502,
-                "needAddReaction": False
+                "needAddReaction": False,
+                "message": "Object answer does not exist"
             })
         if operationType == "L":
             queryset = LikeAnswer.objects.filter(user=user, answer=a)
@@ -348,9 +351,36 @@ def changeReaction(req):
                 a.dislike += 1
             needAddReaction = True
         a.countRating()
+        a.save()
     return JsonResponse({
         "status": 200,
-        "needAddReaction": needAddReaction
+        "needAddReaction": needAddReaction,
+        "message": "Operation has finished successful!"
+    })
+
+
+# для AJAX запросов
+@login_required(login_url=f'{LOGIN_URL}')
+@csrf_protect
+def rightAnswer(req):
+    body = req.body.decode('utf-8')  # Декодирование байтов в строку
+    body_decoded = json.loads(body)  # Парсинг JSON
+    answer_id = body_decoded['object_id']
+    try:
+        ans = Answer.objects.get(id=answer_id)
+    except Answer.DoesNotExist:
+        return JsonResponse({
+            "status": 502,
+            "message": "Object answer does not exist!"
+        })
+    isChecked = ans.correct
+    # меняем на противоположное значение
+    ans.correct = False if isChecked else True
+    ans.save()
+    return JsonResponse({
+        "status": 200,
+        "isRightAnswer": ans.correct,
+        "message": "Operation has finished successful!"
     })
 
 

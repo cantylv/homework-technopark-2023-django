@@ -35,7 +35,7 @@
         <div class="user-block pt-3 pe-5">
             <img src="{{ question.user.profile.avatar.url }}" class="img-set" alt="{{ question.username }}' ava">
 
-            <div class="question-statistic d-flex mt-1 big-screens-ldc justify-content-center">
+            <div class="question-statistic d-flex mt-1 big-screens-ldc justify-content-center" question_id="{{ question.id }}">
                 <!--Block with likes and dislikes-->
                 <div class="likes mt-2 me-2">
                     <div>{{ question.like }}</div>
@@ -91,7 +91,7 @@
                     </div>
                 </form>
                 <div class="comments mt-2 text-start mb-5">
-                    <span style="font-size: 1.1rem">{{ question.comment }} Answers {{ ans_id }}</span>
+                    <span style="font-size: 1.1rem">{{ question.comment }} Answers</span>
                     <img src="{% static 'svg/comment.svg' %}" alt="comm">
                 </div>
 

@@ -4,11 +4,20 @@
 {% for answer in context.object_list %}
     <div class="ans border-bottom mb-3" id="answer-{{ answer.id }}">
         <div class="form-check mb-1">
-            {% if answer.correct == True %}
-                <input class="form-check-input ps-1" type="checkbox" value="" id="flexCheckDefault" checked disabled>
+            {% if data_user.user.id == question.user.id %}
+                <input class="form-check-input ps-1" type="checkbox" value="" id="flexCheckDefault"
+                        {% if answer.correct == True %} checked {% endif %}>
                 <label class="form-check-label right-answer-check px-1" for="flexCheckIndeterminateDisabled">
-                    Correct!
+                    {% if answer.correct == True %} Correct! {% else %} Is correct ?{% endif %}
                 </label>
+            {% else %}
+                {% if answer.correct == True %}
+                    <input class="form-check-input ps-1" type="checkbox" value="" id="flexCheckDefault" checked
+                           disabled>
+                    <label class="form-check-label right-answer-check px-1" for="flexCheckIndeterminateDisabled">
+                        Correct!
+                    </label>
+                {% endif %}
             {% endif %}
         </div>
         <div class="answer-body">
@@ -16,7 +25,7 @@
         </div>
         <div class="col-12 px-0 mb-1 d-flex flex-wrap justify-content-between align-items-baseline">
 
-            <div class="answer-statistic  d-flex flex-wrap mb-1" answer_id="{{ answer.id }}">
+            <div class="answer-statistic d-flex flex-wrap mb-1" answer_id="{{ answer.id }}">
 
                 <div class="likes mt-2 me-2">
                     <span>{{ answer.like }}</span>

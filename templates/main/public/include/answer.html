@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load main_tags %}
 
 {% for answer in context.object_list %}
     <div class="ans border-bottom mb-3" id="answer-{{ answer.id }}">
@@ -30,13 +30,23 @@
                 <div class="likes mt-2 me-2">
                     <span>{{ answer.like }}</span>
                     <button>
-                        <img src="{% static 'svg/like.svg' %}" alt="like" class="mb-2">
+                        {% get_answers_likes data_user.user as answer_likes %}
+                        {% if answer in answer_likes %}
+                            <img src="{% static 'svg/like_add.svg' %}" alt="like">
+                        {% else %}
+                            <img src="{% static 'svg/like.svg' %}" alt="like">
+                        {% endif %}
                     </button>
                 </div>
                 <div class="dislikes mt-2 me-2">
                     <span>{{ answer.dislike }}</span>
                     <button>
-                        <img src="{% static 'svg/dislike.svg' %}" alt="dislike">
+                        {% get_answers_dislikes data_user.user as answer_dislikes %}
+                        {% if answer in answer_dislikes %}
+                            <img src="{% static 'svg/dislike_add.svg' %}" alt="like">
+                        {% else %}
+                            <img src="{% static 'svg/dislike.svg' %}" alt="like">
+                        {% endif %}
                     </button>
                 </div>
 

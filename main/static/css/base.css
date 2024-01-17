@@ -158,7 +158,7 @@ body {
 
 /*блок с лайками и дизлайками*/
 
-.question-statistic  button {
+.question-statistic button {
     border: none;
     background: none;
     padding: 0;
@@ -208,10 +208,14 @@ body {
 }
 
 .user-auth {
-    text-decoration: none!important;
-    color: white!important;
+    text-decoration: none !important;
+    color: white !important;
 }
 
 .user-auth-signin {
-    text-decoration: none!important;
+    text-decoration: none !important;
+}
+
+.btn-signin:hover .user-auth-signin {
+    color: white;
 }

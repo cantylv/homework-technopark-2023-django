@@ -2,9 +2,7 @@
 let questions = document.getElementsByClassName("question-statistic")
 let answers = document.getElementsByClassName("answer-statistic")
 let checkForms = document.getElementsByClassName("isRightAnswer")
-let btnsSignOut = document.getElementsByClassName("btn-sign-out")
-let btnsSignIn = document.getElementsByClassName("btn-signin")
-let btnsSignUp = document.getElementsByClassName("btn-signup")
+
 
 // получаем токен, чтобы можно было делать js инъекции в работе программы
 const csrftoken = getCookie('csrftoken')
@@ -18,10 +16,10 @@ if (questions.length) {
         let block_dislikes = current_question.children[1]
         let question_id = current_question.getAttribute("question_id")
         block_likes.children[1].addEventListener('click', () => {
-            changeReaction(block_likes.children[0], question_id, objectType, 'L', '/changeReaction/', csrftoken)
+            changeReaction(block_likes, question_id, objectType, 'L', '/changeReaction/', csrftoken)
         })
         block_dislikes.children[1].addEventListener('click', () => {
-            changeReaction(block_dislikes.children[0], question_id, objectType, 'D', '/changeReaction/', csrftoken)
+            changeReaction(block_dislikes, question_id, objectType, 'D', '/changeReaction/', csrftoken)
         })
         // L - ставим лайк, D - дизлайк
     }
@@ -36,10 +34,10 @@ if (answers.length) {
         let block_dislikes = current_answer.children[1]
         let answer_id = current_answer.getAttribute("answer_id")
         block_likes.children[1].addEventListener('click', () => {
-            changeReaction(block_likes.children[0], answer_id, objectType, 'L', '/changeReaction/', csrftoken)
+            changeReaction(block_likes, answer_id, objectType, 'L', '/changeReaction/', csrftoken)
         })
         block_dislikes.children[1].addEventListener('click', () => {
-            changeReaction(block_dislikes.children[0], answer_id, objectType, 'D', '/changeReaction/', csrftoken)
+            changeReaction(block_dislikes, answer_id, objectType, 'D', '/changeReaction/', csrftoken)
         })
         if (checkForms.length) {
             // checkForms[i].children[0] --> чекбокс
@@ -90,9 +88,19 @@ function changeReaction(object, object_id, objectType, operation, url, csrftoken
             .then(data => {
                 if (data.status === 200) {
                     if (data.needAddReaction) {
-                        object.innerHTML = Number(object.innerHTML) + 1
+                        object.children[0].innerHTML = Number(object.children[0].innerHTML) + 1
+                        if (operation === 'L') {
+                            object.children[1].children[0].src = '/static/svg/like_add.svg'
+                        } else {
+                            object.children[1].children[0].src = '/static/svg/dislike_add.svg'
+                        }
                     } else {
-                        object.innerHTML = Number(object.innerHTML) - 1
+                        object.children[0].innerHTML = Number(object.children[0].innerHTML) - 1
+                        if (operation === 'L') {
+                            object.children[1].children[0].src = '/static/svg/like.svg'
+                        } else {
+                            object.children[1].children[0].src = '/static/svg/dislike.svg'
+                        }
                     }
                 } else {
                     console.log(data.status, ': ', data.message)
@@ -118,6 +126,10 @@ function getCookie(name) {
     }
     return cookieValue;
 }
+
+// let btnsSignOut = document.getElementsByClassName("btn-sign-out")
+// let btnsSignIn = document.getElementsByClassName("btn-signin")
+// let btnsSignUp = document.getElementsByClassName("btn-signup")
 
 // for (let btn of btnsSignOut) {
 //     btn.addEventListener('click', () => {

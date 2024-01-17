@@ -1,7 +1,7 @@
 // получили массив div-ов
 let questions = document.getElementsByClassName("question-statistic")
 let answers = document.getElementsByClassName("answer-statistic")
-let checkFormes = document.getElementsByClassName("form-check")
+let checkForms = document.getElementsByClassName("isRightAnswer")
 
 // получаем токен, чтобы можно было делать js инъекции в работе программы
 const csrftoken = getCookie('csrftoken')
@@ -38,10 +38,12 @@ if (answers.length) {
         block_dislikes.children[1].addEventListener('click', () => {
             changeReaction(block_dislikes.children[0], answer_id, objectType, 'D', '/changeReaction/', csrftoken)
         })
-        // checkFormes[i].children[0] --> чекбокс
-        checkFormes[i].children[0].addEventListener('change', () => {
-            changeReaction(checkFormes[i].children[1], answer_id, objectType, 'C', '/rightAnswer/', csrftoken)
-        })
+        if (checkForms.length) {
+            // checkForms[i].children[0] --> чекбокс
+            checkForms[i].children[0].addEventListener('change', () => {
+                changeReaction(checkForms[i].children[1], answer_id, objectType, 'C', '/rightAnswer/', csrftoken)
+            })
+        }
         // L - ставим лайк, D - дизлайк
     }
 }

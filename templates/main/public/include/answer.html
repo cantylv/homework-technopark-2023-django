@@ -3,7 +3,7 @@
 
 {% for answer in context.object_list %}
     <div class="ans border-bottom mb-3" id="answer-{{ answer.id }}">
-        <div class="form-check mb-1">
+        <div class="form-check {% if data_user.user.id == question.user.id %}isRightAnswer{% endif %} mb-1">
             {% if data_user.user.id == question.user.id %}
                 <input class="form-check-input ps-1" type="checkbox" value="" id="flexCheckDefault"
                         {% if answer.correct == True %} checked {% endif %}>

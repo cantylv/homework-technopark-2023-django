@@ -74,11 +74,12 @@
             {% endfor %}
             {{ form.non_field_errors }}
 
+            {% get_popular_tags as popular_tags %}
             <div class="collapse mt-3" id="popularTags">
                 <div class="card card-body">
-                    <ul>
+                    <ul class="d-flex flex-wrap">
                         {% for tag in popular_tags %}
-                            <li>{{ tag }}</li>
+                            <span class="me-5">{{ tag.name }}</span>
                         {% endfor %}
                     </ul>
                 </div>

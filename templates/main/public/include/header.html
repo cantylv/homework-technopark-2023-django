@@ -63,16 +63,18 @@
             <a class="col-12 text-center text-decoration-none big-screens"
                href="{% url 'profile' username=data_user.user.username %}">{{ data_user.user.username }}</a>
         </div>
-        <button type="button" class="btn btn-primary btn-sign-out ms-md-0 ms-1 big-screens">
-            <a href="{% url 'logout' %}" class="user-auth">Sign out</a>
-        </button>
+
+        <a href="{% url 'logout' %}" class="user-auth">
+            <button type="button" class="btn btn-primary btn-sign-out ms-md-0 ms-1 big-screens">Sign out</button>
+        </a>
+
     {% else %}
-        <button type="button" class="btn btn-outline-primary btn-signin me-2 big-screens">
-            <a href="{% url 'auth' %}" class="user-auth-signin">Sign in</a>
-        </button>
-        <button type="button" class="btn btn-primary btn-signup ms-md-0 ms-1 big-screens">
-            <a href="{% url 'reg' %}" class="user-auth">Sign up</a>
-        </button>
+        <a href="{% url 'auth' %}" class="user-auth-signin">
+            <button type="button" class="btn btn-outline-primary btn-signin me-2 big-screens">Sign in</button>
+        </a>
+        <a href="{% url 'reg' %}" class="user-auth">
+            <button type="button" class="btn btn-primary btn-signup ms-md-0 ms-1 big-screens">Sign up</button>
+        </a>
     {% endif %}
 </div>
 

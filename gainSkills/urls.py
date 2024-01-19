@@ -31,6 +31,5 @@ if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-
 # на все ошибки 404 будет вызываться функция main.views.page_404
 handler404 = page_404

@@ -6,3 +6,7 @@ main/static/.DS_Store
 main/static/bootstrap5.3.2
 *.pxd
 uploads/users/
+*.log
+main/static/admin/
+main/static/django_extensions/
+var/

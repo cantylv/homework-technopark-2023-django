@@ -15,18 +15,14 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
+# SECRET_KEY = os.environ.get('SECRET_KEY')
 SECRET_KEY = 'django-insecure-g@@-sggo!g%6p39q$_p)oddz9#l!*d$ue46i-eoh@wdm#&=*b5'
-
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
-
-# Application definition
+# CORS
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -80,7 +76,7 @@ DATABASES = {
         'USER': 'ivan',
         'PASSWORD': '123',
         'HOST': 'localhost',
-        'PORT': 6666
+        'PORT': '6666'
     }
 }
 
@@ -117,22 +113,11 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-
 STATIC_ROOT = os.path.join(BASE_DIR, 'main/static/')
-
-# дополнительное место, в котором утилита collectstatic будет искать все статические файлы для переноса их на веб-сервер
-# STATICFILES_DIRS = [
-#     BASE_DIR / "main/static/",
-#     BASE_DIR / "uploads/users/"
-# ]
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = 'uploads/'
-
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 
 # запускаем с помощью python manage.py crontab add -- начинает исполнять все cron-скрипты
@@ -146,4 +131,6 @@ CRONJOBS = [
     # ('*/1 * * * *', 'main.management.cron.best_users.updateBestUsers'),
     # ('*/1 * * * *', 'main.management.cron.popular_tags.updatePopularTags')
 ]
+
+# если пользователь не авторизован, переправь его на этот url
 LOGIN_URL = '/user/auth/'

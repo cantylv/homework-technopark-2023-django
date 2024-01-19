@@ -26,5 +26,5 @@ urlpatterns = [
     re_path(r'^user/auth/.*', RedirectView.as_view(url='/user/auth/')),
     re_path(r'^user/reg/.*', RedirectView.as_view(url='/user/reg/')),
     re_path(r'^user/ask(/.*)?$', RedirectView.as_view(url="/user/ask/")),
-    re_path(r'^(?!uploads/users/|admin($|/)).*$', RedirectView.as_view(url="/"))
+    re_path(r'^(?!uploads/+|static/+|admin/+).*$', RedirectView.as_view(url="/"))
 ]

@@ -118,7 +118,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'main/static/')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = 'uploads/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'main/uploads')
 
 # запускаем с помощью python manage.py crontab add -- начинает исполнять все cron-скрипты
 CRONJOBS = [

@@ -7,7 +7,7 @@ port = 8000
 # port = 8081
 
 bind = f'localhost:{port}'
-workers = 8
+workers = 2
 
 # логи работы WSGI-server
 accesslog = './var/tmp/gunicorn_logs/access.g.log'

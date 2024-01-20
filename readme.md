@@ -62,6 +62,14 @@ http {
         server_name localhost;
         include mime.types;
 
+        gzip on;
+        gzip_vary on;
+        gzip_proxied any;
+        gzip_comp_level 6;
+        gzip_buffers 16 8k;
+        gzip_http_version 1.1;
+        gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+
         # указали ^~, чтобы показать, что у этого location приоритет выше регулярных выражений
         location ^~ /uploads/ {
             root /Users/ivanlobanov/Programming/Technopark/Semestr1/WebDev/Homework/gainSkills/main;
@@ -304,6 +312,14 @@ http {
         listen 80;
         server_name localhost;
         include mime.types;
+
+        gzip on;
+        gzip_vary on;
+        gzip_proxied any;
+        gzip_comp_level 6;
+        gzip_buffers 16 8k;
+        gzip_http_version 1.1;
+        gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
 
         proxy_cache clientCache;
         proxy_cache_valid 200 302 10m;

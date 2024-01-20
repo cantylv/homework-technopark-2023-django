@@ -323,7 +323,9 @@ http {
 
         proxy_cache clientCache;
         proxy_cache_valid 200 302 10m;
-        proxy_cache_valid 404      1m;  
+        proxy_cache_valid 404      1m;
+
+        add_header Cache-Control "public, max-age=31536000";
 
         location ^~ /uploads/ {
             root /Users/ivanlobanov/Programming/Technopark/Semestr1/WebDev/Homework/gainSkills/main;

@@ -1,3 +1,6 @@
+## Сайт вопросов и ответов "GainSkills"
+![The main page](github/src/main.jpg)
+
 ## ER-диаграмма
 
 ![ER-Diagram](github/src/er-diagram.png)
@@ -425,6 +428,8 @@ Percentage of the requests served within a certain time (ms)
 
 Команда для запуска контейнера с Centrifugo:  
 `docker run --ulimit nofile=262144:262144 -v $PWD/centrifugo:/centrifugo --name centrifugo -p 8001:8000 centrifugo/centrifugo:v5.1 centrifugo -c config.json`
+
+
 
 
 

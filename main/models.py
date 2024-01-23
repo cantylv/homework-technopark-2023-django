@@ -155,20 +155,20 @@ class DislikeAnswer(AbstractReactionAnswer):
         unique_together = ["user", "answer"]
 
 
-# Эти таблицы нужны для выборки лучших пользователей и тегов. Особенность в том, что их значение будет меняться только
-# через cron-скрипты
-
-class BestUsers(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-
-    class Meta:
-        managed = True
-        db_table = 'BestUsers'
-
-
-class PopularTags(models.Model):
-    tag = models.OneToOneField(Tag, on_delete=models.CASCADE)
-
-    class Meta:
-        managed = True
-        db_table = "PopularTags"
+# # Эти таблицы нужны для выборки лучших пользователей и тегов. Особенность в том, что их значение будет меняться только
+# # через cron-скрипты
+#
+# class BestUsers(models.Model):
+#     user = models.OneToOneField(User, on_delete=models.CASCADE)
+#
+#     class Meta:
+#         managed = True
+#         db_table = 'BestUsers'
+#
+#
+# class PopularTags(models.Model):
+#     tag = models.OneToOneField(Tag, on_delete=models.CASCADE)
+#
+#     class Meta:
+#         managed = True
+#         db_table = "PopularTags"

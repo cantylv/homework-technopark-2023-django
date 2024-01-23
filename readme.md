@@ -1,4 +1,6 @@
-## Сайт вопросов и ответов "GainSkills"
+## TP Autumn 2023. Web-технологии. Сайт вопросов и ответов "GainSkills".
+### [Ссылка](https://github.com/ziontab/tp-tasks/tree/master "TP WEB Техническое задание") на репозиторий с техническим заданием.
+
 ![The main page](github/src/main.jpg)
 
 ## ER-диаграмма

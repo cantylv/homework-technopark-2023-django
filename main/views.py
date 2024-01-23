@@ -1,3 +1,4 @@
+from gainSkills.settings import *
 from django.contrib.auth import authenticate, login, update_session_auth_hash, logout
 from django.core.exceptions import FieldError, ObjectDoesNotExist
 from django.core.paginator import Paginator, EmptyPage
@@ -10,8 +11,48 @@ from django.views.decorators.http import require_GET
 from django.contrib.auth.decorators import login_required
 from gainSkills.settings import LOGIN_URL
 
+import django.contrib.postgres.search
+
 from .forms import *
+
+# для генерации JWT
+import jwt
+import time
+
+import requests
 import json
+
+
+def get_centrifugo_data(user_id):
+    user_id = 0 if user_id is None else user_id
+    token = jwt.encode({"sub": str(user_id), "exp": int(time.time()) + 100 * 60}, TOKEN_HMAC_SECRET_KEY,
+                       algorithm="HS256")
+    return {
+        "user_token": token,
+        "ws_url": CENTRIFUGO_WS_URL,
+    }
+
+
+def ws_add_answer(answer, question_id):
+    data = json.dumps({
+        "channel": f"{question_id}",
+        "data": {
+            "answer": {
+                "id": f"{answer.id}",
+                "text": f"{answer.text}",
+                "date_create": f"{answer.date_create}",
+                "correct": f"{answer.correct}",
+                "like": f"{answer.like}",
+                "dislike": f"{answer.dislike}",
+                "username": f"{answer.user.username}",
+                "user_id": f"{answer.user.id}",
+                "avatar": f"{answer.user.profile.avatar.url}"
+            }
+        }
+
+    })
+    headers = {'X-API-Key': f'{API_KEY}', 'Content-type': 'application/json'}
+    requests.post(f"{CENTRIFUGO_WS_URL_PUBLISH_DATA}", data=data, headers=headers)
 
 
 # проверять валидность per_page и ограничить кол-во выводимых элементов <=100 не будем, так как это зашито в бэке
@@ -113,6 +154,8 @@ def question(req, question_id):
                 ans.question.comment += 1
                 ans.question.countRating()
                 ans.question.save()
+                # обращаемся к Centrifugo
+                ws_add_answer(ans, question_id)
                 # Добавим данные в сессию
                 req.session['ans_id'] = ans.id
                 return redirect(reverse('question', kwargs={'question_id': question_id}))
@@ -130,6 +173,7 @@ def question(req, question_id):
 
     # Проверим, есть ли данные в сессии
     ans_id = req.session.pop('ans_id', None)
+
     if ans_id:
         context = paginate(ans, req, ans_id)
     else:
@@ -145,7 +189,8 @@ def question(req, question_id):
         'question': found_q,
         'context': context,
         'data_user': data_user,
-        'form': form
+        'form': form,
+        'centrifugo': get_centrifugo_data(req.user.id)
     }
 
     if ans_id:

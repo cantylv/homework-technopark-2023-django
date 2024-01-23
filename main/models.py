@@ -164,3 +164,11 @@ class BestUsers(models.Model):
     class Meta:
         managed = True
         db_table = 'BestUsers'
+
+
+class PopularTags(models.Model):
+    tag = models.OneToOneField(Tag, on_delete=models.CASCADE)
+
+    class Meta:
+        managed = True
+        db_table = "PopularTags"

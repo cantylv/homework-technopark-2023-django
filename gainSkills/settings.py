@@ -33,7 +33,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'main.apps.MainConfig',
-    'django_crontab'
+    'django_crontab',
+    'django.contrib.postgres'
 ]
 
 MIDDLEWARE = [
@@ -80,6 +81,13 @@ DATABASES = {
     }
 }
 
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
+        "LOCATION": "localhost:11211"
+    }
+}
+
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -122,15 +130,21 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'main/uploads')
 
 # запускаем с помощью python manage.py crontab add -- начинает исполнять все cron-скрипты
 CRONJOBS = [
-    # “At 06:00 on Monday.”
-    ('* 6 * * */1', 'main.management.cron.best_users.updateBestUsers'),
-    # “At minute 0.” - каждый час без минуты
-    ('0 * * * *', 'main.management.cron.popular_tags.updatePopularTags')
+    # # At 00:00 on Sunday.
+    # ('0 0 * * 7', 'main.management.cron.best_users.updateBestUsers'),
+    # # At 00:00 on day-of-month 1 in January, April, July, and October.
+    # ('0 0 1 1,4,7,10 *', 'main.management.cron.popular_tags.updatePopularTags')
 
     # для теста
-    # ('*/1 * * * *', 'main.management.cron.best_users.updateBestUsers'),
-    # ('*/1 * * * *', 'main.management.cron.popular_tags.updatePopularTags')
+    ('*/1 * * * *', 'main.management.cron.best_users.updateBestUsers'),
+    ('*/1 * * * *', 'main.management.cron.popular_tags.updatePopularTags')
 ]
 
 # если пользователь не авторизован, переправь его на этот url
 LOGIN_URL = '/user/auth/'
+
+# настройка Centrifugo
+TOKEN_HMAC_SECRET_KEY = "5110bee9-ce84-4b93-8422-8168f8c5614f"
+API_KEY = "713d9b58-373d-4162-bd42-8ac90c93230a"
+CENTRIFUGO_WS_URL = "ws://localhost:8001/connection/websocket"
+CENTRIFUGO_WS_URL_PUBLISH_DATA = "http://localhost:8001/api/publish"

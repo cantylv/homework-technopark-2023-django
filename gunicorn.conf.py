@@ -4,7 +4,6 @@ raw_env = ['SECRET_KEY=django-insecure-g@@-sggo!g%6p39q$_p)oddz9#l!*d$ue46i-eoh@
 
 # непосредственная настройка Application Server
 port = 8000
-# port = 8081
 
 bind = f'localhost:{port}'
 workers = 2

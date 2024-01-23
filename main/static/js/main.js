@@ -90,16 +90,16 @@ function changeReaction(object, object_id, objectType, operation, url, csrftoken
                     if (data.needAddReaction) {
                         object.children[0].innerHTML = Number(object.children[0].innerHTML) + 1
                         if (operation === 'L') {
-                            object.children[1].children[0].src = '/static/svg/like_add.svg'
+                            object.children[1].children[0].src = '/static/svg/like_add.jpg'
                         } else {
-                            object.children[1].children[0].src = '/static/svg/dislike_add.svg'
+                            object.children[1].children[0].src = '/static/svg/dislike_add.jpg'
                         }
                     } else {
                         object.children[0].innerHTML = Number(object.children[0].innerHTML) - 1
                         if (operation === 'L') {
-                            object.children[1].children[0].src = '/static/svg/like.svg'
+                            object.children[1].children[0].src = '/static/svg/like.jpg'
                         } else {
-                            object.children[1].children[0].src = '/static/svg/dislike.svg'
+                            object.children[1].children[0].src = '/static/svg/dislike.jpg'
                         }
                     }
                 } else {

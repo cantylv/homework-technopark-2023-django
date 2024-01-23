@@ -32,9 +32,9 @@
                     <button>
                         {% get_answers_likes data_user.user as answer_likes %}
                         {% if answer in answer_likes %}
-                            <img src="{% static 'svg/like_add.svg' %}" alt="like">
+                            <img src="{% static 'svg/like_add.jpg' %}" alt="like">
                         {% else %}
-                            <img src="{% static 'svg/like.svg' %}" alt="like">
+                            <img src="{% static 'svg/like.jpg' %}" alt="like">
                         {% endif %}
                     </button>
                 </div>
@@ -43,9 +43,9 @@
                     <button>
                         {% get_answers_dislikes data_user.user as answer_dislikes %}
                         {% if answer in answer_dislikes %}
-                            <img src="{% static 'svg/dislike_add.svg' %}" alt="like">
+                            <img src="{% static 'svg/dislike_add.jpg' %}" alt="like">
                         {% else %}
-                            <img src="{% static 'svg/dislike.svg' %}" alt="like">
+                            <img src="{% static 'svg/dislike.jpg' %}" alt="dislike">
                         {% endif %}
                     </button>
                 </div>
@@ -62,7 +62,5 @@
                         </span>
             </div>
         </div>
-
-
     </div>
 {% endfor %}

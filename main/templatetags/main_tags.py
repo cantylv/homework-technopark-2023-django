@@ -1,6 +1,7 @@
 from django import template
 
 from main.models import *
+from django.core.cache import cache
 
 register = template.Library()
 
@@ -8,13 +9,13 @@ register = template.Library()
 # Нужно будет сделать с помощью cron-cкрипта
 @register.simple_tag()
 def get_popular_tags():
-    return Tag.objects.order_by('-rating')[:20]
+    return cache.get('popular_tags', [])
 
 
 # Получение топ-10 пользователей с самыми популярными ответами
 @register.simple_tag()
 def get_best_users():
-    return BestUsers.objects.all()[:10]
+    return cache.get('best_users', [])
 
 
 # вернуть id вопросов

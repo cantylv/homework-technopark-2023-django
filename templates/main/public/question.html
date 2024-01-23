@@ -43,9 +43,9 @@
                     <button>
                         {% get_questions_likes data_user.user as question_likes %}
                         {% if question in question_likes %}
-                            <img src="{% static 'svg/like_add.svg' %}" alt="like">
+                            <img src="{% static 'svg/like_add.jpg' %}" alt="like">
                         {% else %}
-                            <img src="{% static 'svg/like.svg' %}" alt="like">
+                            <img src="{% static 'svg/like.jpg' %}" alt="like">
                         {% endif %}
                     </button>
                 </div>
@@ -54,9 +54,9 @@
                     <button>
                         {% get_questions_dislikes data_user.user as question_dislikes %}
                         {% if question in question_dislikes %}
-                            <img src="{% static 'svg/dislike_add.svg' %}" alt="like">
+                            <img src="{% static 'svg/dislike_add.jpg' %}" alt="like">
                         {% else %}
-                            <img src="{% static 'svg/dislike.svg' %}" alt="like">
+                            <img src="{% static 'svg/dislike.jpg' %}" alt="like">
                         {% endif %}
                     </button>
                 </div>
@@ -102,13 +102,14 @@
                     </div>
                 </form>
                 <div class="comments mt-2 text-start mb-5">
-                    <span style="font-size: 1.1rem">{{ question.comment }} Answers</span>
+                    <span style="font-size: 1.1rem" id="question_comments">{{ question.comment }}</span>
+                    <span>Answers</span>
                     <img src="{% static 'svg/comment.svg' %}" alt="comm">
                 </div>
 
-
-                {% include 'main/public/include/answer.html' %}
-
+                <div id="answers" channel="{{ question.id }}">
+                    {% include 'main/public/include/answer.html' %}
+                </div>
             </div>
         </div>
     </div>
@@ -139,4 +140,75 @@
             </form>
         </div>
     </div>
+{% endblock %}
+
+{% block answer_js %}
+    <script src="{% static 'node_modules/centrifuge/dist/centrifuge.js' %}"></script>
+    <script>
+        const container = document.getElementById('answers');
+        const centrifuge = new Centrifuge("{{ centrifugo.ws_url }}", {
+            token: "{{ centrifugo.user_token }}"
+        });
+
+        // Получим корневой элемент, куда будем дописывать сообщения
+        const rootElement = document.getElementById("answers");
+        const channel = rootElement.getAttribute("channel");
+
+        const sub = centrifuge.newSubscription(channel);
+
+        centrifuge.connect();
+
+        sub.on('publication', function (ctx) {
+            const answer = ctx.data.answer;
+            if (answer) {
+                const count_comment = document.getElementById("question_comments");
+                count_comment.innerHTML = String(Number(count_comment.innerHTML) + 1);
+                const element = `
+            <div class="ans border-bottom mb-3" id="answer-${answer.id}">
+        <div class="form-check {% if data_user.user.id == question.user.id %}isRightAnswer{% endif %} mb-1">
+            {% if data_user.user.id == question.user.id %}
+                <input class="form-check-input ps-1" type="checkbox" value="" id="flexCheckDefault">
+                <label class="form-check-label right-answer-check px-1" for="flexCheckIndeterminateDisabled">
+                    Is correct ?
+                </label>
+            {% endif %}
+        </div>
+        <div class="answer-body">
+            ${answer.text}
+        </div>
+        <div class="col-12 px-0 mb-1 d-flex flex-wrap justify-content-between align-items-baseline">
+
+            <div class="answer-statistic d-flex flex-wrap mb-1" answer_id="${answer.id}">
+
+                <div class="likes mt-2 me-2">
+                    <span>${answer.like}</span>
+                    <button>
+                          <img src="{% static 'svg/like.jpg' %}" alt="like">
+                    </button>
+                </div>
+                <div class="dislikes mt-2 me-2">
+                    <span>${answer.dislike}</span>
+                    <button>
+                           <img src="{% static 'svg/dislike.jpg' %}" alt="dislike">
+                    </button>
+                </div>
+
+            </div>
+
+            <div>
+                <img src="${answer.avatar}" alt="${answer.username}'s photo"
+                     class="ava_user mb-1">
+                <span class="username px-1">${answer.username}</span>
+
+                <span class="time_last_update px-1"><small
+                        class="text-body-secondary">Last updated ${answer.date_create}</small>
+                        </span>
+            </div>
+        </div>
+    </div>
+            `
+                rootElement.insertAdjacentHTML('afterbegin', element);
+            }
+        }).subscribe();
+    </script>
 {% endblock %}

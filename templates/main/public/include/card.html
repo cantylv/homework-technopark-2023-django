@@ -13,9 +13,9 @@
                             <button>
                                 {% get_questions_likes data_user.user as question_likes %}
                                 {% if question in question_likes %}
-                                    <img src="{% static 'svg/like_add.svg' %}" alt="like">
+                                    <img src="{% static 'svg/like_add.jpg' %}" alt="like">
                                 {% else %}
-                                    <img src="{% static 'svg/like.svg' %}" alt="like">
+                                    <img src="{% static 'svg/like.jpg' %}" alt="like">
                                 {% endif %}
                                 <!--надо как-то обрабатывать нажатие на кнопки-->
                             </button>
@@ -25,9 +25,9 @@
                             <button>
                                 {% get_questions_dislikes data_user.user as question_dislikes %}
                                 {% if question in question_dislikes %}
-                                    <img src="{% static 'svg/dislike_add.svg' %}" alt="like">
+                                    <img src="{% static 'svg/dislike_add.jpg' %}" alt="like">
                                 {% else %}
-                                    <img src="{% static 'svg/dislike.svg' %}" alt="like">
+                                    <img src="{% static 'svg/dislike.jpg' %}" alt="like">
                                 {% endif %}
                             </button>
                         </div>
@@ -70,9 +70,9 @@
                                 <button>
                                     {% get_questions_likes data_user.user as question_likes %}
                                     {% if question in question_likes %}
-                                        <img src="{% static 'svg/like_add.svg' %}" alt="like">
+                                        <img src="{% static 'svg/like_add.jpg' %}" alt="like">
                                     {% else %}
-                                        <img src="{% static 'svg/like.svg' %}" alt="like">
+                                        <img src="{% static 'svg/like.jpg' %}" alt="like">
                                     {% endif %}
                                 </button>
                             </span>
@@ -82,9 +82,9 @@
                                 <button>
                                     {% get_questions_dislikes data_user.user as question_dislikes %}
                                     {% if question in question_dislikes %}
-                                        <img src="{% static 'svg/dislike_add.svg' %}" alt="like">
+                                        <img src="{% static 'svg/dislike_add.jpg' %}" alt="like">
                                     {% else %}
-                                        <img src="{% static 'svg/dislike.svg' %}" alt="like">
+                                        <img src="{% static 'svg/dislike.jpg' %}" alt="like">
                                     {% endif %}
                                 </button>
                             </span>

@@ -1,4 +1,10 @@
-## Сайт вопросов и ответов "GainSkills"
+## TP Autumn 2023. Web-технологии. Сайт вопросов и ответов "GainSkills".
+### [Ссылка](https://github.com/ziontab/tp-tasks/tree/master "TP WEB Техническое задание") на репозиторий с техническим заданием.
+
+* Лектор: Динар Сабитов 
+* Семинарист: Владлен Гилязетдинов
+* Ментор: Владислав Фоменко
+
 ![The main page](github/src/main.jpg)
 
 ## ER-диаграмма
@@ -92,7 +98,7 @@ http {
 
         location / {
             proxy_set_header Host $host;
-
+            proxy_pass http://gainSkills;
         }
     }
 }

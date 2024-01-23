@@ -92,7 +92,7 @@ http {
 
         location / {
             proxy_set_header Host $host;
-
+            proxy_pass http://gainSkills;
         }
     }
 }
